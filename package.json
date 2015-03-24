@@ -1,0 +1,15 @@
+{
+  "name": "theofficekeg",
+  "main": "server.js",
+  "dependencies": {
+    "express": "latest",
+    "mongoose": "latest",
+    "body-parser": "latest",
+    "bcrypt-nodejs" : "latest",
+    "passport" : "latest",
+    "passport-local" : "latest",
+    "express-session" : "latest",
+    "cookie-parser" : "latest",
+    "morgan" : "latest"
+  }
+}
