@@ -10,6 +10,7 @@
     "passport-local" : "latest",
     "express-session" : "latest",
     "cookie-parser" : "latest",
-    "morgan" : "latest"
+    "morgan" : "latest",
+    "passport-http" : "latest"
   }
 }

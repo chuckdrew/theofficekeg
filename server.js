@@ -8,8 +8,16 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var configDB = require('./config/database.js');
-
 mongoose.connect(configDB.url);
+require('./config/passport')(passport);
+
+express.response.apiRes = function(status, message, data) {
+    this.json({
+        success: status,
+        message: message,
+        data: data
+    });
+}
 
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser());
@@ -20,7 +28,8 @@ app.use(session({ secret: 'mysecurekey' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/api/', require('./controllers/index'));
+app.use('/', require('./controllers/index')(app, passport));
+app.use('/api', passport.authenticate('basic', { session: false }), require('./controllers/index')(app, passport));
 
 app.get('*', function(req, res) {
     res.sendfile('./public/index.html');
