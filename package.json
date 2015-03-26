@@ -11,7 +11,8 @@
     "express-session" : "latest",
     "cookie-parser" : "latest",
     "morgan" : "latest",
-    "passport-http" : "latest"
+    "passport-http" : "latest",
+    "connect-mongo" : "latest"
   },
   "scripts": {
     "start": "node server.js"
