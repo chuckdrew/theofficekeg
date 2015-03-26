@@ -12,5 +12,8 @@
     "cookie-parser" : "latest",
     "morgan" : "latest",
     "passport-http" : "latest"
+  },
+  "scripts": {
+    "start": "node server.js"
   }
 }

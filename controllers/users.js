@@ -2,10 +2,6 @@ module.exports = function(app, passport) {
     var express = require('express');
     var router = express.Router();
 
-    router.get('/test', passport.checkAuth(), function(req, res) {
-        res.json(req.user);
-    });
-
     router.get('/logout', function(req, res) {
         req.logout();
         res.apiRes(true,'User successfully logged out', null);

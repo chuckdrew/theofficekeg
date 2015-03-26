@@ -21,7 +21,6 @@ express.response.apiRes = function(status, message, data) {
     });
 }
 
-//Store Sessions in Mongo
 mongoose.connect(configDB.url);
 
 app.use(morgan('dev')); // log every request to the console
@@ -29,6 +28,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+//Store Sessions in Mongo
 app.use(session({
     secret: 'mysecurekey',
     store: new MongoStore({ mongooseConnection: mongoose.connection })
