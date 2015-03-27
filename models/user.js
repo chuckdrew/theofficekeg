@@ -5,7 +5,12 @@ var userSchema = mongoose.Schema({
     local : {
         email : String,
         password : String
-    }
+    },
+    scanner_uuid : String,
+    first_name : String,
+    last_name : String,
+    balance: String,
+    is_admin: Boolean
 });
 
 userSchema.methods.generateHash = function(password) {

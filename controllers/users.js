@@ -1,3 +1,5 @@
+var User = require('../models/user');
+
 module.exports = function(app, passport) {
     var express = require('express');
     var router = express.Router();
@@ -8,22 +10,34 @@ module.exports = function(app, passport) {
     });
 
     router.post('/signup', function(req, res) {
-        passport.authenticate('local-signup', function(err, user, info) {
-            if(err) {
+        User.findOne({'local.email' :  req.body.email }, function(err, user) {
+            if (err) {
                 res.apiRes(false,info,err);
-            } else if(user == false) {
-                res.apiRes(false,info,null);
+            }
+
+            if (user) {
+                return res.apiRes(false,'User with that email address already exists',null);
             } else {
-                req.logIn(user, function (err) {
-                    if(err) {
-                        res.apiRes(false,info,err);
+                var newUser = new User();
+
+                newUser.local.email    = req.body.email;
+                newUser.local.password = newUser.generateHash(req.body.password);
+
+                newUser.save(function(err) {
+                    if (err) {
+                        res.apiRes(false,'Error Saving User',err);
                     } else {
-                        res.apiRes(true,'User successfully added and logged in',{user_id: user._id});
+                        req.logIn(newUser, function (err) {
+                            if(err) {
+                                res.apiRes(false,'Error Logging User In',err);
+                            } else {
+                                res.apiRes(true,'User successfully added and logged in',{user_id: newUser._id});
+                            }
+                        });
                     }
                 });
-
             }
-        })(req, res);
+        });
     });
 
     router.post('/login', function(req, res) {
