@@ -5,11 +5,11 @@ module.exports = function(app, passport) {
     var express = require('express');
     var router = express.Router();
 
-    router.get('/scan', passport.checkAuth('admin'), function (req, res) {
-        User.findOne({'scanner_uuid' :  req.query.scanned_uuid }, function(err, user) {
+    router.post('/scan', passport.checkAuth('admin'), function (req, res) {
+        User.findOne({'scanner_uuid' :  req.body.scanned_uuid }, function(err, user) {
             var newScan = new Scan();
 
-            newScan.scanned_uuid = req.query.scanned_uuid;
+            newScan.scanned_uuid = req.body.scanned_uuid;
             newScan.scanned_date = new Date();
 
             if(user) {
