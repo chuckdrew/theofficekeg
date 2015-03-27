@@ -12,7 +12,9 @@
     "cookie-parser" : "latest",
     "morgan" : "latest",
     "passport-http" : "latest",
-    "connect-mongo" : "latest"
+    "connect-mongo" : "latest",
+    "express-mailer" : "latest",
+    "hbs" : "latest"
   },
   "scripts": {
     "start": "node server.js"
