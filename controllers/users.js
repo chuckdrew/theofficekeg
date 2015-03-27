@@ -26,6 +26,9 @@ module.exports = function(app, passport) {
 
                 newUser.local.email    = req.body.email;
                 newUser.local.password = newUser.generateHash(req.body.password);
+                newUser.scanner_uuid = req.body.scanner_uuid;
+                newUser.first_name = req.body.first_name;
+                newUser.last_name = req.body.last_name;
 
                 newUser.save(function(err) {
                     if (err) {
@@ -61,6 +64,30 @@ module.exports = function(app, passport) {
                 });
             }
         })(req, res);
+    });
+
+    router.get('/', passport.checkAuth(), function(req, res) {
+        User.findOne({'_id' :  req.query.id }, function(err, user) {
+            res.apiRes(true,'Successfully Retrieved User',user);
+        });
+    });
+
+    router.post('/update', passport.checkAuth(), function(req, res) {
+        User.findOne({'_id' :  req.query.id }, function(err, user) {
+            user.local.email    = req.body.email;
+            user.scanner_uuid = req.body.scanner_uuid;
+            user.first_name = req.body.first_name;
+            user.last_name = req.body.last_name;
+            user.is_admin = req.body.is_admin;
+
+            user.save(function(err) {
+                if (err) {
+                    res.apiRes(false,'Error Saving User',err);
+                } else {
+                    res.apiRes(true,'User Successfully Saved',user);
+                }
+            });
+        });
     });
 
     return router;
