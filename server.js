@@ -19,8 +19,14 @@ express.response.apiRes = function(status, message, data) {
     });
 }
 
+//Mailer Config and Init
+require('./config/mailer')(app);
+
 //Open Mongo Connection
 mongoose.connect(configDB.url);
+
+//Set view engine
+app.set('view engine', 'hbs');
 
 //Logging
 app.use(morgan('dev')); // log every request to the console

@@ -30,6 +30,14 @@ module.exports = function(app, passport) {
                     if (err) {
                         res.apiRes(false,'Error Saving User',err);
                     } else {
+                        //Send Welcome Email
+                        app.mailer.send('../views/emails/welcome', {
+                            to: newUser.email,
+                            subject: 'Welcome to The Office Keg!',
+                            user: newUser
+                        });
+
+                        //Log User In
                         req.logIn(newUser, function (err) {
                             if(err) {
                                 res.apiRes(false,'Error Logging User In',err);
