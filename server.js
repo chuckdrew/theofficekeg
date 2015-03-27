@@ -9,10 +9,8 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var configDB = require('./config/database.js');
-require('./config/passport')(passport);
 
-app.use(express.static(__dirname + '/public'));
-
+//Create Standard Response Object
 express.response.apiRes = function(status, message, data) {
     this.json({
         success: status,
@@ -21,10 +19,16 @@ express.response.apiRes = function(status, message, data) {
     });
 }
 
+//Open Mongo Connection
 mongoose.connect(configDB.url);
 
+//Logging
 app.use(morgan('dev')); // log every request to the console
+
+//Cookie Parser
 app.use(cookieParser());
+
+//Read in the body
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -34,24 +38,32 @@ app.use(session({
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
+require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Base Route to Index Controllers
 app.use('/', require('./controllers/index')(app, passport));
+
+//API Route that uses Basic auth
 app.use('/api', passport.authenticate('basic', { session: false }), require('./controllers/index')(app, passport));
 
+//Set public directory
+app.use(express.static(__dirname + '/public'));
+
+//Set index.html
 app.get('/', function(req, res) {
     res.sendfile('./public/index.html');
 });
 
-//404
+//404 Error Pages
 app.use(function(req, res) {
     res.send('404: Page not Found', 404);
 });
 
-//500
-app.use(function(error, req, res, next) {
-    res.send('500: Internal Server Error', 500);
-});
+////500 Error Pages
+//app.use(function(error, req, res, next) {
+//    res.send('500: Internal Server Error', 500);
+//});
 
 app.listen(port);
