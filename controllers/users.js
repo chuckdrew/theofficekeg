@@ -9,12 +9,8 @@ module.exports = function(app, passport) {
         res.apiRes(true,'User successfully logged out', null);
     });
 
-    router.get('/test', passport.checkAuth(), function(req, res) {
-        res.json(req.user);
-    });
-
     router.post('/signup', function(req, res) {
-        User.findOne({'local.email' :  req.body.email }, function(err, user) {
+        User.findOne({'email' :  req.body.email }, function(err, user) {
             if (err) {
                 res.apiRes(false,info,err);
             }
@@ -24,8 +20,8 @@ module.exports = function(app, passport) {
             } else {
                 var newUser = new User();
 
-                newUser.local.email    = req.body.email;
-                newUser.local.password = newUser.generateHash(req.body.password);
+                newUser.email    = req.body.email;
+                newUser.password = newUser.generateHash(req.body.password);
                 newUser.scanner_uuid = req.body.scanner_uuid;
                 newUser.first_name = req.body.first_name;
                 newUser.last_name = req.body.last_name;
@@ -66,27 +62,60 @@ module.exports = function(app, passport) {
         })(req, res);
     });
 
-    router.get('/', passport.checkAuth(), function(req, res) {
+    router.get('/', passport.checkAuth('guest'), function(req, res) {
         User.findOne({'_id' :  req.query.id }, function(err, user) {
-            res.apiRes(true,'Successfully Retrieved User',user);
+            if(user) {
+                res.apiRes(true,'Successfully Retrieved User',user);
+            } else {
+                res.apiRes(false,'Could Not Find User',user);
+            }
         });
     });
 
-    router.post('/update', passport.checkAuth(), function(req, res) {
-        User.findOne({'_id' :  req.query.id }, function(err, user) {
-            user.local.email    = req.body.email;
-            user.scanner_uuid = req.body.scanner_uuid;
-            user.first_name = req.body.first_name;
-            user.last_name = req.body.last_name;
-            user.is_admin = req.body.is_admin;
+    router.get('/all', passport.checkAuth('admin'), function(req, res) {
+        User.find(function(err, users) {
+            if(users) {
+                res.apiRes(true,'Successfully Retrieved Users',users);
+            } else {
+                res.apiRes(false,'Could Not Find Users',users);
+            }
+        });
+    });
 
-            user.save(function(err) {
-                if (err) {
-                    res.apiRes(false,'Error Saving User',err);
-                } else {
-                    res.apiRes(true,'User Successfully Saved',user);
-                }
-            });
+    router.put('/update', passport.checkAuth('guest'), function(req, res) {
+        User.findOne({'_id' :  req.query.id }, function(err, user) {
+            if(user) {
+                user.email = req.body.email;
+                user.scanner_uuid = req.body.scanner_uuid;
+                user.first_name = req.body.first_name;
+                user.last_name = req.body.last_name;
+
+                user.save(function (err) {
+                    if (err) {
+                        res.apiRes(false, 'Error Saving User', err);
+                    } else {
+                        res.apiRes(true, 'User Successfully Saved', user);
+                    }
+                });
+            } else {
+                res.apiRes(false,'Could Not Find User',user);
+            }
+        });
+    });
+
+    router.delete('/delete', passport.checkAuth('admin'), function(req, res) {
+        User.findOne({'_id' :  req.query.id }, function(err, user) {
+            if(user) {
+                user.remove(function (err) {
+                    if (err) {
+                        res.apiRes(false, 'Error Deleting User', err);
+                    } else {
+                        res.apiRes(true, 'User Successfully Deleted', user);
+                    }
+                });
+            } else {
+                res.apiRes(false,'Could Not Find User',user);
+            }
         });
     });
 

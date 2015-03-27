@@ -38,6 +38,7 @@ app.use(session({
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
+//Passport Config
 require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
