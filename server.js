@@ -43,8 +43,12 @@ app.use(bodyParser.json());
 
 //Store Sessions in Mongo
 app.use(session({
-    secret: 'mysecurekey',
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    secret: process.env.COOKIE_SECRET,
+    name: process.env.COOKIE_NAME,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    resave: true,
+    saveUninitialized: true,
+    proxy: true
 }));
 
 //Passport Config
@@ -68,7 +72,7 @@ app.get('/', function(req, res) {
 
 //404 Error Pages
 app.use(function(req, res) {
-    res.send('404: Page not Found', 404);
+    res.status(404).send('404: Page not Found');
 });
 
 ////500 Error Pages

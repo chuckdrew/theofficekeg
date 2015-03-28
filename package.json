@@ -1,7 +1,26 @@
 {
   "name": "theofficekeg",
   "main": "server.js",
+  "version": "1.0.0",
   "description":"My first Node JS app to manage the office keg.",
+  "author": {
+    "name": "Chuck Drew",
+    "email": "charles@freelunchlabs.com",
+    "url": "http://www.freelunchlabs.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chuckdrew/theofficekeg.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= v0.10.0"
+  },
   "dependencies": {
     "express": "latest",
     "mongoose": "latest",
