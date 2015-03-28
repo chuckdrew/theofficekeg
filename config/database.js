@@ -1,5 +1,5 @@
 // Connection string looks like: mongodb://<user>:<pass>@www.example.com:27017/theofficekeg
 
 module.exports = {
-    'url' : process.env.MONGODB_URL || 'mongodb://localhost:27017/theofficekeg'
+    'url' : process.env.MONGODB_URL
 };

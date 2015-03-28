@@ -35,6 +35,8 @@ module.exports = function(app, passport) {
                             to: newUser.email,
                             subject: 'Welcome to The Office Keg!',
                             user: newUser
+                        }, function(err) {
+                            console.log(err);
                         });
 
                         //Log User In

@@ -1,6 +1,7 @@
 {
   "name": "theofficekeg",
   "main": "server.js",
+  "description":"My first Node JS app to manage the office keg.",
   "dependencies": {
     "express": "latest",
     "mongoose": "latest",
@@ -14,7 +15,8 @@
     "passport-http" : "latest",
     "connect-mongo" : "latest",
     "express-mailer" : "latest",
-    "hbs" : "latest"
+    "hbs" : "latest",
+    "dotenv" : "latest"
   },
   "scripts": {
     "start": "node server.js"
