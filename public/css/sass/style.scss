@@ -1,0 +1,64 @@
+@import "compass";
+@import "compass/reset";
+@import "../frameworks/sass-mq";
+
+$mq-breakpoints: (
+        mobile-sm: 320px,
+        mobile:  480px,
+        tablet:  768px,
+        desktop: 992px,
+        wide:    1200px,
+);
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: url("../../img/bg.jpg");
+  background-size: 100%;
+  font-size: 16px;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.header-wrap .header {
+  max-width: 1200px;
+  margin: 30px auto;
+  overflow: auto;
+}
+
+.header-wrap .header .logo {
+  float: left;
+}
+
+.header-wrap .header .logo img {
+  max-width: 270px;
+  width: 100%;
+}
+
+.header-wrap .header .menu {
+  float: right;
+  width: 240px;
+}
+
+.header-wrap .header .menu a {
+  float: left;
+  display: block;
+  padding: 20px;
+  width: 120px;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  text-align: center;
+}
+
+.header-wrap .header .menu a.sign-up {
+  border: 1px solid #ffffff;
+  border-radius: 40px;
+}
+
+.currently-serving {
+
+
+}
