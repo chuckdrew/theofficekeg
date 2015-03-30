@@ -25,7 +25,7 @@ a {
 .header-wrap .header {
   max-width: 1200px;
   margin: 30px auto;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .header-wrap .header .logo {
@@ -74,7 +74,7 @@ a {
   text-align: center;
   color: #fff;
   padding-bottom: 20px;
-  border-bottom: 1px solid yellow;
+  border-bottom: 1px solid #ffe400;
   margin: 0px 5px 30px 5px;
 }
 
@@ -94,15 +94,17 @@ a {
 
 .buy-a-pint {
   width: 280px;
-  background: #fff;
+  border: 5px solid #fff;
   border-radius: 50px;
   font-size: 30px;
   font-weight: 600;
   margin: 0px auto;
   cursor: pointer;
+  color: #333;
+  background-color:rgba(0, 0, 0, 0.5)
 }
 .buy-a-pint .price {
-  background: yellow;
+  background: #ffe400;
   float: left;
   width: 50px;
   padding: 20px;
@@ -113,5 +115,5 @@ a {
 
 .buy-a-pint .tagline {
   padding: 20px;
-
+  color: #fff;
 }
