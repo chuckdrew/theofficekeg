@@ -36,6 +36,10 @@ a {
   overflow: hidden;
   position: relative;
   padding: 0px 20px;
+
+  @include mq($until: tablet) {
+    height: 90px;
+  }
 }
 
 .header-wrap .header .logo {
