@@ -260,11 +260,19 @@ a {
 .my-account-wrapper .my-account .login .sub-links {
   text-align: center;
   padding-top: 40px;
+
+  @include mq($until: mobile) {
+    font-size: .8em;
+  }
 }
 
 .my-account-wrapper .my-account .login .sub-links a:first-child {
   text-align: center;
   padding-right: 30px;
+
+  @include mq($until: mobile) {
+    padding-right: 15px;
+  }
 }
 
 .footer-wrap .footer {
