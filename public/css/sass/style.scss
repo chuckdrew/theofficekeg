@@ -19,7 +19,7 @@ body {
 }
 
 a {
-  color: #fff;
+  color: #0c7bf8;
   text-decoration: underline;
 }
 
@@ -118,6 +118,7 @@ a {
   -webkit-box-sizing:border-box;
   text-align: center;
   text-decoration: none;
+  color: #fff;
 }
 
 .header-wrap .header .menu a:hover,
@@ -239,8 +240,7 @@ a {
 .my-account-wrapper .my-account {
   max-width: 1200px;
   margin: 0px auto;
-  position: relative;
-  padding: 40px 20px;
+  padding: 100px 20px;
 }
 
 .my-account-wrapper .my-account .header-title {
@@ -255,6 +255,16 @@ a {
 .my-account-wrapper .my-account .login {
   max-width: 400px;
   margin: 0px auto;
+}
+
+.my-account-wrapper .my-account .login .sub-links {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.my-account-wrapper .my-account .login .sub-links a:first-child {
+  text-align: center;
+  padding-right: 30px;
 }
 
 .footer-wrap .footer {
