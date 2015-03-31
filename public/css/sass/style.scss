@@ -25,28 +25,85 @@ a {
   background: url("../../img/bg.jpg") no-repeat;
   background-size: 100%;
   height:100vh;
-  padding: 0px 15px;
+  padding: 0px 20px;
 }
 
 .header-wrap .header {
   max-width: 1200px;
+  height: 120px;
   margin: 0px auto;
   overflow: hidden;
-  padding: 30px 0px;
+  position: relative;
 }
 
 .header-wrap .header .logo {
   float: left;
+  width: 80%;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+  @include mq($from: tablet) {
+    width: 50%;
+  }
 }
 
 .header-wrap .header .logo img {
   max-width: 270px;
   width: 100%;
+  position: relative;
+  top: 2px;
+}
+
+.header-wrap .header .hamburger {
+  border-radius: 4px;
+  width: 26px;
+  padding: 15px 0px;
+  cursor: pointer;
+  float: right;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+  @include mq($from: tablet) {
+    display: none;
+  }
+}
+
+.header-wrap .header .hamburger .patty{
+  background: #fff;
+  height: 4px;
+  border-radius: 4px;
+  margin: 4px 0px;
+  display: block;
+}
+
+.header-wrap .header .hamburger .bun{
+  background: #fff;
+  height: 4px;
+  border-radius: 4px;
+  display: block;
 }
 
 .header-wrap .header .menu {
   float: right;
-  width: 240px;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+  @include mq($until: tablet) {
+    width: 20%;
+  }
+
+  @include mq($from: tablet) {
+    width: 240px;
+  }
 }
 
 .header-wrap .header .menu a {
@@ -58,11 +115,22 @@ a {
   -moz-box-sizing:border-box;
   -webkit-box-sizing:border-box;
   text-align: center;
+
 }
 
 .header-wrap .header .menu a.sign-up {
   border: 1px solid #ffffff;
   border-radius: 40px;
+
+  @include mq($until: tablet) {
+    display: none;
+  }
+}
+
+.header-wrap .header .menu a.login {
+  @include mq($until: tablet) {
+    display: none;
+  }
 }
 
 .main-wrap .main {
@@ -74,9 +142,13 @@ a {
   margin: 80px auto 40px auto;
 
   @include mq($until: tablet) {
-    width: 90%;
+    width: 92%;
   }
   width: 70%;
+
+  @include mq($until: tablet) {
+    margin-top: 40px;
+  }
 }
 
 .currently-serving .title {
@@ -90,6 +162,10 @@ a {
   font-size: 30px;
   text-align: center;
   color: #fff;
+
+  @include mq($until: tablet) {
+    font-size: 18px;
+  }
 }
 
 .currently-serving .beer {
@@ -126,6 +202,7 @@ a {
   color: #333;
   background-color:rgba(0, 0, 0, 0.5)
 }
+
 .buy-a-pint .price {
   background: #ffe400;
   float: left;
@@ -148,5 +225,4 @@ a {
   font-size: 12px;
   border-top: 1px dashed #cccccc;
   text-align: center;
-
 }
