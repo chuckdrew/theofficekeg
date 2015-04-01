@@ -2,15 +2,27 @@
 <html>
     <head lang="en">
         <meta name="viewport" content="width=device-width">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+        <!-- Libraries -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-resource.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>
+
         <script type="text/javascript" src="/js/lib/ng-FitText.js"></script>
+
+        <!-- Controllers -->
         <script type="text/javascript" src="/js/controllers/app.js"></script>
+        <script type="text/javascript" src="/js/controllers/users.js"></script>
+
+        <!-- Models -->
+        <script type="text/javascript" src="/js/models/user.js"></script>
+
         <link href='http://fonts.googleapis.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
         <link href="/css/stylesheets/style.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <title>The Office Keg</title>
     </head>
-    <body ng-app="app">
+    <body ng-app="app" ng-controller="app as app">
         <div class="wrapper">
             <div class="upper-section-wrap">
                 <div class="header-wrap">
@@ -18,7 +30,7 @@
                         <div class="logo">
                             <a href="/"><img src="/img/logo.png" alt="The Office Keg" /></a>
                         </div>
-                        <div class="menu">
+                        <div class="menu" ng-if="userLoggedIn == false">
                             <a class="sign-up" href="" title="Sign Up for The Office Keg">Sign Up</a>
                             <a class="login" href="" title="Login">Sign In</a>
                         </div>
@@ -50,30 +62,8 @@
                 </div>
             </div>
             <div class="my-account-wrapper">
-                <div class="my-account">
-                    <div class="login">
-                        <h2 class="header-title">Sign In</h2>
-                        <div class="form">
-                            <form>
-                                <div class="field">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                                </div>
-                                <div class="field">
-                                    <label for="exampleInputEmail1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Password">
-                                </div>
-                                <div class="form-button">
-                                    <button type="submit" class="button button-default">Sign In</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="sub-links">
-                            <a href="" title="Create a New Account" class="create-new-account-link">Create a New Account</a>
-                            <a href="" title="Create a New Account" class="create-new-account-link">Reset Password</a>
-                        </div>
-
-                    </div>
+                <div class="my-account" ng-controller="app.controller.users as users">
+                    <div ng-view></div>
                     <div class="signup">
 
                     </div>
