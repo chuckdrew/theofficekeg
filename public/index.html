@@ -28,11 +28,15 @@
                 <div class="header-wrap">
                     <div class="header">
                         <div class="logo">
-                            <a href="/"><img src="/img/logo.png" alt="The Office Keg" /></a>
+                            <a href="/#/"><img src="/img/logo.png" alt="The Office Keg" /></a>
                         </div>
                         <div class="menu" ng-if="userLoggedIn == false">
-                            <a class="sign-up" href="" title="Sign Up for The Office Keg">Sign Up</a>
-                            <a class="login" href="" title="Login">Sign In</a>
+                            <a class="sign-up" href="/#/users/signup" title="Sign Up for The Office Keg">Sign Up</a>
+                            <a class="login" href="/#/users/login" title="Login">Sign In</a>
+                        </div>
+                        <div class="menu" ng-if="userLoggedIn == true">
+                            <a class="login" href="/#/users/account" title="My Account">My Account</a>
+                            <a class="login" href="/#/users/account" title="My Account">Logout</a>
                         </div>
                         <div class="hamburger">
                             <span class="bun"></span>

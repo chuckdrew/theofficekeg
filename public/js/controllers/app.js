@@ -6,15 +6,7 @@ var app = angular.module("app", [
 ]);
 
 app.config(function($routeProvider) {
-    $routeProvider.when('/', {
-        templateUrl : '/js/views/login.html',
-        controller  : 'app.controller.users'
-    });
 
-    $routeProvider.when('/signup', {
-        templateUrl : '/js/views/signup.html',
-        controller  : 'app.controller.users'
-    });
 });
 
 app.controller('app', function ($scope, $rootScope, $window) {
