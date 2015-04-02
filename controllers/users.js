@@ -44,7 +44,7 @@ module.exports = function(app, passport) {
                             if(err) {
                                 res.apiRes(false,'Error Logging User In',err);
                             } else {
-                                res.apiRes(true,'User successfully added and logged in',{user_id: newUser._id});
+                                res.apiRes(true,'User successfully added and logged in',newUser);
                             }
                         });
 
@@ -65,11 +65,19 @@ module.exports = function(app, passport) {
                     if(err) {
                         res.apiRes(false,info,err);
                     } else {
-                        res.apiRes(true,'User successfully logged in',{user_id: user._id});
+                        res.apiRes(true,'User successfully logged in',user);
                     }
                 });
             }
         })(req, res);
+    });
+
+    router.get('/current', function(req, res) {
+        if(req.user) {
+            res.apiRes(true, 'User Logged In', req.user)
+        } else {
+            res.apiRes(false, 'No user logged in.', req.user)
+        }
     });
 
     router.get('/', passport.checkAuth('guest'), function(req, res) {

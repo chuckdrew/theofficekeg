@@ -2,28 +2,28 @@ var usersModule = angular.module('app.users',[
     'app.model.user'
 ]);
 
-usersModule.config(function($routeProvider) {
-    $routeProvider.when('/users/login', {
-        templateUrl : '/js/views/users/login.html',
-        controller  : 'app.controller.users',
-        controllerAs: 'users'
-    });
-
-    $routeProvider.when('/users/signup', {
-        templateUrl : '/js/views/users/signup.html',
-        controller  : 'app.controller.users'
-    });
-
-    $routeProvider.when('/users/password-reset', {
-        templateUrl : '/js/views/users/password-reset.html',
-        controller  : 'app.controller.users'
-    });
-
-    $routeProvider.otherwise({
-        templateUrl : '/js/views/users/login.html',
-        controller  : 'app.controller.users'
-    });
-});
+//usersModule.config(function($routeProvider) {
+//    $routeProvider.when('/users/login', {
+//        templateUrl : '/js/views/users/login.html',
+//        controller  : 'app.controller.users',
+//        controllerAs: 'users'
+//    });
+//
+//    $routeProvider.when('/users/signup', {
+//        templateUrl : '/js/views/users/signup.html',
+//        controller  : 'app.controller.users'
+//    });
+//
+//    $routeProvider.when('/users/reset-password', {
+//        templateUrl : '/js/views/users/password-reset.html',
+//        controller  : 'app.controller.users'
+//    });
+//
+//    $routeProvider.otherwise({
+//        templateUrl : '/js/views/users/login.html',
+//        controller  : 'app.controller.users'
+//    });
+//});
 
 usersModule.controller('app.controller.users', function($scope, $window, $http, User) {
 

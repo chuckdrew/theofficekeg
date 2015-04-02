@@ -7,9 +7,9 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-resource.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>
 
         <script type="text/javascript" src="/js/lib/ng-FitText.js"></script>
+        <script type="text/javascript" src="/js/lib/angular-ui-router.min.js"></script>
 
         <!-- Controllers -->
         <script type="text/javascript" src="/js/controllers/app.js"></script>
@@ -22,7 +22,7 @@
         <link href="/css/stylesheets/style.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <title>The Office Keg</title>
     </head>
-    <body ng-app="app" ng-controller="app as app">
+    <body ng-app="app" ng-controller="app as app" ng-init="app.init()">
         <div class="wrapper">
             <div class="upper-section-wrap">
                 <div class="header-wrap">
@@ -30,13 +30,13 @@
                         <div class="logo">
                             <a href="/#/"><img src="/img/logo.png" alt="The Office Keg" /></a>
                         </div>
-                        <div class="menu" ng-if="userLoggedIn == false">
+                        <div class="menu" ng-if="!app.getCurrentUser()">
                             <a class="sign-up" href="/#/users/signup" title="Sign Up for The Office Keg">Sign Up</a>
                             <a class="login" href="/#/users/login" title="Login">Sign In</a>
                         </div>
-                        <div class="menu" ng-if="userLoggedIn == true">
-                            <a class="login" href="/#/users/account" title="My Account">My Account</a>
-                            <a class="login" href="/#/users/account" title="My Account">Logout</a>
+                        <div class="menu" ng-if="app.getCurrentUser()">
+                            <a class="my-account" href="/#/users/account" title="My Account">My Account</a>
+                            <a class="logout" ng-click="app.logout()" href="/#/users/login" title="Logout">Logout</a>
                         </div>
                         <div class="hamburger">
                             <span class="bun"></span>
@@ -67,7 +67,6 @@
             </div>
             <div class="my-account-wrapper">
                 <div class="my-account" ng-controller="app.controller.users as users">
-                    <div ng-view></div>
                     <div class="signup">
 
                     </div>
