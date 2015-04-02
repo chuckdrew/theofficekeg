@@ -40,6 +40,18 @@ module.exports = function(app, passport) {
         });
     });
 
+    router.post('/activate', passport.checkAuth('admin'), function(req, res){
+        Keg.update({'is_active' : true},{'is_active' : false},null, function(){
+            Keg.update({'_id' :  req.body.id },{'is_active' : true},null, function(err){
+                if(err) {
+                    res.apiRes(false, 'Error Activating Keg', err);
+                } else {
+                    res.apiRes(true, 'Successfully Activated Keg', null);
+                }
+            });
+        });
+    });
+
     router.get('/active', function (req, res) {
         Keg.findOne({'is_active' :  true }, function(err, keg) {
             if(keg) {
