@@ -31,12 +31,12 @@
                             <a href="/#/"><img src="/img/logo.png" alt="The Office Keg" /></a>
                         </div>
                         <div class="menu" ng-if="!app.getCurrentUser()">
-                            <a class="sign-up" href="/#/users/signup" title="Sign Up for The Office Keg">Sign Up</a>
-                            <a class="login" href="/#/users/login" title="Login">Sign In</a>
+                            <a class="sign-up" ui-sref="signup" ui-sref-active="active" ng-click="app.scrollIntoView('#myaccount')" title="Sign Up for The Office Keg">Sign Up</a>
+                            <a class="login" ui-sref="login" ui-sref-active="active" ng-click="app.scrollIntoView('#myaccount')" title="Login">Sign In</a>
                         </div>
                         <div class="menu" ng-if="app.getCurrentUser()">
-                            <a class="my-account" href="/#/users/account" title="My Account">My Account</a>
-                            <a class="logout" ng-click="app.logout()" href="/#/users/login" title="Logout">Logout</a>
+                            <a class="my-account" ui-sref="account" ui-sref-active="active" ng-click="app.scrollIntoView('#myaccount')" title="My Account">My Account</a>
+                            <a class="logout" href="/#/" ng-click="app.logout()" title="Logout">Logout</a>
                         </div>
                         <div class="hamburger">
                             <span class="bun"></span>
@@ -65,8 +65,9 @@
                     </div>
                 </div>
             </div>
-            <div class="my-account-wrapper">
-                <div class="my-account" ng-controller="app.controller.users as users">
+            <div class="my-account-wrapper" id="myaccount">
+                <div class="my-account">
+                    <div ui-view></div>
                     <div class="signup">
 
                     </div>
