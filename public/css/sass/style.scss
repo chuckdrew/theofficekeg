@@ -256,12 +256,12 @@ a {
   padding-bottom: 5px;
 }
 
-.my-account-wrapper .my-account .login {
+.my-account-wrapper .my-account .user-form {
   max-width: 400px;
   margin: 0px auto;
 }
 
-.my-account-wrapper .my-account .login .sub-links {
+.my-account-wrapper .my-account .user-form .sub-links {
   text-align: center;
   padding-top: 40px;
 
@@ -270,7 +270,7 @@ a {
   }
 }
 
-.my-account-wrapper .my-account .login .sub-links a:first-child {
+.my-account-wrapper .my-account .user-form .sub-links a.create-new-account-link {
   text-align: center;
   padding-right: 30px;
 

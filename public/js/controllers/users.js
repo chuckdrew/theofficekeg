@@ -51,4 +51,19 @@ usersModule.controller('app.controller.users', function($scope, $window, $http, 
         });;
     }
 
+    users.signup = function(newUser) {
+        $http.post('/users/signup', newUser).success(function(response){
+            if(response.success) {
+                $state.go('account');
+                $scope.$emit('USER_LOGGED_IN', response.data);
+            } else {
+                // Show Error Message
+                alert(response.message);
+            }
+
+        }).error(function(data, status, headers, config) {
+            $window.alert("Error Creating Account");
+        });;
+    }
+
 });

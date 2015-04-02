@@ -1,14 +1,14 @@
-<div class="login">
+<div class="user-form">
     <h2 class="header-title">Sign In</h2>
     <div class="form" ng-submit="users.login(users.credentials);">
         <form>
             <div class="field">
                 <label for="exampleInputEmail1">Email address</label>
-                <input ng-model="users.credentials.email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                <input ng-model="users.credentials.email" type="email" required class="form-control" id="exampleInputEmail1" placeholder="Enter email">
             </div>
             <div class="field">
                 <label for="exampleInputEmail1">Password</label>
-                <input ng-model="users.credentials.password" type="password" class="form-control" id="exampleInputEmail1" placeholder="Password">
+                <input ng-model="users.credentials.password" type="password" required class="form-control" id="exampleInputEmail1" placeholder="Password">
             </div>
             <div class="form-button">
                 <button type="submit" class="button button-default">Sign In</button>
@@ -16,7 +16,7 @@
         </form>
     </div>
     <div class="sub-links">
-        <a href="/#/users/signup" title="Create a New Account" class="create-new-account-link">Create a New Account</a>
-        <a href="/#/users/reset-password" title="Reset Password" class="create-new-account-link">Reset Password</a>
+        <a ui-sref="signup" title="Create a New Account" ng-click="app.scrollIntoView('#myaccount')" class="create-new-account-link">Create a New Account</a>
+        <a ui-sref="reset_password" title="Reset Password" ng-click="app.scrollIntoView('#myaccount')" class="create-new-account-link">Reset Password</a>
     </div>
 </div>
