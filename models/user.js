@@ -15,7 +15,7 @@ userSchema.methods.hasRole = function(role) {
     if(this.roles.indexOf(role) != -1) {
         return true;
     } else {
-        return false
+        return false;
     }
 }
 
