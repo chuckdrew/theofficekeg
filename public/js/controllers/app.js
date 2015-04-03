@@ -1,11 +1,15 @@
 var app = angular.module("app", [
     'ngResource',
+    'ngAnimate',
     'ui.router',
     'ngFitText',
-    'app.users'
+    'inform',
+    'app.users',
+    'app.purchases',
+    'app.kegs'
 ]);
 
-app.controller('app', function ($scope, $rootScope, $window, $http, $state) {
+app.controller('app', function ($scope, $rootScope, $window, $http, $state, inform) {
 
     var app = this;
 
@@ -25,12 +29,11 @@ app.controller('app', function ($scope, $rootScope, $window, $http, $state) {
     }
 
     app.init = function() {
+        $window.inform = inform;
         $http.get('/users/current').success(function(response){
             if(response.success) {
-                $state.go('account');
                 app.currentUser = response.data;
             } else {
-                $state.go('login');
                 app.currentUser = null;
             }
         }).error(function() {
@@ -42,14 +45,26 @@ app.controller('app', function ($scope, $rootScope, $window, $http, $state) {
     app.logout = function() {
         $http.get('/users/logout').success(function(response){
             if(response.success) {
+                inform.add('Successfully Logged Out.', {ttl: 3000, type: 'success'});
                 $state.go('login');
                 app.currentUser = null;
             } else {
-                alert("Error logging out");
+                inform.add('Error logging out.', {ttl: 5000, type: 'danger'});
             }
         }).error(function() {
-            alert("Error logging out");
+            inform.add('Error logging out.', {ttl: 5000, type: 'danger'});
         });
     }
+
+    $rootScope.safeApply = function(fn) {
+        var phase = this.$root.$$phase;
+        if(phase == '$apply' || phase == '$digest') {
+            if(fn && (typeof(fn) === 'function')) {
+                fn();
+            }
+        } else {
+            this.$apply(fn);
+        }
+    };
 
 });

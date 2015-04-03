@@ -1,30 +1,37 @@
 var Purchase = require('../models/purchase');
+var Keg = require('../models/keg');
 
 module.exports = function(app, passport) {
     var express = require('express');
     var router = express.Router();
 
     router.post('/add', passport.checkAuth('guest'), function (req, res) {
-        var newPurchase = new Purchase();
+        Keg.findOne({'_id' :  req.body.keg_id }, function(err, keg) {
+            if(keg) {
+                var newPurchase = new Purchase();
 
-        newPurchase.user_id = req.user._id;
-        newPurchase.keg_id = req.body.keg_id;
-        newPurchase.price = req.body.price;
+                newPurchase.user = req.user._id;
+                newPurchase.keg = keg._id;
+                newPurchase.price = keg.pint_price;
 
-        newPurchase.save(function(err) {
-            if (err) {
-                res.apiRes(false,'Error Saving Purchase',err);
-            } else {
-                app.mailer.send('../views/emails/purchase', {
-                    to: req.user.email,
-                    subject: 'Enjoy that Beer!',
-                    base_url: process.env.BASE_URL,
-                    purchase_id: newPurchase._id
-                }, function(err) {
-                    console.log(err);
+                newPurchase.save(function (err) {
+                    if (err) {
+                        res.apiRes(false, 'Error Saving Purchase', err);
+                    } else {
+                        app.mailer.send('../views/emails/purchase', {
+                            to: req.user.email,
+                            subject: 'Enjoy that Beer!',
+                            base_url: process.env.BASE_URL,
+                            purchase_id: newPurchase._id
+                        }, function (err) {
+                            console.log(err);
+                        });
+
+                        res.apiRes(true, 'Successfully saved purchase', newPurchase);
+                    }
                 });
-
-                res.apiRes(true,'Successfully saved purchase',newPurchase);
+            } else {
+                res.apiRes(false, 'Could Not Find Keg.', err);
             }
         });
     });
@@ -48,10 +55,18 @@ module.exports = function(app, passport) {
                         }
                     });
                 } else {
-                    res.apiRes(false, 'Purchase already canceled.', purchase);
+                    if (req.query.redirect == "true") {
+                        res.redirect('/#/purchases/already-canceled');
+                    } else {
+                        res.apiRes(false, 'Purchase already canceled.', purchase);
+                    }
                 }
             } else {
-                res.apiRes(false, 'Could not find purchase.', purchase);
+                if (req.query.redirect == "true") {
+                    res.redirect('/#/purchases/could not find purchase.');
+                } else {
+                    res.apiRes(false, 'Could not find purchase.', purchase);
+                }
             }
         });
     });
