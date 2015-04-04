@@ -71,6 +71,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="latest" ng-controller="app.controller.purchases as purchases" ng-init="purchases.latest()">
+                    <p ng-if="purchases.latestPour"><strong>{{purchases.latestPour.created | date:'M/d/yy h:mm a'}}:</strong> {{purchases.latestPour.user.first_name}} {{purchases.latestPour.user.last_name}} just enjoyed a {{purchases.latestPour.keg.beer_name}}</p>
+                </div>
             </div>
             <div class="my-account-wrapper" id="myaccount">
                 <div class="my-account">

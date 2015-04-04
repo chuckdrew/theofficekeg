@@ -1,4 +1,4 @@
-var app = angular.module("app", [
+var theofficekeg = angular.module("app", [
     'ngResource',
     'ngAnimate',
     'ui.router',
@@ -9,7 +9,7 @@ var app = angular.module("app", [
     'app.kegs'
 ]);
 
-app.controller('app', function ($scope, $rootScope, $window, $http, $state, inform) {
+theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $state, inform) {
 
     var app = this;
 
@@ -17,6 +17,12 @@ app.controller('app', function ($scope, $rootScope, $window, $http, $state, info
 
     $scope.$on('USER_LOGGED_IN', function(event, user) {
         app.currentUser = user;
+    });
+
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+        if(toState.requiresAuth == true && !app.getCurrentUser()) {
+            $state.go('login');
+        }
     });
 
     app.scrollIntoView = function(elementId) {

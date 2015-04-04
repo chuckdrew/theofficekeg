@@ -3,18 +3,28 @@ var purchasesModule = angular.module('app.purchases', []);
 purchasesModule.config(function($stateProvider) {
 
     $stateProvider.state('cancel_purchase_success', {
-        url: "/purchases/cancel-success"
+        url: "/purchases/cancel-success",
+        requiresAuth: false
     });
 
     $stateProvider.state('cancel_purchase_error', {
-        url: "/purchases/cancel-error"
+        url: "/purchases/cancel-error",
+        requiresAuth: false
     });
 
 });
 
-purchasesModule.controller('app.controller.purchases', function($rootScope, $scope, $window, $http, $state, inform) {
+purchasesModule.controller('app.controller.purchases', function($rootScope, $scope, $window, $http, $state, inform, $interval) {
 
     var purchases = this;
+
+    var getLatest = function() {
+        $http.get('/purchases/latest').success(function(response){
+            if(response.success) {
+                purchases.latestPour = response.data;
+            }
+        });
+    }
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         if(toState.name == "cancel_purchase_success") {
@@ -39,6 +49,13 @@ purchasesModule.controller('app.controller.purchases', function($rootScope, $sco
         }).error(function(data, status, headers, config) {
             inform.add('Error recording purchase.', {ttl: 5000, type: 'danger'});
         });;
+    }
+
+    purchases.latest = function() {
+        getLatest();
+        $interval(function(){
+            getLatest();
+        }, 5000, null ,true);
     }
 
 });

@@ -4,35 +4,39 @@ var usersModule = angular.module('app.users',[
 
 usersModule.config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/users/account");
 
     $stateProvider.state('login', {
         url: "/users/login",
         templateUrl: "/js/views/users/login.html",
-        controller: 'app.controller.users as users'
+        controller: 'app.controller.users as users',
+        requiresAuth: false
     });
 
     $stateProvider.state('signup', {
         url: "/users/signup",
         templateUrl: "/js/views/users/signup.html",
-        controller: 'app.controller.users as users'
+        controller: 'app.controller.users as users',
+        requiresAuth: false
     });
 
     $stateProvider.state('reset_password', {
         url: "/users/reset-password",
         templateUrl: "/js/views/users/password-reset.html",
-        controller: 'app.controller.users as users'
+        controller: 'app.controller.users as users',
+        requiresAuth: false
     });
 
     $stateProvider.state('account', {
         url: "/users/account",
         templateUrl: "/js/views/users/account.html",
-        controller: 'app.controller.users as users'
+        controller: 'app.controller.users as users',
+        requiresAuth: true
     });
 
 });
 
-usersModule.controller('app.controller.users', function($scope, $window, $http, $state, User) {
+usersModule.controller('app.controller.users', function($scope, $window, $http, $state, inform) {
 
     var users = this;
 
@@ -42,8 +46,7 @@ usersModule.controller('app.controller.users', function($scope, $window, $http, 
                 $state.go('account');
                 $scope.$emit('USER_LOGGED_IN', response.data);
             } else {
-                // Show Error Message
-                alert(response.message);
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
 
         }).error(function(data, status, headers, config) {
@@ -57,8 +60,7 @@ usersModule.controller('app.controller.users', function($scope, $window, $http, 
                 $state.go('account');
                 $scope.$emit('USER_LOGGED_IN', response.data);
             } else {
-                // Show Error Message
-                alert(response.message);
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
 
         }).error(function(data, status, headers, config) {

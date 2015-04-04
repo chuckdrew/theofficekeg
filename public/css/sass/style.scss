@@ -242,6 +242,23 @@ a {
   color: #fff;
 }
 
+.latest {
+  color: #fff;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}
+.latest p {
+  max-width: 1200px;
+  font-weight: 100;
+  margin: 0px auto;
+  padding: 30px;
+}
+.latest p strong {
+  font-weight: bold;
+}
+
 .my-account-wrapper .my-account {
   max-width: 1200px;
   margin: 0px auto;
