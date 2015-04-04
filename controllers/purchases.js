@@ -1,5 +1,6 @@
 var Purchase = require('../models/purchase');
 var Keg = require('../models/keg');
+var User = require('../models/user');
 
 module.exports = function(app, passport) {
     var express = require('express');
@@ -27,7 +28,16 @@ module.exports = function(app, passport) {
                             console.log(err);
                         });
 
-                        res.apiRes(true, 'Successfully saved purchase', newPurchase);
+                        User.findOne({'_id': req.user._id}, function(err, user) {
+                            user.balance = user.balance + newPurchase.price;
+                            user.save(function (err) {
+                                if(err) {
+                                    res.apiRes(false, 'Error saving purchase', err);
+                                } else {
+                                    res.apiRes(true, 'Successfully saved purchase', newPurchase);
+                                }
+                            });
+                        });
                     }
                 });
             } else {
@@ -47,11 +57,24 @@ module.exports = function(app, passport) {
                         if (err) {
                             res.apiRes(false, 'Error cancelling purchase.', purchase);
                         } else {
-                            if (req.query.redirect == "true") {
-                                res.redirect('/#/purchases/cancel-success');
-                            } else {
-                                res.apiRes(true, 'Successfully Cancelled.', purchase);
-                            }
+                            User.findOne({'_id': purchase.user}, function(err, user) {
+                                if(user) {
+                                    user.balance = Number(user.balance) - Number(purchase.price);
+                                    user.save(function(err) {
+                                        if(err) {
+                                            res.apiRes(false, 'Error cancelling purchase.', err);
+                                        } else {
+                                            if (req.query.redirect == "true") {
+                                                res.redirect('/#/purchases/cancel-success');
+                                            } else {
+                                                res.apiRes(true, 'Successfully Cancelled and Refunded.', purchase);
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    res.apiRes(false, 'Error cancelling purchase.', purchase);
+                                }
+                            });
                         }
                     });
                 } else {

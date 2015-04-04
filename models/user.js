@@ -7,7 +7,7 @@ var userSchema = mongoose.Schema({
     scanner_uuid : String,
     first_name : String,
     last_name : String,
-    balance: Number,
+    balance: {type: Number, default: 0},
     roles: {type: Array, default: new Array('guest')}
 });
 

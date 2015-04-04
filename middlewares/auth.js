@@ -7,7 +7,7 @@ module.exports = function(requiredRole) {
                 res.apiRes(false, 'You do not have permission to use this action.', null);
             }
         } else {
-            res.apiRes(false, 'Session Expired', null);
+            res.apiRes(false, 'Please login on create a new account.', null);
         }
     }
 }
