@@ -9,11 +9,24 @@ var theofficekeg = angular.module("app", [
     'app.kegs'
 ]);
 
-theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $state, inform) {
+theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $state, inform, $interval) {
 
     var app = this;
 
     app.currentUser = null;
+
+    var getCurrentUser = function() {
+        $http.get('/users/current').success(function(response){
+            if(response.success) {
+                app.currentUser = response.data;
+            } else {
+                app.currentUser = null;
+            }
+        }).error(function() {
+            $state.go('login');
+            app.currentUser = null;
+        });
+    }
 
     $scope.$on('USER_LOGGED_IN', function(event, user) {
         app.currentUser = user;
@@ -35,17 +48,10 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
     }
 
     app.init = function() {
-        $window.inform = inform;
-        $http.get('/users/current').success(function(response){
-            if(response.success) {
-                app.currentUser = response.data;
-            } else {
-                app.currentUser = null;
-            }
-        }).error(function() {
-            $state.go('login');
-            app.currentUser = null;
-        });
+        getCurrentUser();
+        $interval(function(){
+            getCurrentUser();
+        }, 3000, null, true);
     }
 
     app.logout = function() {

@@ -242,20 +242,30 @@ a {
   color: #fff;
 }
 
-.latest {
+.upper-footer-wrap {
   color: #fff;
   position: absolute;
   bottom: 0px;
   left: 0px;
   width: 100%;
 }
-.latest p {
+.upper-footer {
   max-width: 1200px;
   font-weight: 100;
   margin: 0px auto;
   padding: 30px;
+  overflow: auto;
 }
-.latest p strong {
+p.latest  {
+  float: left;
+}
+p.latest strong {
+  font-weight: bold;
+}
+p.balance {
+  float: right;
+}
+p.balance strong {
   font-weight: bold;
 }
 
