@@ -5,7 +5,7 @@ var kegSchema = mongoose.Schema({
     brewery_name: String,
     pint_price: Number,
     is_active: {type: Boolean, default: false},
-    created : {type: Date, default: new Date()}
+    created : {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model('Keg', kegSchema);

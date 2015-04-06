@@ -5,7 +5,7 @@ var purchaseSchema = mongoose.Schema({
     keg: {type: mongoose.Schema.Types.ObjectId, ref: 'Keg' },
     scan: {type: mongoose.Schema.Types.ObjectId, ref: 'Scan' },
     price: Number,
-    created : {type: Date, default: new Date()},
+    created : {type: Date, default: Date.now},
     cancelled: {type: Boolean, default: false},
     cancelled_date: Date
 });
