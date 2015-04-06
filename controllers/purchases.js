@@ -95,7 +95,7 @@ module.exports = function(app, passport) {
     });
 
     router.get('/latest', function(req, res) {
-        Purchase.findOne({'cancelled': false}, {}, { sort: { 'created' : -1 } }).populate('user').populate('keg').exec(function(err, purchase) {
+        Purchase.findOne({'cancelled': false, 'user': {'$ne':null}}, {}, { sort: { 'created' : -1 } }).populate('user').populate('keg').exec(function(err, purchase) {
             if(purchase) {
                 res.apiRes(true, 'Latest Purchase.', purchase);
             } else {
