@@ -42,7 +42,7 @@ module.exports = function(app, passport) {
 
     router.post('/activate', passport.checkAuth('admin'), function(req, res){
         Keg.update({'is_active' : true},{'is_active' : false},null, function(){
-            Keg.update({'_id' :  req.body.id },{'is_active' : true},null, function(err){
+            Keg.update({_id : req.body.id },{'is_active' : true},null, function(err){
                 if(err) {
                     res.apiRes(false, 'Error Activating Keg', err);
                 } else {
