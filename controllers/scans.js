@@ -54,7 +54,7 @@ module.exports = function(app, passport) {
                                                 console.log(err);
                                             });
 
-                                            user.balance = user.balance + newPurchase.price;
+                                            user.decreaseBalance(newPurchase.price);
                                             user.save(function (err) {
                                                 if (err) {
                                                     res.apiRes(false, 'Error leaving', err);

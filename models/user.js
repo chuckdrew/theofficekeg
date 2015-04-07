@@ -19,6 +19,14 @@ userSchema.methods.hasRole = function(role) {
     }
 }
 
+userSchema.methods.increaseBalance = function(paymentAmount) {
+    this.balance = this.balance + paymentAmount;
+}
+
+userSchema.methods.decreaseBalance = function(purchaseAmount) {
+    this.balance = this.balance - purchaseAmount;
+}
+
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };

@@ -29,7 +29,7 @@ module.exports = function(app, passport) {
                         });
 
                         User.findOne({'_id': req.user._id}, function(err, user) {
-                            user.balance = user.balance - newPurchase.price;
+                            user.decreaseBalance(newPurchase.price)
                             user.save(function (err) {
                                 if(err) {
                                     res.apiRes(false, 'Error saving purchase', err);
@@ -59,7 +59,7 @@ module.exports = function(app, passport) {
                         } else {
                             User.findOne({'_id': purchase.user}, function(err, user) {
                                 if(user) {
-                                    user.balance = Number(user.balance) + Number(purchase.price);
+                                    user.increaseBalance(purchase.price);
                                     user.save(function(err) {
                                         if(err) {
                                             res.apiRes(false, 'Error cancelling purchase.', err);
