@@ -36,6 +36,10 @@ userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
 
+userSchema.statics.findWithNegativeBalance = function(callback) {
+    this.where('balance').lt(0).exec(callback);
+};
+
 userSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('User', userSchema);
