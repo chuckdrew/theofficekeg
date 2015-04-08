@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 
 var kegSchema = mongoose.Schema({
     beer_name : String,
@@ -7,5 +8,7 @@ var kegSchema = mongoose.Schema({
     is_active: {type: Boolean, default: false},
     created : {type: Date, default: Date.now}
 });
+
+kegSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Keg', kegSchema);

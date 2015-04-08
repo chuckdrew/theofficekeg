@@ -19,7 +19,7 @@ module.exports = function(app, passport) {
                 newScan.scanned_date = new Date();
 
                 if (user) {
-                    newScan.user_id = user._id;
+                    newScan.user = user._id;
                 }
 
                 newScan.save(function (err) {

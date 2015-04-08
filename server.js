@@ -58,8 +58,8 @@ app.use(passport.session());
 
 //Set pagination limit
 app.use('/', function(req, res, next) {
-    if(req.query.limit == null || req.query.limit > 20) {
-        req.query.limit = 20;
+    if(req.query.limit == null || req.query.limit > process.env.QUERY_LIMIT || 100) {
+        req.query.limit = process.env.QUERY_LIMIT || 100;
     }
 
     next();
