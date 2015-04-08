@@ -4,11 +4,17 @@ purchasesModule.config(function($stateProvider) {
 
     $stateProvider.state('cancel_purchase_success', {
         url: "/purchases/cancel-success",
-        requiresAuth: false
+        requiresAuth: false,
+        controller: 'app.controller.purchases'
     });
 
     $stateProvider.state('cancel_purchase_error', {
         url: "/purchases/cancel-error",
+        requiresAuth: false
+    });
+
+    $stateProvider.state('purchase_already_cancelled', {
+        url: "/purchases/already-canceled",
         requiresAuth: false
     });
 
@@ -25,18 +31,6 @@ purchasesModule.controller('app.controller.purchases', function($rootScope, $sco
             }
         });
     }
-
-    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-        if(toState.name == "cancel_purchase_success") {
-            inform.add('Successfully Canceled Purchase.', {ttl: 3000, type: 'success'});
-            $state.go('account');
-        }
-
-        if(toState.name == "cancel_purchase_error") {
-            inform.add('Error Canceling Purchase.', {ttl: 5000, type: 'danger'});
-            $state.go('account');
-        }
-    });
 
     purchases.add = function(keg_id) {
         $http.post('/purchases/add',{keg_id: keg_id}).success(function(response){

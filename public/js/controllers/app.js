@@ -32,9 +32,24 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
         app.currentUser = user;
     });
 
-    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+    $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         if(toState.requiresAuth == true && !app.getCurrentUser()) {
             $state.go('login');
+        }
+
+        if(toState.name == "cancel_purchase_success") {
+            inform.add('Successfully Canceled Purchase.', {ttl: 3000, type: 'success'});
+            $state.go('account');
+        }
+
+        if(toState.name == "cancel_purchase_error") {
+            inform.add('Error Canceling Purchase.', {ttl: 5000, type: 'danger'});
+            $state.go('account');
+        }
+
+        if(toState.name == "purchase_already_cancelled") {
+            inform.add('Purchase already cancelled.', {ttl: 5000, type: 'danger'});
+            $state.go('account');
         }
     });
 

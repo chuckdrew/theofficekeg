@@ -16,6 +16,16 @@ module.exports = function(app, passport) {
                 res.apiRes(false,'Error Saving Payment',err);
             } else {
                 User.findOne({'_id': req.body.user_id}, function(err, user) {
+                    app.mailer.send('../views/emails/payment', {
+                        to: user.email,
+                        subject: 'Thanks for your payment!',
+                        base_url: process.env.BASE_URL,
+                        payment: newPayment,
+                        user: user
+                    }, function (err) {
+                        console.log(err);
+                    });
+
                     user.increaseBalance(newPayment.amount)
                     user.save(function (err) {
                         if(err) {

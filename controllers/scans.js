@@ -49,7 +49,9 @@ module.exports = function(app, passport) {
                                                 to: user.email,
                                                 subject: 'Enjoy that Beer!',
                                                 base_url: process.env.BASE_URL,
-                                                purchase_id: newPurchase._id
+                                                purchase: newPurchase,
+                                                user: user,
+                                                keg: keg
                                             }, function (err) {
                                                 console.log(err);
                                             });
