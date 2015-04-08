@@ -2,6 +2,7 @@ var Purchase = require('../models/purchase');
 var Keg = require('../models/keg');
 var User = require('../models/user');
 
+
 module.exports = function(app, passport) {
     var express = require('express');
     var router = express.Router();
@@ -104,6 +105,22 @@ module.exports = function(app, passport) {
                 res.apiRes(false, 'Could not find latest purchase.', purchase);
             }
         });
+    });
+
+    router.get('/list', passport.checkAuth('guest'), function(req, res) {
+        Purchase.paginate({user: req.user._id}, req.query.page, req.query.limit, function(err, pageCount, paginatedResults, itemCount) {
+            if (err) {
+                res.apiRes(false, 'Error finding purchases.', err);
+            } else {
+                res.apiRes(true, 'Successfully fetched purchases.', {
+                    page: req.query.page,
+                    limit: req.query.limit,
+                    page_count: pageCount,
+                    item_count: itemCount,
+                    results: paginatedResults
+                });
+            }
+        }, {sortBy: {created: -1}});
     });
 
     return router;

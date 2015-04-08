@@ -56,6 +56,15 @@ require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Set pagination limit
+app.use('/', function(req, res, next) {
+    if(req.query.limit == null || req.query.limit > 20) {
+        req.query.limit = 20;
+    }
+
+    next();
+});
+
 //Base Route to Index Controllers
 app.use('/', require('./controllers/index')(app, passport));
 

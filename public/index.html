@@ -77,7 +77,7 @@
                 <div class="upper-footer-wrap" ng-controller="app.controller.purchases as purchases" ng-init="purchases.latest()">
                     <div class="upper-footer">
                         <p class="latest" ng-if="purchases.latestPour"><strong>{{purchases.latestPour.created | date:'M/d/yy h:mm a'}}:</strong> {{purchases.latestPour.user.first_name}} {{purchases.latestPour.user.last_name}} just enjoyed a {{purchases.latestPour.keg.beer_name}}</p>
-                        <p class="balance" ng-if="app.getCurrentUser()"><strong>Your Balance:</strong> {{app.currentUser.balance | customCurrency}}</p>
+                        <p class="balance" ng-if="app.getCurrentUser()"><strong>Your Tab:</strong> {{app.currentUser.balance | customCurrency}}</p>
                     </div>
                 </div>
             </div>

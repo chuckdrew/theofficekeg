@@ -2,7 +2,7 @@
   "name": "theofficekeg",
   "main": "server.js",
   "version": "1.0.0",
-  "description":"My first Node JS app to manage the office keg.",
+  "description": "My first Node JS app to manage the office keg.",
   "author": {
     "name": "Chuck Drew",
     "email": "charles@freelunchlabs.com",
@@ -22,20 +22,22 @@
     "node": ">= v0.10.0"
   },
   "dependencies": {
-    "express": "latest",
-    "mongoose": "latest",
+    "bcrypt-nodejs": "latest",
     "body-parser": "latest",
-    "bcrypt-nodejs" : "latest",
-    "passport" : "latest",
-    "passport-local" : "latest",
-    "express-session" : "latest",
-    "cookie-parser" : "latest",
-    "morgan" : "latest",
-    "passport-http" : "latest",
-    "connect-mongo" : "latest",
-    "express-mailer" : "latest",
-    "hbs" : "latest",
-    "dotenv" : "latest"
+    "connect-mongo": "latest",
+    "cookie-parser": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "express-mailer": "latest",
+    "express-session": "latest",
+    "hbs": "latest",
+    "mongoose": "latest",
+    "mongoose-paginate": "^3.1.3",
+    "morgan": "latest",
+    "passport": "latest",
+    "passport-http": "latest",
+    "passport-local": "latest",
+    "mongoose-paginate" : "latest"
   },
   "scripts": {
     "start": "node server.js"
