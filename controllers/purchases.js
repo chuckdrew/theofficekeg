@@ -67,6 +67,16 @@ module.exports = function(app, passport) {
                                         if(err) {
                                             res.apiRes(false, 'Error cancelling purchase.', err);
                                         } else {
+                                            app.mailer.send('../views/emails/cancel', {
+                                                to: user.email,
+                                                subject: 'Purchase Cancelled',
+                                                base_url: process.env.BASE_URL,
+                                                purchase: purchase,
+                                                user: user
+                                            }, function (err) {
+                                                console.log(err);
+                                            });
+
                                             if (req.query.redirect == "true") {
                                                 res.redirect('/#/purchases/cancel-success');
                                             } else {
@@ -89,7 +99,7 @@ module.exports = function(app, passport) {
                 }
             } else {
                 if (req.query.redirect == "true") {
-                    res.redirect('/#/purchases/could not find purchase.');
+                    res.redirect('/#/purchases/could-not-find-purchase.');
                 } else {
                     res.apiRes(false, 'Could not find purchase.', purchase);
                 }

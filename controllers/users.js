@@ -137,5 +137,21 @@ module.exports = function(app, passport) {
         });
     });
 
+    router.get('/list', passport.checkAuth('admin'), function(req, res) {
+        User.paginate({}, req.query.page, req.query.limit, function(err, pageCount, paginatedResults, itemCount) {
+            if (err) {
+                res.apiRes(false, 'Error finding users.', err);
+            } else {
+                res.apiRes(true, 'Successfully fetched users.', {
+                    page: req.query.page,
+                    limit: req.query.limit,
+                    page_count: pageCount,
+                    item_count: itemCount,
+                    results: paginatedResults
+                });
+            }
+        }, {sortBy: {last_name: 'descending'}});
+    });
+
     return router;
 };

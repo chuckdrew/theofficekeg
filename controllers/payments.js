@@ -39,5 +39,21 @@ module.exports = function(app, passport) {
         });
     });
 
+    router.get('/list', passport.checkAuth('guest'), function(req, res) {
+        Payment.paginate({user: req.user._id}, req.query.page, req.query.limit, function(err, pageCount, paginatedResults, itemCount) {
+            if (err) {
+                res.apiRes(false, 'Error finding payments.', err);
+            } else {
+                res.apiRes(true, 'Successfully fetched payments.', {
+                    page: req.query.page,
+                    limit: req.query.limit,
+                    page_count: pageCount,
+                    item_count: itemCount,
+                    results: paginatedResults
+                });
+            }
+        }, {sortBy: {created: -1}});
+    });
+
     return router;
 }

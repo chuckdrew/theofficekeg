@@ -62,5 +62,21 @@ module.exports = function(app, passport) {
         });
     });
 
+    router.get('/list', function(req, res) {
+        Keg.paginate({}, req.query.page, req.query.limit, function(err, pageCount, paginatedResults, itemCount) {
+            if (err) {
+                res.apiRes(false, 'Error finding kegs.', err);
+            } else {
+                res.apiRes(true, 'Successfully fetched kegs.', {
+                    page: req.query.page,
+                    limit: req.query.limit,
+                    page_count: pageCount,
+                    item_count: itemCount,
+                    results: paginatedResults
+                });
+            }
+        }, {sortBy: {created: -1}});
+    });
+
     return router;
 }

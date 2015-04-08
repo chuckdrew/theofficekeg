@@ -65,6 +65,17 @@ module.exports = function(app, passport) {
                                                 }
                                             });
                                         } else {
+                                            app.mailer.send('../views/emails/orphanscan', {
+                                                to: process.env.ADMIN_EMAIL_ADDRESS,
+                                                subject: 'Orphan Scan! Please assign to a user.',
+                                                base_url: process.env.BASE_URL,
+                                                purchase: newPurchase,
+                                                scan: newScan,
+                                                keg: keg
+                                            }, function (err) {
+                                                console.log(err);
+                                            });
+
                                             res.apiRes(true, 'Successfully saved scan, but could not link to a user.', newPurchase);
                                         }
                                     }
@@ -77,6 +88,26 @@ module.exports = function(app, passport) {
                 });
             });
         }
+    });
+
+    router.get('/list', passport.checkAuth('guest'), function(req, res) {
+        Scan.paginate({user: null}, req.query.page, req.query.limit, function(err, pageCount, paginatedResults, itemCount) {
+            if (err) {
+                res.apiRes(false, 'Error finding scans.', err);
+            } else {
+                res.apiRes(true, 'Successfully fetched orphan scans.', {
+                    page: req.query.page,
+                    limit: req.query.limit,
+                    page_count: pageCount,
+                    item_count: itemCount,
+                    results: paginatedResults
+                });
+            }
+        }, {sortBy: {created: -1}});
+    });
+
+    router.put('/assign-to-user', passport.checkAuth('admin'), function(req, res) {
+        res.apiRes(true, 'Assigned this scan to user and applied to their balance.');
     });
 
     return router;
