@@ -45,7 +45,7 @@
                             <a class="login" ui-sref="login" ui-sref-active="active" ng-click="app.scrollIntoView('#myaccount')" title="Login">Sign In</a>
                         </div>
                         <div class="menu" ng-if="app.getCurrentUser()">
-                            <a class="my-account" ui-sref="account" ui-sref-active="active" ng-click="app.scrollIntoView('#myaccount')" title="My Account">My Account</a>
+                            <a class="my-account" ui-sref="account.view" ui-sref-active="active" ng-click="app.scrollIntoView('#myaccount')" title="My Account">My Account</a>
                             <a class="logout" href="/#/" ng-click="app.logout()" title="Logout">Logout</a>
                         </div>
                         <div class="hamburger">

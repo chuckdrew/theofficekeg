@@ -1,0 +1,8 @@
+<div class="tabs">
+    <div class="tab" ui-sref="account.view" ui-sref-active="active">Overview</div>
+    <div class="tab" ui-sref="account.edit" ui-sref-active="active">Edit</div>
+    <div class="tab" ui-sref="account.admin" ui-sref-active="active" ng-if="app.hasRole('admin')">Admin</div>
+</div>
+<div class="account-content">
+    <div ui-view></div>
+</div>

@@ -5,17 +5,19 @@ purchasesModule.config(function($stateProvider) {
     $stateProvider.state('cancel_purchase_success', {
         url: "/purchases/cancel-success",
         requiresAuth: false,
-        controller: 'app.controller.purchases'
+        requiresRole: false
     });
 
     $stateProvider.state('cancel_purchase_error', {
         url: "/purchases/cancel-error",
-        requiresAuth: false
+        requiresAuth: false,
+        requiresRole: false
     });
 
     $stateProvider.state('purchase_already_cancelled', {
         url: "/purchases/already-canceled",
-        requiresAuth: false
+        requiresAuth: false,
+        requiresRole: false
     });
 
 });

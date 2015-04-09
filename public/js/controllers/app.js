@@ -15,7 +15,7 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
 
     app.currentUser = null;
 
-    var getCurrentUser = function() {
+    var loadCurrentUser = function() {
         $http.get('/users/current').success(function(response){
             if(response.success) {
                 app.currentUser = response.data;
@@ -35,21 +35,25 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         if(toState.requiresAuth == true && !app.getCurrentUser()) {
             $state.go('login');
+        } else if(toState.requiresRole != false && !app.hasRole(toState.requiresRole)) {
+            event.preventDefault();
+            $state.go('account.view');
+            inform.add('You do not have the privs to access this action son!', {ttl: 5000, type: 'danger'});
         }
 
         if(toState.name == "cancel_purchase_success") {
             inform.add('Successfully Canceled Purchase.', {ttl: 3000, type: 'success'});
-            $state.go('account');
+            $state.go('account.view');
         }
 
         if(toState.name == "cancel_purchase_error") {
             inform.add('Error Canceling Purchase.', {ttl: 5000, type: 'danger'});
-            $state.go('account');
+            $state.go('account.view');
         }
 
         if(toState.name == "purchase_already_cancelled") {
             inform.add('Purchase already cancelled.', {ttl: 5000, type: 'danger'});
-            $state.go('account');
+            $state.go('account.view');
         }
     });
 
@@ -63,10 +67,22 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
     }
 
     app.init = function() {
-        getCurrentUser();
+        loadCurrentUser();
         $interval(function(){
-            getCurrentUser();
+            loadCurrentUser();
         }, 3000, null, true);
+    }
+
+    app.hasRole = function(role) {
+        if(app.getCurrentUser()) {
+            if(app.getCurrentUser().roles.indexOf(role) > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     app.logout = function() {
