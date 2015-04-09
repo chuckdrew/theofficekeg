@@ -46,7 +46,7 @@ purchasesModule.controller('app.controller.purchases', function($interval, purch
     }
 
     purchases.loadPurchases = function() {
-        purchaseService.getList().success(function(response){
+        purchaseService.getList(purchasesLoadLimit).success(function(response){
             purchases.list = response.data;
         });
     }

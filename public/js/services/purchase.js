@@ -1,9 +1,8 @@
 var purchaseServiceModule = angular.module('app.service.purchase',[]);
 
-purchaseServiceModule.service('purchaseService', function(inform, $http, $q) {
+purchaseServiceModule.service('purchaseService', function(inform, $http) {
 
     var purchaseService = this;
-    var purchasesLoadLimit = 20;
 
     purchaseService.add = function(kegId) {
         return $http.post('/purchases/add',{keg_id: kegId}).success(function(response){
@@ -37,12 +36,10 @@ purchaseServiceModule.service('purchaseService', function(inform, $http, $q) {
         });
     }
 
-    purchaseService.getList = function() {
-        return $http.get('/purchases/list', {params:{page: 1, limit: purchasesLoadLimit}}).success(function(response){
-            if(response.success) {
-                purchases.list = response.data;
-            } else {
-                inform.add('Error getting ', {ttl: 5000, type: 'danger'});
+    purchaseService.getList = function(limit) {
+        return $http.get('/purchases/list', {params:{page: 1, limit: limit}}).success(function(response){
+            if(!response.success) {
+                inform.add('Error loading purchases.', {ttl: 5000, type: 'danger'});
             }
         });
     }

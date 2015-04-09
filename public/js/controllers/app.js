@@ -20,7 +20,7 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
         app.currentUser = user;
     });
 
-    $scope.$on('USER_LOGGED_0UT', function() {
+    $scope.$on('USER_LOGGED_OUT', function() {
         app.currentUser = null;
     });
 
