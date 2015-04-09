@@ -30,7 +30,9 @@ purchasesModule.controller('app.controller.purchases', function($interval, purch
     var purchasesLoadLimit = 20;
 
     purchases.add = function(kegId) {
-        purchaseService.add(kegId);
+        purchaseService.add(kegId).success(function() {
+            purchases.loadPurchases();
+        });
     }
 
     purchases.latest = function() {

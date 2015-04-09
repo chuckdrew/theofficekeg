@@ -11,7 +11,7 @@ purchaseServiceModule.service('purchaseService', function(inform, $http) {
             } else {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
-        }).error(function(data, status, headers, config) {
+        }).error(function() {
             inform.add('Error recording purchase.', {ttl: 5000, type: 'danger'});
         });
     }
