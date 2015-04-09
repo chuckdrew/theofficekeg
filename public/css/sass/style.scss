@@ -64,38 +64,6 @@ a {
   top: 2px;
 }
 
-.header-wrap .header .hamburger {
-  border-radius: 4px;
-  width: 26px;
-  padding: 15px 0px;
-  cursor: pointer;
-  float: right;
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-
-  @include mq($from: tablet) {
-    display: none;
-  }
-}
-
-.header-wrap .header .hamburger .patty{
-  background: #fff;
-  height: 4px;
-  border-radius: 4px;
-  margin: 4px 0px;
-  display: block;
-}
-
-.header-wrap .header .hamburger .bun{
-  background: #fff;
-  height: 4px;
-  border-radius: 4px;
-  display: block;
-}
-
 .header-wrap .header .menu {
   float: right;
   position: relative;
@@ -135,16 +103,10 @@ a {
 .header-wrap .header .menu a.sign-up {
   border: 1px solid #ffffff;
   border-radius: 40px;
-
-  @include mq($until: tablet) {
-    display: none;
-  }
 }
 
 .header-wrap .header .menu a.login {
-  @include mq($until: tablet) {
-    display: none;
-  }
+
 }
 
 .main-wrap {

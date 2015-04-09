@@ -6,6 +6,7 @@ var theofficekeg = angular.module("app", [
     'inform',
     'app.users',
     'app.purchases',
+    'app.payments',
     'app.kegs'
 ]);
 
@@ -15,21 +16,12 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
 
     app.currentUser = null;
 
-    var loadCurrentUser = function() {
-        $http.get('/users/current').success(function(response){
-            if(response.success) {
-                app.currentUser = response.data;
-            } else {
-                app.currentUser = null;
-            }
-        }).error(function() {
-            $state.go('login');
-            app.currentUser = null;
-        });
-    }
-
     $scope.$on('USER_LOGGED_IN', function(event, user) {
         app.currentUser = user;
+    });
+
+    $scope.$on('USER_LOGGED_0UT', function() {
+        app.currentUser = null;
     });
 
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
@@ -57,20 +49,28 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
         }
     });
 
-    app.scrollIntoView = function(elementId) {
-        var offset = $(elementId).offset();
-        $("body, html").animate({scrollTop: offset.top}, 500, 'swing');
-    }
-
-    app.getCurrentUser = function() {
-        return app.currentUser;
-    }
-
     app.init = function() {
         loadCurrentUser();
         $interval(function(){
             loadCurrentUser();
         }, 3000, null, true);
+    }
+
+    var loadCurrentUser = function() {
+        $http.get('/users/current').success(function(response){
+            if(response.success) {
+                app.currentUser = response.data;
+            } else {
+                app.currentUser = null;
+            }
+        }).error(function() {
+            $state.go('login');
+            app.currentUser = null;
+        });
+    }
+
+    app.getCurrentUser = function() {
+        return app.currentUser;
     }
 
     app.hasRole = function(role) {
@@ -85,29 +85,10 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
         }
     }
 
-    app.logout = function() {
-        $http.get('/users/logout').success(function(response){
-            if(response.success) {
-                inform.add('Successfully Logged Out.', {ttl: 3000, type: 'success'});
-                $state.go('login');
-                app.currentUser = null;
-            } else {
-                inform.add('Error logging out.', {ttl: 5000, type: 'danger'});
-            }
-        }).error(function() {
-            inform.add('Error logging out.', {ttl: 5000, type: 'danger'});
-        });
+    app.scrollIntoView = function(elementId) {
+        var offset = $(elementId).offset();
+        $("body, html").animate({scrollTop: offset.top}, 500, 'swing');
     }
 
-    $rootScope.safeApply = function(fn) {
-        var phase = this.$root.$$phase;
-        if(phase == '$apply' || phase == '$digest') {
-            if(fn && (typeof(fn) === 'function')) {
-                fn();
-            }
-        } else {
-            this.$apply(fn);
-        }
-    };
 
 });

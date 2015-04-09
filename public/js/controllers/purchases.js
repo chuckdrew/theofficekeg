@@ -54,4 +54,22 @@ purchasesModule.controller('app.controller.purchases', function($rootScope, $sco
         }, 5000, null ,true);
     }
 
+    purchases.list = function(page, limit) {
+        $http.get('/purchases/list', {params:{page: page, limit: limit}}).success(function(response){
+            if(response.success) {
+                purchases.list = response.data;
+            }
+        });
+    }
+
+    purchases.cancel = function(purchase) {
+        $http.get('/purchases/cancel', {params:{purchase_id: purchase._id}}).success(function(response){
+            if(response.success) {
+                inform.add(response.message, {ttl: 3000, type: 'success'});
+            } else {
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
+            }
+        });
+    }
+
 });

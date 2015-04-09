@@ -130,7 +130,7 @@ module.exports = function(app, passport) {
                     results: paginatedResults
                 });
             }
-        }, {sortBy: {created: -1}});
+        }, {populate: 'keg', sortBy: {created: -1}});
     });
 
     return router;

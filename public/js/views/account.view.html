@@ -1,1 +1,29 @@
-<h1>View</h1>
+<div class="view-account">
+    <div class="balance">
+        <h1 class="balance-label">Your Tab:</h1>
+        <h1 class="balance-value">{{app.currentUser.balance | customCurrency}}</h1>
+    </div>
+    <div class="purchases " ng-controller="app.controller.purchases as purchases" ng-init="purchases.list()">
+        <div class="purchase" ng-repeat="purchase in purchases.list.results">
+            <div class="item">
+                <span class="label">When</span>
+                <span class="value">{{purchase.created | date:'M/d/yy h:mm a'}}</span>
+            </div>
+            <div class="item">
+                <span class="label">What</span>
+                <span class="value">{{purchase.keg.beer_name}}</span>
+            </div>
+            <div class="item">
+                <span class="label">How</span>
+                <span class="value">{{purchase.price | customCurrency}}</span>
+            </div>
+            <div class="item">
+                <span class="label">Why</span>
+                <span class="value">
+                    <a ng-if="!purchase.cancelled" ng-click="purchases.cancel(purchase)" href="" class="cancel-link">Cancel</a>
+                    <span ng-if="purchase.cancelled">Cancelled</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

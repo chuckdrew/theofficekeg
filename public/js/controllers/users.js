@@ -54,7 +54,7 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'app.controller.users as users',
         requiresAuth: true,
         requiresRole: 'admin'
-    })
+    });
 
 });
 
@@ -72,7 +72,7 @@ usersModule.controller('app.controller.users', function($scope, $window, $http, 
             }
 
         }).error(function(data, status, headers, config) {
-            $window.alert("Error Logging in");
+            inform.add("Error Logging in", {ttl: 5000, type: 'danger'});
         });;
     }
 
@@ -86,8 +86,22 @@ usersModule.controller('app.controller.users', function($scope, $window, $http, 
             }
 
         }).error(function(data, status, headers, config) {
-            $window.alert("Error Creating Account");
+            inform.add("Error Creating Account", {ttl: 5000, type: 'danger'});
         });;
+    }
+
+    users.logout = function() {
+        $http.get('/users/logout').success(function(response){
+            if(response.success) {
+                inform.add('Successfully Logged Out.', {ttl: 3000, type: 'success'});
+                $state.go('login');
+                $scope.$emit('USER_LOGGED_OUT', response.data);
+            } else {
+                inform.add('Error logging out.', {ttl: 5000, type: 'danger'});
+            }
+        }).error(function() {
+            inform.add('Error logging out.', {ttl: 5000, type: 'danger'});
+        });
     }
 
 });
