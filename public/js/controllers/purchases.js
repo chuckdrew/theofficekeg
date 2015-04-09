@@ -1,4 +1,6 @@
-var purchasesModule = angular.module('app.purchases', []);
+var purchasesModule = angular.module('app.purchases', [
+    'app.service.purchase'
+]);
 
 purchasesModule.config(function($stateProvider) {
 
@@ -22,54 +24,42 @@ purchasesModule.config(function($stateProvider) {
 
 });
 
-purchasesModule.controller('app.controller.purchases', function($rootScope, $scope, $window, $http, $state, inform, $interval) {
+purchasesModule.controller('app.controller.purchases', function($rootScope, $scope, $window, $http, $state, inform, $interval, purchaseService) {
 
     var purchases = this;
+    var purchasesLoadLimit = 20;
 
-    var getLatest = function() {
-        $http.get('/purchases/latest').success(function(response){
-            if(response.success) {
-                purchases.latestPour = response.data;
-            }
-        });
-    }
-
-    purchases.add = function(keg_id) {
-        $http.post('/purchases/add',{keg_id: keg_id}).success(function(response){
-            if(response.success) {
-                inform.add('Enjoy your pint!', {ttl: 3000, type: 'success'});
-            } else {
-                inform.add(response.message, {ttl: 5000, type: 'danger'});
-            }
-
-        }).error(function(data, status, headers, config) {
-            inform.add('Error recording purchase.', {ttl: 5000, type: 'danger'});
-        });;
+    purchases.add = function(kegId) {
+        purchaseService.add(kegId);
     }
 
     purchases.latest = function() {
-        getLatest();
+        purchaseService.getLatest().success(function(response) {
+            purchases.latestPour = response.data;
+        });
+
         $interval(function(){
-            getLatest();
+            purchaseService.getLatest().success(function(response) {
+                purchases.latestPour = response.data;
+            });
         }, 5000, null ,true);
     }
 
-    purchases.list = function(page, limit) {
-        $http.get('/purchases/list', {params:{page: page, limit: limit}}).success(function(response){
-            if(response.success) {
-                purchases.list = response.data;
-            }
+    purchases.loadPurchases = function() {
+        purchaseService.getList().success(function(response){
+            purchases.list = response.data;
         });
     }
 
+    purchases.loadMorePurchases = function(count) {
+        purchasesLoadLimit = purchasesLoadLimit + count;
+        purchases.loadPurchases();
+    }
+
     purchases.cancel = function(purchase) {
-        $http.get('/purchases/cancel', {params:{purchase_id: purchase._id}}).success(function(response){
-            if(response.success) {
-                inform.add(response.message, {ttl: 3000, type: 'success'});
-            } else {
-                inform.add(response.message, {ttl: 5000, type: 'danger'});
-            }
-        });
+        purchaseService.cancel(purchase).success(function() {
+            purchases.loadPurchases();
+        })
     }
 
 });

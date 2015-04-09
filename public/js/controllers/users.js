@@ -1,5 +1,5 @@
 var usersModule = angular.module('app.users',[
-    'app.model.user'
+
 ]);
 
 usersModule.config(function($stateProvider, $urlRouterProvider) {
