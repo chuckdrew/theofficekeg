@@ -24,7 +24,7 @@ purchasesModule.config(function($stateProvider) {
 
 });
 
-purchasesModule.controller('app.controller.purchases', function($rootScope, $scope, $window, $http, $state, inform, $interval, purchaseService) {
+purchasesModule.controller('app.controller.purchases', function($interval, purchaseService) {
 
     var purchases = this;
     var purchasesLoadLimit = 20;
