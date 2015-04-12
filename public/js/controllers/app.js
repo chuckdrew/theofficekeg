@@ -24,7 +24,7 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
         app.currentUser = null;
     });
 
-    $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+    $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
         if(toState.requiresAuth == true && !app.getCurrentUser()) {
             $state.go('login');
         } else if(toState.requiresRole != false && !app.hasRole(toState.requiresRole)) {
