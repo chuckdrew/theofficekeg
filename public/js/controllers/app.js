@@ -10,24 +10,21 @@ var theofficekeg = angular.module("app", [
     'app.kegs'
 ]);
 
-theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $state, inform, $interval) {
+theofficekeg.controller('app', function ($scope, $state, inform, $interval, userService) {
 
     var app = this;
 
-    app.currentUser = null;
-
-    $scope.$on('USER_LOGGED_IN', function(event, user) {
-        app.currentUser = user;
+    $scope.$watch(function(){
+        return userService.getCurrentUser();
+    }, function(newValue) {
+        app.currentUser = newValue;
     });
 
-    $scope.$on('USER_LOGGED_OUT', function() {
-        app.currentUser = null;
-    });
-
-    $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-        if(toState.requiresAuth == true && !app.getCurrentUser()) {
+    $scope.$on('$stateChangeStart', function(event, toState){
+        if(toState.requiresAuth == true && !userService.getCurrentUser()) {
             $state.go('login');
-        } else if(toState.requiresRole != false && !app.hasRole(toState.requiresRole)) {
+            event.preventDefault();
+        } else if(toState.requiresRole != false && !userService.hasRole(toState.requiresRole)) {
             event.preventDefault();
             $state.go('account.view');
             inform.add('You do not have the privs to access this action son!', {ttl: 5000, type: 'danger'});
@@ -50,45 +47,17 @@ theofficekeg.controller('app', function ($scope, $rootScope, $window, $http, $st
     });
 
     app.init = function() {
-        loadCurrentUser();
-        $interval(function(){
-            loadCurrentUser();
-        }, 3000, null, true);
-    }
-
-    var loadCurrentUser = function() {
-        $http.get('/users/current').success(function(response){
-            if(response.success) {
-                app.currentUser = response.data;
-            } else {
-                app.currentUser = null;
-            }
-        }).error(function() {
-            $state.go('login');
-            app.currentUser = null;
-        });
+        userService.loadCurrentUser();
+        userService.initUserPolling();
     }
 
     app.getCurrentUser = function() {
         return app.currentUser;
     }
 
-    app.hasRole = function(role) {
-        if(app.getCurrentUser()) {
-            if(app.getCurrentUser().roles.indexOf(role) > -1) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
     app.scrollIntoView = function(elementId) {
         var offset = $(elementId).offset();
         $("body, html").animate({scrollTop: offset.top}, 500, 'swing');
     }
-
 
 });

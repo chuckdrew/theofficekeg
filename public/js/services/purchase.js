@@ -1,8 +1,10 @@
 var purchaseServiceModule = angular.module('app.service.purchase',[]);
 
-purchaseServiceModule.service('purchaseService', function(inform, $http) {
+purchaseServiceModule.service('purchaseService', function(inform, $http, $interval) {
 
     var purchaseService = this;
+    purchaseService.purchasesList = null;
+    purchaseService.latestPour = null;
 
     purchaseService.add = function(kegId) {
         return $http.post('/purchases/add',{keg_id: kegId}).success(function(response){
@@ -16,14 +18,22 @@ purchaseServiceModule.service('purchaseService', function(inform, $http) {
         });
     }
 
-    purchaseService.getLatest = function() {
+    purchaseService.loadLatest = function() {
         return $http.get('/purchases/latest').success(function(response) {
-            if(!response.success) {
+            if(response.success) {
+                purchaseService.latestPour = response.data;
+            } else {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
         }).error(function() {
             inform.add('Error getting latest purchase', {ttl: 5000, type: 'danger'});
         });
+    }
+
+    purchaseService.initLatestPolling = function() {
+        $interval(function(){
+            purchaseService.loadLatest();
+        }, 5000, null ,true);
     }
 
     purchaseService.cancel = function(purchase) {
@@ -33,14 +43,20 @@ purchaseServiceModule.service('purchaseService', function(inform, $http) {
             } else {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
+        }).error(function() {
+            inform.add('Error cancelling purchase.', {ttl: 5000, type: 'danger'});
         });
     }
 
-    purchaseService.getList = function(limit) {
+    purchaseService.loadPurchases = function(limit) {
         return $http.get('/purchases/list', {params:{page: 1, limit: limit}}).success(function(response){
-            if(!response.success) {
+            if(response.success) {
+                purchaseService.purchasesList = response.data;
+            } else {
                 inform.add('Error loading purchases.', {ttl: 5000, type: 'danger'});
             }
+        }).error(function() {
+            inform.add('Error loading purchases.', {ttl: 5000, type: 'danger'});
         });
     }
 

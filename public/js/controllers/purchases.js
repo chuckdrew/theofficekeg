@@ -24,10 +24,24 @@ purchasesModule.config(function($stateProvider) {
 
 });
 
-purchasesModule.controller('app.controller.purchases', function($interval, purchaseService) {
+purchasesModule.controller('app.controller.purchases', function($scope, $interval, purchaseService) {
 
     var purchases = this;
-    var purchasesLoadLimit = 20;
+    var purchasesLoadLimit = 10;
+    purchases.list = null;
+    purchases.latestPour = null;
+
+    $scope.$watch(function(){
+        return purchaseService.purchasesList;
+    }, function(newValue) {
+        purchases.list = newValue;
+    });
+
+    $scope.$watch(function(){
+        return purchaseService.latestPour;
+    }, function(newValue) {
+        purchases.latestPour = newValue;
+    });
 
     purchases.add = function(kegId) {
         purchaseService.add(kegId).success(function() {
@@ -36,21 +50,12 @@ purchasesModule.controller('app.controller.purchases', function($interval, purch
     }
 
     purchases.latest = function() {
-        purchaseService.getLatest().success(function(response) {
-            purchases.latestPour = response.data;
-        });
-
-        $interval(function(){
-            purchaseService.getLatest().success(function(response) {
-                purchases.latestPour = response.data;
-            });
-        }, 5000, null ,true);
+        purchaseService.loadLatest();
+        purchaseService.initLatestPolling();
     }
 
     purchases.loadPurchases = function() {
-        purchaseService.getList(purchasesLoadLimit).success(function(response){
-            purchases.list = response.data;
-        });
+        purchaseService.loadPurchases(purchasesLoadLimit);
     }
 
     purchases.loadMorePurchases = function(count) {
@@ -61,7 +66,7 @@ purchasesModule.controller('app.controller.purchases', function($interval, purch
     purchases.cancel = function(purchase) {
         purchaseService.cancel(purchase).success(function() {
             purchases.loadPurchases();
-        })
+        });
     }
 
 });

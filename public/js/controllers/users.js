@@ -1,5 +1,5 @@
 var usersModule = angular.module('app.users',[
-
+    'app.service.user'
 ]);
 
 usersModule.config(function($stateProvider, $urlRouterProvider) {
@@ -58,49 +58,33 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
 
 });
 
-usersModule.controller('app.controller.users', function($scope, $window, $http, $state, inform) {
+usersModule.controller('app.controller.users', function($scope, $state, inform, userService) {
 
     var users = this;
 
     users.login = function(credentials) {
-        $http.post('/users/login', credentials).success(function(response){
+        userService.login(credentials).success(function(response) {
             if(response.success) {
                 $state.go('account.view');
                 $scope.$emit('USER_LOGGED_IN', response.data);
-            } else {
-                inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
-
-        }).error(function(data, status, headers, config) {
-            inform.add("Error Logging in", {ttl: 5000, type: 'danger'});
-        });;
+        });
     }
 
     users.signup = function(newUser) {
-        $http.post('/users/signup', newUser).success(function(response){
+        userService.signup(newUser).success(function(response) {
             if(response.success) {
                 $state.go('account.view');
                 $scope.$emit('USER_LOGGED_IN', response.data);
-            } else {
-                inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
-
-        }).error(function(data, status, headers, config) {
-            inform.add("Error Creating Account", {ttl: 5000, type: 'danger'});
-        });;
+        });
     }
 
     users.logout = function() {
-        $http.get('/users/logout').success(function(response){
+        userService.logout().success(function(response) {
             if(response.success) {
-                inform.add('Successfully Logged Out.', {ttl: 3000, type: 'success'});
                 $state.go('login');
-                $scope.$emit('USER_LOGGED_OUT', response.data);
-            } else {
-                inform.add('Error logging out.', {ttl: 5000, type: 'danger'});
             }
-        }).error(function() {
-            inform.add('Error logging out.', {ttl: 5000, type: 'danger'});
         });
     }
 
