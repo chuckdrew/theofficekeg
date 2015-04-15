@@ -11,7 +11,8 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
         templateUrl: "/js/views/login.html",
         controller: 'app.controller.users as users',
         requiresAuth: false,
-        requiresRole: false
+        requiresRole: false,
+        requiresNoAuth: true
     });
 
     $stateProvider.state('signup', {
@@ -19,7 +20,8 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
         templateUrl: "/js/views/signup.html",
         controller: 'app.controller.users as users',
         requiresAuth: false,
-        requiresRole: false
+        requiresRole: false,
+        requiresNoAuth: true
     });
 
     $stateProvider.state('reset_password', {
@@ -27,7 +29,8 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
         templateUrl: "/js/views/password-reset.html",
         controller: 'app.controller.users as users',
         requiresAuth: false,
-        requiresRole: false
+        requiresRole: false,
+        requiresNoAuth: true
     });
 
     $stateProvider.state('account', {

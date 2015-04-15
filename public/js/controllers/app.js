@@ -10,45 +10,46 @@ var theofficekeg = angular.module("app", [
     'app.kegs'
 ]);
 
-theofficekeg.controller('app', function ($scope, $state, inform, $interval, userService) {
+theofficekeg.controller('app', function ($scope, $state, inform, userService) {
 
     var app = this;
+    app.loading = true;
+    app.loadingState = null;
 
     $scope.$watch(function(){
         return userService.getCurrentUser();
-    }, function(newValue) {
-        app.currentUser = newValue;
+    }, function(currentUser) {
+        app.currentUser = currentUser;
     });
 
-    $scope.$on('$stateChangeStart', function(event, toState){
-        if(toState.requiresAuth == true && !userService.getCurrentUser()) {
-            $state.go('login');
+    $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        if(app.loading == false) {
+            if (toState.requiresAuth === true && !userService.getCurrentUser()) {
+                $state.go('login');
+                event.preventDefault();
+            } else if (toState.requriesNoAuth === true && userService.getCurrentUser()) {
+                $state.go('account.view');
+                event.preventDefault();
+            } else if (toState.requiresRole && !userService.hasRole(toState.requiresRole)) {
+                $state.go('account.view');
+                inform.add('You do not have the privs to access this action son!', {ttl: 5000, type: 'danger'});
+                event.preventDefault();
+            }
+        } else {
+            app.loadingState = toState;
             event.preventDefault();
-        } else if(toState.requiresRole != false && !userService.hasRole(toState.requiresRole)) {
-            event.preventDefault();
-            $state.go('account.view');
-            inform.add('You do not have the privs to access this action son!', {ttl: 5000, type: 'danger'});
         }
-
-        if(toState.name == "cancel_purchase_success") {
-            inform.add('Successfully Canceled Purchase.', {ttl: 3000, type: 'success'});
-            $state.go('account.view');
-        }
-
-        if(toState.name == "cancel_purchase_error") {
-            inform.add('Error Canceling Purchase.', {ttl: 5000, type: 'danger'});
-            $state.go('account.view');
-        }
-
-        if(toState.name == "purchase_already_cancelled") {
-            inform.add('Purchase already cancelled.', {ttl: 5000, type: 'danger'});
-            $state.go('account.view');
-        }
-    });
+    })
 
     app.init = function() {
-        userService.loadCurrentUser();
-        userService.initUserPolling();
+        app.loading = true;
+        userService.loadCurrentUser().then(function() {
+            app.loading = false;
+            if(app.loadingState) {
+                $state.go(app.loadingState);
+            }
+            userService.initUserPolling();
+        });
     }
 
     app.getCurrentUser = function() {
