@@ -31,8 +31,9 @@
         <link href="/css/lib/angular-inform.min.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <link href="/css/stylesheets/style.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <title>The Office Keg</title>
+
     </head>
-    <body ng-app="app" ng-controller="app as app" ng-init="app.init()">
+    <body ng-app="app" ng-controller="app as app" ng-init='app.init({{{currentUser}}})'>
         <div inform class="inform-fixed inform-center inform-animate"></div>
         <div class="wrapper">
             <div class="upper-section-wrap">
@@ -58,22 +59,22 @@
                                 <h3>Currently Serving</h3>
                             </div>
                             <div class="beer">
-                                <h1 data-fittext ng-model="kegs.activeKeg.beer_name">{{kegs.activeKeg.beer_name}}</h1>
+                                <h1 data-fittext ng-model="kegs.activeKeg.beer_name">[[kegs.activeKeg.beer_name]]</h1>
                             </div>
                             <div class="brewery">
-                                <h3 data-fittext ng-model="kegs.activeKeg.brewery_name">{{kegs.activeKeg.brewery_name}}</h3>
+                                <h3 data-fittext ng-model="kegs.activeKeg.brewery_name">[[kegs.activeKeg.brewery_name]]</h3>
                             </div>
                         </div>
                         <div class="buy-a-pint" ng-click="purchases.add(kegs.activeKeg._id)" ng-controller="app.controller.purchases as purchases">
-                            <div class="price">${{kegs.activeKeg.pint_price}}</div>
+                            <div class="price">$[[kegs.activeKeg.pint_price]]</div>
                             <div class="tagline">Buy a Pint</div>
                         </div>
                     </div>
                 </div>
                 <div class="upper-footer-wrap" ng-controller="app.controller.purchases as purchases" ng-init="purchases.latest()">
                     <div class="upper-footer">
-                        <p class="latest" ng-if="purchases.latestPour"><strong>{{purchases.latestPour.created | date:'M/d/yy h:mm a'}}:</strong> {{purchases.latestPour.user.first_name}} {{purchases.latestPour.user.last_name}} just enjoyed a {{purchases.latestPour.keg.beer_name}}</p>
-                        <p class="balance" ng-if="app.getCurrentUser()"><strong>Your Tab:</strong> {{app.currentUser.balance | customCurrency}}</p>
+                        <p class="latest" ng-if="purchases.latestPour"><strong>[[purchases.latestPour.created | date:'M/d/yy h:mm a']]:</strong> [[purchases.latestPour.user.first_name]] [[purchases.latestPour.user.last_name]] just enjoyed a [[purchases.latestPour.keg.beer_name]]</p>
+                        <p class="balance" ng-if="app.getCurrentUser()"><strong>Your Tab:</strong> [[app.currentUser.balance | customCurrency]]</p>
                     </div>
                 </div>
             </div>

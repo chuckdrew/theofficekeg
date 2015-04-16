@@ -8,7 +8,7 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     userService.login = function(credentials) {
         return $http.post('/users/login', credentials).success(function(response) {
             if(response.success) {
-                userService.currentUser = response.data;
+                userService.setCurrentUser(response.data);
             } else {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
@@ -20,7 +20,7 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     userService.signup = function(newUser) {
         return $http.post('/users/signup', newUser).success(function(response) {
             if(response.success) {
-                userService.currentUser = response.data;
+                userService.setCurrentUser(response.data);
             } else {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
@@ -45,12 +45,12 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     userService.loadCurrentUser = function() {
         return $http.get('/users/current').success(function(response){
             if(response.success) {
-                userService.currentUser = response.data;
+                userService.setCurrentUser(response.data);
             } else {
-                userService.currentUser = null;
+                userService.setCurrentUser(null);
             }
         }).error(function() {
-            userService.currentUser = null;
+            userService.setCurrentUser(null);
         });
     }
 
@@ -62,6 +62,14 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
 
     userService.getCurrentUser = function() {
         return userService.currentUser;
+    }
+
+    userService.setCurrentUser = function(currentUser) {
+        if(currentUser) {
+            userService.currentUser = currentUser;
+        } else {
+            userService.currentUser = null
+        }
     }
 
     userService.hasRole = function(role) {

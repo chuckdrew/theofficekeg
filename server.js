@@ -58,8 +58,8 @@ app.use(passport.session());
 
 //Set pagination limit
 app.use('/', function(req, res, next) {
-    if(req.query.limit == null || req.query.limit > process.env.QUERY_LIMIT || 100) {
-        req.query.limit = process.env.QUERY_LIMIT || 100;
+    if(req.query.limit == null || req.query.limit > process.env.QUERY_LIMIT || 200) {
+        req.query.limit = process.env.QUERY_LIMIT || 200;
     }
 
     next();
@@ -76,7 +76,9 @@ app.use(express.static(__dirname + '/public'));
 
 //Set index.html
 app.get('/', function(req, res) {
-    res.sendfile('./public/index.html');
+    res.render('index', {
+        currentUser: JSON.stringify(req.user)
+    });
 });
 
 //404 Error Pages

@@ -1,22 +1,22 @@
 <div class="view-account">
     <div class="balance">
         <h1 class="balance-label">Your Tab:</h1>
-        <h1 class="balance-value">{{app.currentUser.balance | customCurrency}}</h1>
+        <h1 class="balance-value">[[app.currentUser.balance | customCurrency]]</h1>
     </div>
     <div class="purchases " ng-controller="app.controller.purchases as purchases" ng-init="purchases.loadPurchases()">
         <h2>Pints</h2>
         <div class="purchase" ng-repeat="purchase in purchases.list.results">
             <div class="item">
                 <span class="label">Date</span>
-                <span class="value">{{purchase.created | date:'M/d/yy h:mm a'}}</span>
+                <span class="value">[[purchase.created | date:'M/d/yy h:mm a']]</span>
             </div>
             <div class="item">
                 <span class="label">Beverage</span>
-                <span class="value">{{purchase.keg.beer_name}}</span>
+                <span class="value">[[purchase.keg.beer_name]]</span>
             </div>
             <div class="item">
                 <span class="label">Price</span>
-                <span class="value">{{purchase.price | customCurrency}}</span>
+                <span class="value">[[purchase.price | customCurrency]]</span>
             </div>
             <div class="item">
                 <span class="label">Mistake?</span>
@@ -35,11 +35,11 @@
         <div class="payment" ng-repeat="payment in payments.list.results">
             <div class="item">
                 <span class="label">Date</span>
-                <span class="value">{{payment.created | date:'M/d/yy h:mm a'}}</span>
+                <span class="value">[[payment.created | date:'M/d/yy h:mm a']]</span>
             </div>
             <div class="item">
                 <span class="label">Amount</span>
-                <span class="value">{{payment.amount | customCurrency}}</span>
+                <span class="value">[[payment.amount | customCurrency]]</span>
             </div>
         </div>
         <div class="load-more" ng-click="payments.loadMorePayments(20)" ng-if="payments.list.results.length < 200">

@@ -10,11 +10,14 @@ var theofficekeg = angular.module("app", [
     'app.kegs'
 ]);
 
+theofficekeg.config(function($interpolateProvider) {
+    $interpolateProvider.startSymbol('[[');
+    $interpolateProvider.endSymbol(']]');
+});
+
 theofficekeg.controller('app', function ($scope, $state, inform, userService) {
 
     var app = this;
-    app.loading = true;
-    app.loadingState = null;
 
     $scope.$watch(function(){
         return userService.getCurrentUser();
@@ -23,33 +26,22 @@ theofficekeg.controller('app', function ($scope, $state, inform, userService) {
     });
 
     $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-        if(app.loading == false) {
-            if (toState.requiresAuth === true && !userService.getCurrentUser()) {
-                $state.go('login');
-                event.preventDefault();
-            } else if (toState.requriesNoAuth === true && userService.getCurrentUser()) {
-                $state.go('account.view');
-                event.preventDefault();
-            } else if (toState.requiresRole && !userService.hasRole(toState.requiresRole)) {
-                $state.go('account.view');
-                inform.add('You do not have the privs to access this action son!', {ttl: 5000, type: 'danger'});
-                event.preventDefault();
-            }
-        } else {
-            app.loadingState = toState;
+        if (toState.requiresAuth === true && !userService.getCurrentUser()) {
+            $state.go('login');
+            event.preventDefault();
+        } else if (toState.requriesNoAuth === true && userService.getCurrentUser()) {
+            $state.go('account.view');
+            event.preventDefault();
+        } else if (toState.requiresRole && !userService.hasRole(toState.requiresRole)) {
+            $state.go('account.view');
+            inform.add('You do not have the privs to access this action son!', {ttl: 5000, type: 'danger'});
             event.preventDefault();
         }
-    })
+    });
 
-    app.init = function() {
-        app.loading = true;
-        userService.loadCurrentUser().then(function() {
-            app.loading = false;
-            if(app.loadingState) {
-                $state.go(app.loadingState);
-            }
-            userService.initUserPolling();
-        });
+    app.init = function(currentUser) {
+        userService.setCurrentUser(currentUser);
+        userService.initUserPolling();
     }
 
     app.getCurrentUser = function() {
