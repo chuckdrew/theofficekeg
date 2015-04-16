@@ -40,7 +40,7 @@
                 <div class="header-wrap">
                     <div class="header">
                         <div class="logo">
-                            <a href="/#/"><img src="/img/logo.png" alt="The Office Keg" /></a>
+                            <a ui-sref="account.view"><img src="/img/logo.png" alt="The Office Keg" /></a>
                         </div>
                         <div class="menu" ng-if="!app.getCurrentUser()">
                             <a class="sign-up" ui-sref="signup" ui-sref-active="active" ng-click="app.scrollIntoView('#myaccount')" title="Sign Up for The Office Keg">Sign Up</a>

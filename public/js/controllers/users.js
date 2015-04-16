@@ -4,8 +4,6 @@ var usersModule = angular.module('app.users',[
 
 usersModule.config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise("/users/account/view");
-
     $stateProvider.state('login', {
         url: "/users/login",
         templateUrl: "/js/views/login.html",

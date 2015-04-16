@@ -10,12 +10,21 @@ var theofficekeg = angular.module("app", [
     'app.kegs'
 ]);
 
-theofficekeg.config(function($interpolateProvider) {
+theofficekeg.config(function($interpolateProvider, $stateProvider, $urlRouterProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
+
+    $stateProvider.state('404', {
+        templateUrl: "/js/views/404.html",
+        requiresAuth: false,
+        requiresRole: false,
+        requiresNoAuth: true
+    });
+
+    $urlRouterProvider.otherwise('/404');
 });
 
-theofficekeg.controller('app', function ($scope, $state, inform, userService) {
+theofficekeg.controller('app', function ($scope, $location, $state, inform, userService) {
 
     var app = this;
 
@@ -27,21 +36,25 @@ theofficekeg.controller('app', function ($scope, $state, inform, userService) {
 
     $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
         if (toState.requiresAuth === true && !userService.getCurrentUser()) {
+            event.preventDefault();
             $state.go('login');
+        } else if (toState.requiresNoAuth === true && userService.getCurrentUser()) {
             event.preventDefault();
-        } else if (toState.requriesNoAuth === true && userService.getCurrentUser()) {
             $state.go('account.view');
-            event.preventDefault();
         } else if (toState.requiresRole && !userService.hasRole(toState.requiresRole)) {
+            event.preventDefault();
             $state.go('account.view');
             inform.add('You do not have the privs to access this action son!', {ttl: 5000, type: 'danger'});
-            event.preventDefault();
         }
     });
-
+    
     app.init = function(currentUser) {
         userService.setCurrentUser(currentUser);
         userService.initUserPolling();
+
+        if($location.path() == "/" || $location.path() == "") {
+            $state.go('account.view');
+        }
     }
 
     app.getCurrentUser = function() {
