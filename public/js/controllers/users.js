@@ -89,4 +89,12 @@ usersModule.controller('app.controller.users', function($scope, $state, inform, 
         });
     }
 
+    users.sendPasswordResetEmail = function(email) {
+        userService.sendPasswordResetEmail(email).success(function(response){
+            if(response.success) {
+                $state.go('login');
+            }
+        });
+    }
+
 });

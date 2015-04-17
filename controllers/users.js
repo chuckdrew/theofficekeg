@@ -1,4 +1,5 @@
 var User = require('../models/user');
+var Token = require('../models/token');
 
 module.exports = function(app, passport) {
     var express = require('express');
@@ -151,6 +152,59 @@ module.exports = function(app, passport) {
                 });
             }
         }, {sortBy: {last_name: 'descending'}});
+    });
+
+    router.post('/send-password-reset-email', function(req, res) {
+        User.findOne({'email' :  req.body.email }, function(err, user) {
+            if(user) {
+                var newToken = new Token();
+
+                newToken.user = user._id;
+
+                newToken.save(function (err) {
+                    if (err) {
+                        res.apiRes(false, 'Error Generating Password Reset Token', err);
+                    } else {
+                        app.mailer.send('../views/emails/password', {
+                            to: user.email,
+                            subject: 'Reset Your Password!',
+                            base_url: process.env.BASE_URL,
+                            user: user,
+                            token: newToken
+                        }, function(err) {
+                            console.log(err);
+                        });
+
+                        res.apiRes(true, 'A password reset link has been emailed to you. That is all.', user);
+                    }
+                });
+            } else {
+                res.apiRes(false,'Could not find user with that email.',user);
+            }
+        });
+    });
+
+    router.get('/password-reset-login', function(req, res) {
+        Token.findOne({'_id' : req.query.token, 'used': false}).populate('user').exec(function(err, token) {
+            if(token) {
+                req.logIn(token.user, function(err, info) {
+                    if(err) {
+                        res.apiRes(false,info,err);
+                    } else {
+                        if (req.query.redirect == "true") {
+                            token.used = true;
+                            token.save();
+
+                            res.redirect('/#/users/account/edit');
+                        } else {
+                            res.apiRes(true, 'Successfully Logged In. Please Change your password.', token.user);
+                        }
+                    }
+                });
+            } else {
+                res.apiRes(false,'Invalid Password Reset Token',null);
+            }
+        });
     });
 
     return router;
