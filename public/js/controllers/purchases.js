@@ -7,19 +7,31 @@ purchasesModule.config(function($stateProvider) {
     $stateProvider.state('cancel_purchase_success', {
         url: "/purchases/cancel-success",
         requiresAuth: false,
-        requiresRole: false
+        requiresRole: false,
+        controller: function($state, inform) {
+            $state.go('account.view');
+            inform.add('Purchase successfully cancelled.', {ttl: 3000, type: 'success'});
+        }
     });
 
     $stateProvider.state('cancel_purchase_error', {
         url: "/purchases/cancel-error",
         requiresAuth: false,
-        requiresRole: false
+        requiresRole: false,
+        controller: function($state, inform) {
+            $state.go('account.view');
+            inform.add('Error Cancelling Purchase.', {ttl: 5000, type: 'danger'});
+        }
     });
 
     $stateProvider.state('purchase_already_cancelled', {
         url: "/purchases/already-canceled",
         requiresAuth: false,
-        requiresRole: false
+        requiresRole: false,
+        controller: function($state, inform) {
+            $state.go('account.view');
+            inform.add('Purchase was already cancelled.', {ttl: 5000, type: 'danger'});
+        }
     });
 
 });

@@ -191,18 +191,26 @@ module.exports = function(app, passport) {
                     if(err) {
                         res.apiRes(false,info,err);
                     } else {
-                        if (req.query.redirect == "true") {
-                            token.used = true;
-                            token.save();
+                        token.used = true;
+                        token.save();
 
-                            res.redirect('/#/users/account/edit');
+                        if (req.query.redirect == "true") {
+                            res.redirect('/#/users/password-reset-login');
                         } else {
                             res.apiRes(true, 'Successfully Logged In. Please Change your password.', token.user);
                         }
                     }
                 });
             } else {
-                res.apiRes(false,'Invalid Password Reset Token',null);
+                if (req.query.redirect == "true") {
+                    if(req.user) {
+                        res.redirect('/#/users/account/edit');
+                    } else {
+                        res.redirect('/#/users/invalid-password-reset-token');
+                    }
+                } else {
+                    res.apiRes(false,'Invalid Password Reset Token',null);
+                }
             }
         });
     });

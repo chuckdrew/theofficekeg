@@ -15,10 +15,10 @@ theofficekeg.config(function($interpolateProvider, $stateProvider, $urlRouterPro
     $interpolateProvider.endSymbol(']]');
 
     $stateProvider.state('404', {
+        url: "/404",
         templateUrl: "/js/views/404.html",
         requiresAuth: false,
-        requiresRole: false,
-        requiresNoAuth: true
+        requiresRole: false
     });
 
     $urlRouterProvider.otherwise('/404');

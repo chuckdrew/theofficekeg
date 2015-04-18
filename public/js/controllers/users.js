@@ -57,6 +57,26 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
         requiresRole: 'admin'
     });
 
+    $stateProvider.state('password_reset_login', {
+        url: "/users/password-reset-login",
+        requiresAuth: true,
+        requiresRole: 'guest',
+        controller: function($state, inform) {
+            $state.go('account.edit');
+            inform.add('Successfully Logged In. Please Change your password.', {ttl: 3000, type: 'success'});
+        }
+    });
+
+    $stateProvider.state('invalid_password_reset_token', {
+        url: "/users/invalid-password-reset-token",
+        requiresAuth: false,
+        requiresRole: false,
+        controller: function($state, inform) {
+            $state.go('reset_password');
+            inform.add('Invalid password reset token. Please use the password reset form again.', {ttl: 5000, type: 'danger'});
+        }
+    });
+
 });
 
 usersModule.controller('app.controller.users', function($scope, $state, inform, userService) {
