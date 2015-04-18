@@ -61,6 +61,10 @@ theofficekeg.controller('app', function ($scope, $location, $state, inform, user
         return app.currentUser;
     }
 
+    app.hasRole = function(role) {
+        return userService.hasRole(role)
+    }
+
     app.scrollIntoView = function(elementId) {
         var offset = $(elementId).offset();
         $("body, html").animate({scrollTop: offset.top}, 500, 'swing');
