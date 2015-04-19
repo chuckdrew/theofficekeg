@@ -82,6 +82,7 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
 usersModule.controller('app.controller.users', function($scope, $state, inform, userService) {
 
     var users = this;
+    users.user = userService.getCurrentUser();
 
     users.login = function(credentials) {
         userService.login(credentials).success(function(response) {
@@ -115,6 +116,10 @@ usersModule.controller('app.controller.users', function($scope, $state, inform, 
                 $state.go('login');
             }
         });
+    }
+
+    users.update = function(user) {
+        userService.update(user);
     }
 
 });

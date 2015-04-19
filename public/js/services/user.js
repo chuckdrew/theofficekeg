@@ -80,6 +80,19 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
         }
     }
 
+    userService.update = function(user) {
+        return $http.put('/users/update', user).success(function(response) {
+            if(response.success) {
+                userService.setCurrentUser(response.data);
+                inform.add(response.message, {ttl: 3000, type: 'success'});
+            } else {
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
+            }
+        }).error(function(data, status, headers, config) {
+            inform.add("Error updating your account", {ttl: 5000, type: 'danger'});
+        });
+    }
+
     userService.hasRole = function(role) {
         if(userService.getCurrentUser()) {
             if(userService.getCurrentUser().roles.indexOf(role) > -1) {

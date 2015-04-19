@@ -102,18 +102,21 @@ module.exports = function(app, passport) {
     });
 
     router.put('/update', passport.checkAuth('guest'), function(req, res) {
-        User.findOne({'_id' :  req.query.id }, function(err, user) {
+        User.findOne({'_id' :  req.body._id }, function(err, user) {
             if(user) {
                 user.email = req.body.email;
-                user.scanner_uuid = req.body.scanner_uuid;
                 user.first_name = req.body.first_name;
                 user.last_name = req.body.last_name;
+
+                if(req.body.new_password) {
+                    user.password = user.generateHash(req.body.new_password);
+                }
 
                 user.save(function (err) {
                     if (err) {
                         res.apiRes(false, 'Error Saving User', err);
                     } else {
-                        res.apiRes(true, 'User Successfully Saved', user);
+                        res.apiRes(true, 'Account successfully saved', user);
                     }
                 });
             } else {

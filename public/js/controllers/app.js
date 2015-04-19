@@ -14,14 +14,13 @@ theofficekeg.config(function($interpolateProvider, $stateProvider, $urlRouterPro
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 
-    $stateProvider.state('404', {
-        url: "/404",
-        templateUrl: "/js/views/404.html",
-        requiresAuth: false,
-        requiresRole: false
+    $stateProvider.state('home', {
+        url: "/",
+        controller: function($state) {
+            $state.go('account.view');
+        }
     });
 
-    $urlRouterProvider.otherwise('/404');
 });
 
 theofficekeg.controller('app', function ($scope, $location, $state, inform, userService) {
