@@ -1,5 +1,6 @@
 var Payment = require('../models/payment');
 var User = require('../models/user');
+var Purchase = require('../models/purchase');
 
 module.exports = function(app, passport) {
     var express = require('express');
@@ -16,6 +17,8 @@ module.exports = function(app, passport) {
                 res.apiRes(false,'Error Saving Payment',err);
             } else {
                 User.findOne({'_id': req.body.user_id}, function(err, user) {
+                    Purchase.lockPurchasesForUser(user._id);
+
                     app.mailer.send('../views/emails/payment', {
                         to: user.email,
                         subject: 'Thanks for your payment!',

@@ -4,6 +4,7 @@ require('dotenv').load();
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 8080;
+var queryLimit = process.env.QUERY_LIMIT || 200;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var bodyParser = require('body-parser');
@@ -58,8 +59,8 @@ app.use(passport.session());
 
 //Set pagination limit
 app.use('/', function(req, res, next) {
-    if(req.query.limit == null || req.query.limit > process.env.QUERY_LIMIT || 200) {
-        req.query.limit = process.env.QUERY_LIMIT || 200;
+    if(req.query.limit == null || req.query.limit > queryLimit) {
+        req.query.limit = queryLimit;
     }
 
     next();

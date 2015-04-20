@@ -8,8 +8,14 @@ var purchaseSchema = mongoose.Schema({
     price: Number,
     created : {type: Date, default: Date.now},
     cancelled: {type: Boolean, default: false},
-    cancelled_date: Date
+    cancelled_date: Date,
+    locked: {type: Boolean, default: false},
+    locked_date: Date
 });
+
+purchaseSchema.statics.lockPurchasesForUser = function(userId, callback) {
+    this.update({'user' : userId},{'locked' : true},null,callback);
+}
 
 purchaseSchema.plugin(mongoosePaginate);
 
