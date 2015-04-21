@@ -36,25 +36,31 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
         templateUrl: "/js/views/account.html",
         controller: 'app.controller.users as users',
         requiresAuth: true,
-        requiresRole: 'guest'
+        requiresRole: false
     }).state('account.view', {
         url: "/view",
         templateUrl: "/js/views/account.view.html",
         controller: 'app.controller.users as users',
         requiresAuth: true,
-        requiresRole: 'guest'
+        requiresRole: false
     }).state('account.edit', {
         url: "/edit",
         templateUrl: "/js/views/account.edit.html",
         controller: 'app.controller.users as users',
         requiresAuth: true,
-        requiresRole: 'guest'
+        requiresRole: false
     }).state('account.admin', {
         url: "/admin",
         templateUrl: "/js/views/account.admin.html",
         controller: 'app.controller.users as users',
         requiresAuth: true,
         requiresRole: 'admin'
+    }).state('account.logout', {
+        url: "/logout",
+        templateUrl: "/js/views/account.logout.html",
+        controller: 'app.controller.users as users',
+        requiresAuth: true,
+        requiresRole: false
     });
 
     $stateProvider.state('password_reset_login', {
@@ -103,6 +109,7 @@ usersModule.controller('app.controller.users', function($scope, $state, inform, 
     }
 
     users.logout = function() {
+        $state.go('account.logout');
         userService.logout().success(function(response) {
             if(response.success) {
                 $state.go('login');
