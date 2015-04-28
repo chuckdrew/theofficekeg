@@ -19,10 +19,11 @@
                 <span class="value">[[purchase.price | customCurrency]]</span>
             </div>
             <div class="item">
-                <span class="label">Mistake?</span>
+                <span class="label">Cancel</span>
                 <span class="value">
-                    <a ng-if="!purchase.cancelled" ng-click="purchases.cancel(purchase)" href="" class="cancel-link">Cancel</a>
+                    <a ng-hide="purchase.cancelled || purchase.locked" ng-click="purchases.cancel(purchase)" href="" class="cancel-link">Cancel</a>
                     <span ng-if="purchase.cancelled">Cancelled</span>
+                    <span ng-if="purchase.locked">Locked</span>
                 </span>
             </div>
         </div>

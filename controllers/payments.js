@@ -17,7 +17,11 @@ module.exports = function(app, passport) {
                 res.apiRes(false,'Error Saving Payment',err);
             } else {
                 User.findOne({'_id': req.body.user_id}, function(err, user) {
-                    Purchase.lockPurchasesForUser(user._id);
+                    Purchase.lockPurchasesForUser(req.body.user_id, function(err) {
+                        if(err) {
+                            console.log(err);
+                        }
+                    });
 
                     app.mailer.send('../views/emails/payment', {
                         to: user.email,

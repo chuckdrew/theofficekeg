@@ -34,6 +34,16 @@ purchasesModule.config(function($stateProvider) {
         }
     });
 
+    $stateProvider.state('purchase_locked', {
+        url: "/purchases/locked",
+        requiresAuth: false,
+        requiresRole: false,
+        controller: function($state, inform) {
+            $state.go('account.view');
+            inform.add('Purchase is locked and can no longer be cancelled.', {ttl: 5000, type: 'danger'});
+        }
+    });
+
 });
 
 purchasesModule.controller('app.controller.purchases', function($scope, $interval, purchaseService) {

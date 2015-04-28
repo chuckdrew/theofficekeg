@@ -52,7 +52,7 @@ module.exports = function(app, passport) {
     router.get('/cancel', function(req, res) {
         Purchase.findOne({'_id' :  req.query.purchase_id}, function(err, purchase) {
             if(purchase) {
-                if(purchase.cancelled == false) {
+                if(purchase.cancelled == false && purchase.locked == false) {
                     purchase.cancelled = true;
                     purchase.cancelled_date = new Date();
 
@@ -90,7 +90,13 @@ module.exports = function(app, passport) {
                             });
                         }
                     });
-                } else {
+                } else if(purchase.locked == true) {
+                    if (req.query.redirect == "true") {
+                        res.redirect('/#/purchases/locked');
+                    } else {
+                        res.apiRes(false, 'Purchase is locked and can no longer be cancelled.', purchase);
+                    }
+                } else if(purchase.cancelled == true) {
                     if (req.query.redirect == "true") {
                         res.redirect('/#/purchases/already-canceled');
                     } else {
