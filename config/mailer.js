@@ -27,6 +27,9 @@ module.exports = function(app) {
     transporter.use('compile', hbs(options));
 
     app.sendMail = function(options) {
+
+        options.base_url = process.env.BASE_URL;
+
         var mailOptions = {
             from: process.env.EMAIL_REPLY_TO,
             to: options.to,

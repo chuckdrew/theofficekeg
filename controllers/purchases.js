@@ -20,15 +20,13 @@ module.exports = function(app, passport) {
                     if (err) {
                         res.apiRes(false, 'Error Saving Purchase', err);
                     } else {
-                        app.mailer.send('../views/emails/purchase', {
+                        app.sendMail({
+                            template: 'purchase',
                             to: req.user.email,
                             subject: 'Enjoy that Beer!',
-                            base_url: process.env.BASE_URL,
                             purchase: newPurchase,
                             user: req.user,
                             keg: keg
-                        }, function (err) {
-                            console.log(err);
                         });
 
                         User.findOne({'_id': req.user._id}, function(err, user) {
@@ -67,14 +65,13 @@ module.exports = function(app, passport) {
                                         if(err) {
                                             res.apiRes(false, 'Error cancelling purchase.', err);
                                         } else {
-                                            app.mailer.send('../views/emails/cancel', {
+                                            app.sendMail({
+                                                template: 'cancel',
                                                 to: user.email,
                                                 subject: 'Purchase Cancelled',
                                                 base_url: process.env.BASE_URL,
                                                 purchase: purchase,
                                                 user: user
-                                            }, function (err) {
-                                                console.log(err);
                                             });
 
                                             if (req.query.redirect == "true") {
