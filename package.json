@@ -27,17 +27,19 @@
     "connect-mongo": "latest",
     "cookie-parser": "latest",
     "dotenv": "latest",
+    "email-templates": "^1.2.1",
     "express": "latest",
-    "express-mailer": "latest",
+    "express-handlebars": "latest",
     "express-session": "latest",
-    "hbs": "latest",
     "mongoose": "latest",
-    "mongoose-paginate": "^3.1.3",
+    "mongoose-paginate": "latest",
     "morgan": "latest",
+    "nodemailer": "latest",
+    "nodemailer-express-handlebars": "latest",
+    "nodemailer-smtp-transport": "latest",
     "passport": "latest",
     "passport-http": "latest",
-    "passport-local": "latest",
-    "mongoose-paginate" : "latest"
+    "passport-local": "latest"
   },
   "scripts": {
     "start": "node server.js"

@@ -13,6 +13,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var configDB = require('./config/database.js');
+var exphbs  = require('express-handlebars');
 
 //Create Standard Response Object
 express.response.apiRes = function(status, message, data) {
@@ -30,7 +31,8 @@ require('./config/mailer')(app);
 mongoose.connect(configDB.url);
 
 //Set view engine
-app.set('view engine', 'hbs');
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
 //Logging
 app.use(morgan('dev')); // log every request to the console
