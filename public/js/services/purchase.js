@@ -5,6 +5,7 @@ purchaseServiceModule.service('purchaseService', function(inform, $http, $interv
     var purchaseService = this;
     purchaseService.purchasesList = null;
     purchaseService.latestPour = null;
+    purchaseService.latestPurchasePollingPromise = null;
 
     purchaseService.add = function(kegId) {
         return $http.post('/purchases/add',{keg_id: kegId}).success(function(response){
@@ -31,7 +32,7 @@ purchaseServiceModule.service('purchaseService', function(inform, $http, $interv
     }
 
     purchaseService.initLatestPolling = function() {
-        $interval(function(){
+        purchaseService.latestPurchasePollingPromise = $interval(function(){
             purchaseService.loadLatest();
         }, 5000, null ,true);
     }

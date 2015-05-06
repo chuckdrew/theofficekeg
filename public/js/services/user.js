@@ -4,6 +4,7 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
 
     var userService = this;
     userService.currentUser = null;
+    userService.currentUserPollingPromise = null;
 
     userService.login = function(credentials) {
         return $http.post('/users/login', credentials).success(function(response) {
@@ -30,9 +31,9 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     }
 
     userService.logout = function() {
+        userService.setCurrentUser(null);
         return $http.get('/users/logout').success(function(response) {
             if(response.success) {
-                userService.currentUser = null;
                 inform.add('Successfully Logged Out.', {ttl: 3000, type: 'success'});
             } else {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});
@@ -63,9 +64,18 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     }
 
     userService.initUserPolling = function() {
-        $interval(function(){
-            userService.loadCurrentUser();
-        }, 3000, null, true);
+        if(userService.currentUserPollingPromise == null) {
+            userService.currentUserPollingPromise = $interval(function(){
+                userService.loadCurrentUser();
+            }, 5000, null, true);
+        }
+    }
+
+    userService.stopUserPolling = function() {
+        if(userService.currentUserPollingPromise) {
+            $interval.cancel(userService.currentUserPollingPromise);
+            userService.currentUserPollingPromise = null;
+        }
     }
 
     userService.getCurrentUser = function() {
@@ -75,8 +85,10 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     userService.setCurrentUser = function(currentUser) {
         if(currentUser) {
             userService.currentUser = currentUser;
+            userService.initUserPolling();
         } else {
             userService.currentUser = null
+            userService.stopUserPolling();
         }
     }
 

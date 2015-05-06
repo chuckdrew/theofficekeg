@@ -6,8 +6,9 @@ module.exports = function(app, passport) {
     var router = express.Router();
 
     router.get('/logout', function(req, res) {
-        req.logout();
-        res.apiRes(true,'User successfully logged out', null);
+        req.session.destroy(function (err) {
+            res.apiRes(true,'User successfully logged out', null);
+        });
     });
 
     router.post('/signup', function(req, res) {

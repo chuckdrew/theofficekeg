@@ -49,7 +49,6 @@ theofficekeg.controller('app', function ($scope, $location, $state, inform, user
     
     app.init = function(currentUser) {
         userService.setCurrentUser(currentUser);
-        userService.initUserPolling();
 
         if($location.path() == "/" || $location.path() == "") {
             $state.go('account.view');
