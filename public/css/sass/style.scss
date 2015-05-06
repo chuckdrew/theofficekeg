@@ -17,6 +17,7 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   background: #ffffff;
+  color: #74777b;
 }
 
 a {
@@ -232,25 +233,59 @@ p.balance strong {
 }
 
 .my-account-wrapper .my-account {
+
+}
+.my-account-wrapper .my-account .tabs-container {
+  background: #e7ecea;
+}
+.my-account-wrapper .my-account .tabs {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
   max-width: 1200px;
   margin: 0px auto;
-  padding: 100px 20px;
 }
-
+.my-account-wrapper .my-account .tabs .tab-wrapper{
+  display: table-row;
+}
+.my-account-wrapper .my-account .tab {
+  display: table-cell;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-right: 1px solid #ccc;
+}
+.my-account-wrapper .my-account .tab .tab-content {
+  display: block;
+  padding: 30px 0px;
+}
+.my-account-wrapper .my-account .tab:first-child {
+  border-left: 1px solid #ccc;
+}
+.my-account-wrapper .my-account .tab.active {
+  background: #fff;
+  border-top: 7px solid #00E4FF;
+  color: #444;
+}
+.my-account-wrapper .my-account .account-content {
+  padding: 40px 0px;
+  max-width: 1200px;
+  margin: 0px auto;
+}
 .my-account-wrapper .my-account .header-title {
   font-size: 40px;
   color: #00E4FF;
   font-weight: 700;
   margin-bottom: 30px;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid #e7ecea;
   padding-bottom: 5px;
 }
-
 .my-account-wrapper .my-account .user-form {
   max-width: 400px;
   margin: 0px auto;
 }
-
 .my-account-wrapper .my-account .user-form .sub-links {
   text-align: center;
   padding-top: 40px;

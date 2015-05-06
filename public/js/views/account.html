@@ -1,7 +1,17 @@
-<div class="tabs">
-    <div class="tab" ui-sref="account.view" ui-sref-active="active">Overview</div>
-    <div class="tab" ui-sref="account.edit" ui-sref-active="active">Edit</div>
-    <div class="tab" ui-sref="account.admin" ui-sref-active="active" ng-if="app.hasRole('admin')">Admin</div>
+<div class="tabs-container">
+    <div class="tabs">
+        <div class="tab-wrapper">
+            <div class="tab" ui-sref="account.view" ui-sref-active="active">
+                <span class="tab-content">Overview</span>
+            </div>
+            <div class="tab" ui-sref="account.edit" ui-sref-active="active">
+                <span class="tab-content">Edit</span>
+            </div>
+            <div class="tab" ui-sref="account.admin" ui-sref-active="active" ng-if="app.hasRole('admin')">
+                <span class="tab-content">Admin</span>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="account-content">
     <div ui-view></div>

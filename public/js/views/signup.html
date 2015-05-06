@@ -1,29 +1,31 @@
-<div class="user-form">
-    <h2 class="header-title">Sign In</h2>
-    <div class="form" ng-submit="users.signup(users.newUser);">
-        <form>
-            <div class="field">
-                <label for="email">Email address</label>
-                <input ng-model="users.newUser.email" type="email" required class="form-control" id="email" placeholder="Email">
-            </div>
-            <div class="field">
-                <label for="firstname">First Name</label>
-                <input ng-model="users.newUser.first_name" type="text" required class="form-control" id="firstname" placeholder="First Name">
-            </div>
-            <div class="field">
-                <label for="lastname">Last Name</label>
-                <input ng-model="users.newUser.last_name" type="text" required class="form-control" id="lastname" placeholder="Last Name">
-            </div>
-            <div class="field">
-                <label for="password">Password</label>
-                <input ng-model="users.newUser.password" type="password" required class="form-control" id="password" placeholder="Password">
-            </div>
-            <div class="form-button">
-                <button type="submit" class="button button-default">Sign Up</button>
-            </div>
-        </form>
-    </div>
-    <div class="sub-links">
-        <a href="/#/users/login" title="Login to my account." class="login-link">Login</a>
+<div class="account-content">
+    <div class="user-form">
+        <h2 class="header-title">Sign In</h2>
+        <div class="form" ng-submit="users.signup(users.newUser);">
+            <form>
+                <div class="field">
+                    <label for="email">Email address</label>
+                    <input ng-model="users.newUser.email" type="email" required class="form-control" id="email" placeholder="Email">
+                </div>
+                <div class="field">
+                    <label for="firstname">First Name</label>
+                    <input ng-model="users.newUser.first_name" type="text" required class="form-control" id="firstname" placeholder="First Name">
+                </div>
+                <div class="field">
+                    <label for="lastname">Last Name</label>
+                    <input ng-model="users.newUser.last_name" type="text" required class="form-control" id="lastname" placeholder="Last Name">
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input ng-model="users.newUser.password" type="password" required class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="form-button">
+                    <button type="submit" class="button button-default">Sign Up</button>
+                </div>
+            </form>
+        </div>
+        <div class="sub-links">
+            <a href="/#/users/login" title="Login to my account." class="login-link">Login</a>
+        </div>
     </div>
 </div>
