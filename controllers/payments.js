@@ -23,14 +23,13 @@ module.exports = function(app, passport) {
                         }
                     });
 
-                    app.mailer.send('../views/emails/payment', {
+                    app.sendMail({
+                        template: 'payment',
                         to: user.email,
                         subject: 'Thanks for your payment!',
                         base_url: process.env.BASE_URL,
                         payment: newPayment,
                         user: user
-                    }, function (err) {
-                        console.log(err);
                     });
 
                     user.increaseBalance(newPayment.amount)

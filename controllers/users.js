@@ -33,12 +33,11 @@ module.exports = function(app, passport) {
                         res.apiRes(false,'Error Saving User',err);
                     } else {
                         //Send Welcome Email
-                        app.mailer.send('../views/emails/welcome', {
+                        app.sendMail({
+                            template: 'welcome',
                             to: newUser.email,
                             subject: 'Welcome to The Office Keg!',
                             user: newUser
-                        }, function(err) {
-                            console.log(err);
                         });
 
                         //Log User In
@@ -169,14 +168,13 @@ module.exports = function(app, passport) {
                     if (err) {
                         res.apiRes(false, 'Error Generating Password Reset Token', err);
                     } else {
-                        app.mailer.send('../views/emails/password', {
+                        app.sendMail({
+                            template: 'password',
                             to: user.email,
                             subject: 'Reset Your Password!',
                             base_url: process.env.BASE_URL,
                             user: user,
                             token: newToken
-                        }, function(err) {
-                            console.log(err);
                         });
 
                         res.apiRes(true, 'A password reset link has been emailed to you. That is all.', user);

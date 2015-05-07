@@ -45,15 +45,14 @@ module.exports = function(app, passport) {
                                         res.apiRes(false, 'Error Saving Purchase', err);
                                     } else {
                                         if (user) {
-                                            app.mailer.send('../views/emails/purchase', {
+                                            app.sendMail({
+                                                template: 'purchase',
                                                 to: user.email,
                                                 subject: 'Enjoy that Beer!',
                                                 base_url: process.env.BASE_URL,
                                                 purchase: newPurchase,
                                                 user: user,
                                                 keg: keg
-                                            }, function (err) {
-                                                console.log(err);
                                             });
 
                                             user.decreaseBalance(newPurchase.price);
@@ -65,15 +64,14 @@ module.exports = function(app, passport) {
                                                 }
                                             });
                                         } else {
-                                            app.mailer.send('../views/emails/orphanscan', {
-                                                to: process.env.ADMIN_EMAIL_ADDRESS,
+                                            app.sendMail({
+                                                template: 'orphanscan',
+                                                to: 'chuckdrew@gmail.com',
                                                 subject: 'Orphan Scan! Please assign to a user.',
                                                 base_url: process.env.BASE_URL,
                                                 purchase: newPurchase,
                                                 scan: newScan,
                                                 keg: keg
-                                            }, function (err) {
-                                                console.log(err);
                                             });
 
                                             res.apiRes(true, 'Successfully saved scan, but could not link to a user.', newPurchase);
