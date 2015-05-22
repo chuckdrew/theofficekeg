@@ -232,11 +232,68 @@ p.balance strong {
   font-weight: bold;
 }
 
+.grid {
+  display: table;
+  width: 100%;
+  border-collapse: collapse
+}
+.grid .row {
+  display: table-row;
+  border-bottom: 1px solid #00E4FB;
+  @include mq($until: tablet) {
+    display: block;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+}
+.grid .row:last-child {
+  border-bottom: none;
+}
+
+.grid .row .item {
+  display: table-cell;
+  padding: 10px 0px;
+
+  @include mq($until: tablet) {
+    display: block;
+    padding: 0px;
+    margin: 4px;
+  }
+}
+.grid .row .item .label {
+  font-weight: 500;
+  @include mq($from: tablet) {
+    display: none;
+  }
+}
+.grid .row .item.right {
+  text-align: right;
+
+  @include mq($until: tablet) {
+    text-align: left;
+  }
+}
+
+.grid .row .item .value {
+  @include mq($until: tablet) {
+    float: right;
+  }
+}
+
+.load-more {
+  margin-top: 30px;
+  background: #f3f3f3;
+  padding: 10px 0px;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
 .my-account-wrapper .my-account {
 
 }
 .my-account-wrapper .my-account .tabs-container {
-  background: #e7ecea;
+  background: #f3f3f3;
 }
 .my-account-wrapper .my-account .tabs {
   display: table;
@@ -260,19 +317,23 @@ p.balance strong {
 .my-account-wrapper .my-account .tab .tab-content {
   display: block;
   padding: 30px 0px;
+
 }
 .my-account-wrapper .my-account .tab:first-child {
   border-left: 1px solid #ccc;
 }
 .my-account-wrapper .my-account .tab.active {
   background: #fff;
-  border-top: 7px solid #00E4FF;
   color: #444;
 }
 .my-account-wrapper .my-account .account-content {
-  padding: 40px 0px;
+  padding: 50px 20px;
   max-width: 1200px;
   margin: 0px auto;
+  overflow: auto;
+  @include mq($until: tablet) {
+    padding-top: 30px;
+  }
 }
 .my-account-wrapper .my-account .header-title {
   font-size: 40px;
@@ -303,6 +364,69 @@ p.balance strong {
     padding-right: 15px;
   }
 }
+
+/* Balance */
+.my-account-wrapper .my-account .account-content .balance {
+  border-bottom: 5px dotted #e7ecea;
+  margin-bottom: 40px;
+  font-size: 40px;
+  font-weight: 800;
+  overflow: auto;
+  @include mq($until: mobile) {
+    font-size: 25px;
+    line-height: 30px;
+  }
+}
+.my-account-wrapper .my-account .account-content .balance .balance-label {
+  float: left;
+  background: #fff;
+  line-height: 50px;
+}
+.my-account-wrapper .my-account .account-content .balance .balance-value{
+  float: right;
+  background: #fff;
+  line-height: 50px;
+}
+
+/* Purchases */
+.my-account-wrapper .my-account .account-content .purchases {
+  float: left;
+  width: 48.5%;
+
+  @include mq($until: desktop) {
+    float: none;
+    width: 100%;
+    margin-bottom: 50px;
+  }
+}
+.my-account-wrapper .my-account .account-content .purchases h2 {
+  font-size: 20px;
+  font-weight: 700;
+  background: #00E4FB;
+  color: #fff;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+/* Payments */
+.my-account-wrapper .my-account .account-content .payments {
+  float: right;
+  width: 48.5%;
+
+  @include mq($until: desktop) {
+    float: none;
+    width: 100%;
+  }
+}
+.my-account-wrapper .my-account .account-content .payments h2 {
+  font-size: 20px;
+  font-weight: 700;
+  background: #00E4FB;
+  color: #fff;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
 
 .footer-wrap .footer {
   padding: 30px;
