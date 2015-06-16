@@ -217,5 +217,22 @@ module.exports = function(app, passport) {
         });
     });
 
+    router.post('/notify-all-users', passport.checkAuth('admin'), function(req, res) {
+        User.find({status:"active"}, function(err, users) {
+            users.forEach(function(user) {
+                app.sendMail({
+                    template: 'notify',
+                    to: user.email,
+                    subject: req.body.subject,
+                    base_url: process.env.BASE_URL,
+                    user: user,
+                    message: req.body.message
+                });
+            });
+
+            res.apiRes(false,'Successfully emailed all active users.',null);
+        });
+    });
+
     return router;
 };

@@ -9,7 +9,8 @@ var userSchema = mongoose.Schema({
     first_name : String,
     last_name : String,
     balance: {type: Number, default: 0},
-    roles: {type: Array, default: new Array('guest')}
+    roles: {type: Array, default: new Array('guest')},
+    status:  {type: String, default: "active"}
 });
 
 userSchema.methods.hasRole = function(role) {
