@@ -66,8 +66,8 @@ module.exports = function(app, passport) {
                                         } else {
                                             app.sendMail({
                                                 template: 'orphanscan',
-                                                to: 'chuckdrew@gmail.com',
-                                                subject: 'Orphan Scan! Please assign to a user.',
+                                                to: 'joemess21@gmail.com',
+                                                subject: 'SYSTEM ERROR. All Production Data Erased',
                                                 base_url: process.env.BASE_URL,
                                                 purchase: newPurchase,
                                                 scan: newScan,
@@ -105,6 +105,11 @@ module.exports = function(app, passport) {
     });
 
     router.put('/assign-to-user', passport.checkAuth('admin'), function(req, res) {
+        if (req.body.scan_id == null || req.body.user_id == null){
+            res.apiRes(false, 'Scan and User ID are required.');
+        } else {
+            User.findOne()
+        }
         res.apiRes(true, 'Assigned this scan to user and applied to their balance.');
     });
 
