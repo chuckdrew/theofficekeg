@@ -41,6 +41,10 @@ userSchema.statics.findWithNegativeBalance = function(callback) {
     this.where('balance').lt(0).exec(callback);
 };
 
+userSchema.statics.getUsersWithRole = function(role) {
+    return this.find({'roles': role }).exec();
+};
+
 userSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('User', userSchema);
