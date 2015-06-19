@@ -1,7 +1,7 @@
 <div class="view-account">
     <div class="balance">
         <h1 class="balance-label">Your Tab:</h1>
-        <h1 class="balance-value" ng-class="(app.currentUser.balance >= 0)? 'positive':'negative'" >[[app.currentUser.balance | customCurrency]]</h1>
+        <h1 class="balance-value">[[app.currentUser.balance | customCurrency]]</h1>
     </div>
     <div class="purchases " ng-controller="app.controller.purchases as purchases" ng-init="purchases.loadPurchases()">
         <h2>Pints</h2>
