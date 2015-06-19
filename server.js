@@ -48,10 +48,12 @@ app.use(bodyParser.json());
 app.use(session({
     secret: process.env.COOKIE_SECRET,
     name: process.env.COOKIE_NAME,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    unset: 'destroy',
     resave: true,
     saveUninitialized: true,
-    proxy: true
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection
+    })
 }));
 
 //Passport Config

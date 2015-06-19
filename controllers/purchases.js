@@ -74,6 +74,20 @@ module.exports = function(app, passport) {
                                                 user: user
                                             });
 
+                                            User.getUsersWithRole('admin').then(function(users) {
+                                                users.forEach(function(adminUser) {
+                                                    app.sendMail({
+                                                        template: 'purchaseCancelled',
+                                                        to: adminUser.email,
+                                                        subject: user.first_name + " " + user.last_name + ' just cancelled their purchase.',
+                                                        base_url: process.env.BASE_URL,
+                                                        purchase: purchase,
+                                                        user: user,
+                                                        admin_user: adminUser
+                                                    });
+                                                });
+                                            });
+
                                             if (req.query.redirect == "true") {
                                                 res.redirect('/#/purchases/cancel-success');
                                             } else {

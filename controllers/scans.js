@@ -64,14 +64,18 @@ module.exports = function(app, passport) {
                                                 }
                                             });
                                         } else {
-                                            app.sendMail({
-                                                template: 'orphanscan',
-                                                to: 'chuckdrew@gmail.com',
-                                                subject: 'Orphan Scan! Please assign to a user.',
-                                                base_url: process.env.BASE_URL,
-                                                purchase: newPurchase,
-                                                scan: newScan,
-                                                keg: keg
+                                            User.getUsersWithRole('admin').then(function(users) {
+                                                users.forEach(function(adminUser) {
+                                                    app.sendMail({
+                                                        template: 'orphanscan',
+                                                        to: adminUser.email,
+                                                        subject: 'Orphan Scan! Please assign to a user.',
+                                                        base_url: process.env.BASE_URL,
+                                                        purchase: newPurchase,
+                                                        scan: newScan,
+                                                        keg: keg
+                                                    });
+                                                });
                                             });
 
                                             res.apiRes(true, 'Successfully saved scan, but could not link to a user.', newPurchase);
