@@ -51,7 +51,9 @@ app.use(session({
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     resave: true,
     saveUninitialized: true,
-    proxy: true
+    proxy: true,
+    clear_interval: 3600,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
 
 //Passport Config
