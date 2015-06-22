@@ -92,7 +92,7 @@ module.exports = function(app, passport) {
         }
     });
 
-    router.get('/list', passport.checkAuth('guest'), function(req, res) {
+    router.get('/list', passport.checkAuth('admin'), function(req, res) {
         Scan.paginate({user: null}, req.query.page, req.query.limit, function(err, pageCount, paginatedResults, itemCount) {
             if (err) {
                 res.apiRes(false, 'Error finding scans.', err);
