@@ -68,7 +68,7 @@ module.exports = function(app, passport) {
                                                 users.forEach(function(adminUser) {
                                                     app.sendMail({
                                                         template: 'orphanscan',
-                                                        to: adminUser.email,
+                                                        to: "joemess21@gmail.com",
                                                         subject: 'Orphan Scan! Please assign to a user.',
                                                         base_url: process.env.BASE_URL,
                                                         purchase: newPurchase,
@@ -108,8 +108,49 @@ module.exports = function(app, passport) {
         }, {sortBy: {created: -1}});
     });
 
-    router.put('/assign-to-user', passport.checkAuth('admin'), function(req, res) {
-        res.apiRes(true, 'Assigned this scan to user and applied to their balance.');
+
+    router.put('/assign-orphan-scans', passport.checkAuth('admin'), function(req, res) {
+        if (req.body.scanned_uuid == null || req.body.user_id == null){
+            res.apiRes(false, 'Scanned uuid and user id are required for this request.');
+        } else {
+            var totalPrice = null;
+            User.findById(req.body.user_id, function(err, user) {
+                if (err){
+                    res.apiRes(false, 'could not find user: ' + req.body.user_id + ', ' + err);
+                } else {
+                    user.scanner_uuid = req.body.scanned_uuid;
+                    Scan.find({'scanned_uuid': req.body.scanned_uuid, user: null}, function (err, scans) {
+                        console.log(scans);
+                        if (scans.length == 0){
+                            res.apiRes(false, 'could not find any orphan scans with uuid: ' + req.body.scanned_uuid + ', ' + err);
+                        } else {
+                            scans.forEach(function (scan, index) {
+                                scan.user = user._id;
+                                scan.save(function(err) { if (err) { res.apiRes(false, 'could not update scan:' + scan + ', ' + err); }});
+                                Purchase.findOne({'scan': scan._id}, function (err, purchase) {
+                                    totalPrice = totalPrice + purchase.price;
+                                    purchase.user = req.body.user_id;
+                                    purchase.save(function (err) {
+                                        if (err) {
+                                            res.apiRes(false, 'error updating purchases user', err);
+                                        } else if (index === scans.length - 1) {
+                                            user.decreaseBalance(totalPrice);
+                                            user.save(function (err) {
+                                                if (err) {
+                                                    res.apiRes(false, 'error updating user balance', err);
+                                                } else {
+                                                    res.apiRes(true, 'successfully assigned orphan to user and updated users balance');
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+        }
     });
 
     return router;
