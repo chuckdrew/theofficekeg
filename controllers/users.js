@@ -230,7 +230,7 @@ module.exports = function(app, passport) {
                 });
             });
 
-            res.apiRes(false,'Successfully emailed all active users.',null);
+            res.apiRes(true,'Successfully emailed all active users.',null);
         });
     });
 
