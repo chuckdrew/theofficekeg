@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var Token = require('../models/token');
+var JWT = require('jsonwebtoken');
 
 module.exports = function(app, passport) {
     var express = require('express');
@@ -160,26 +161,19 @@ module.exports = function(app, passport) {
     router.post('/send-password-reset-email', function(req, res) {
         User.findOne({'email' :  req.body.email }, function(err, user) {
             if(user) {
-                var newToken = new Token();
 
-                newToken.user = user._id;
+                var token = JWT.sign({user: user._id}, process.env.JWT_SECRET, {expiresInSeconds:7200});
 
-                newToken.save(function (err) {
-                    if (err) {
-                        res.apiRes(false, 'Error Generating Password Reset Token', err);
-                    } else {
-                        app.sendMail({
-                            template: 'password',
-                            to: user.email,
-                            subject: 'Reset Your Password!',
-                            base_url: process.env.BASE_URL,
-                            user: user,
-                            token: newToken
-                        });
-
-                        res.apiRes(true, 'A password reset link has been emailed to you. That is all.', user);
-                    }
+                app.sendMail({
+                    template: 'password',
+                    to: user.email,
+                    subject: 'Reset Your Password!',
+                    base_url: process.env.BASE_URL,
+                    user: user,
+                    token: token
                 });
+
+                res.apiRes(true, 'A password reset link has been emailed to you.', user);
             } else {
                 res.apiRes(false,'Could not find user with that email.',user);
             }
@@ -187,20 +181,23 @@ module.exports = function(app, passport) {
     });
 
     router.get('/password-reset-login', function(req, res) {
-        Token.findOne({'_id' : req.query.token, 'used': false}).populate('user').exec(function(err, token) {
-            if(token) {
-                req.logIn(token.user, function(err, info) {
-                    if(err) {
-                        res.apiRes(false,info,err);
+        JWT.verify(req.query.token, process.env.JWT_SECRET, function(err, decodedUser) {
+            if (!err && decodedUser) {
+                User.findById(decodedUser.user, function (err, user) {
+                    if(user) {
+                        req.logIn(user, function(err, info) {
+                            if(err) {
+                                res.apiRes(false,info,err);
+                            } else {
+                                if (req.query.redirect == "true") {
+                                    res.redirect('/#/users/password-reset-login');
+                                } else {
+                                    res.apiRes(true, 'Successfully Logged In. Please Change your password.', user);
+                                }
+                            }
+                        });
                     } else {
-                        token.used = true;
-                        token.save();
-
-                        if (req.query.redirect == "true") {
-                            res.redirect('/#/users/password-reset-login');
-                        } else {
-                            res.apiRes(true, 'Successfully Logged In. Please Change your password.', token.user);
-                        }
+                        res.apiRes(false,"Error finding user account.",err);
                     }
                 });
             } else {
@@ -211,7 +208,7 @@ module.exports = function(app, passport) {
                         res.redirect('/#/users/invalid-password-reset-token');
                     }
                 } else {
-                    res.apiRes(false,'Invalid Password Reset Token',null);
+                    res.apiRes(false,'Invalid Password Reset Token',err);
                 }
             }
         });
