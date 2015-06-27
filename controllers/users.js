@@ -1,5 +1,4 @@
 var User = require('../models/user');
-var Token = require('../models/token');
 var JWT = require('jsonwebtoken');
 
 module.exports = function(app, passport) {
