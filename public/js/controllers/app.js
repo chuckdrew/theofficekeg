@@ -26,6 +26,7 @@ theofficekeg.config(function($interpolateProvider, $stateProvider, $urlRouterPro
 theofficekeg.controller('app', function ($scope, $location, $state, inform, userService) {
 
     var app = this;
+    var intendedState = null;
 
     $scope.$watch(function(){
         return userService.getCurrentUser();
@@ -36,6 +37,8 @@ theofficekeg.controller('app', function ($scope, $location, $state, inform, user
     $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
         if (toState.requiresAuth === true && !userService.getCurrentUser()) {
             event.preventDefault();
+            inform.add('Please login first.', {ttl: 5000, type: 'danger'});
+            intendedState = toState;
             $state.go('login');
         } else if (toState.requiresNoAuth === true && userService.getCurrentUser()) {
             event.preventDefault();

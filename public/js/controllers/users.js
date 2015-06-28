@@ -2,7 +2,7 @@ var usersModule = angular.module('app.users',[
     'app.service.user'
 ]);
 
-usersModule.config(function($stateProvider, $urlRouterProvider) {
+usersModule.config(function($stateProvider) {
 
     $stateProvider.state('login', {
         url: "/users/login",
@@ -22,6 +22,20 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
         requiresNoAuth: true
     });
 
+    $stateProvider.state('logout', {
+        url: "/users/logout",
+        templateUrl: "/js/views/account.logout.html",
+        controller: function($state, userService) {
+            userService.logout().success(function(response) {
+                if(response.success) {
+                    $state.go('login');
+                }
+            });
+        },
+        requiresAuth: true,
+        requiresRole: false
+    });
+
     $stateProvider.state('reset_password', {
         url: "/users/reset-password",
         templateUrl: "/js/views/password-reset.html",
@@ -29,38 +43,6 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
         requiresAuth: false,
         requiresRole: false,
         requiresNoAuth: true
-    });
-
-    $stateProvider.state('account', {
-        url: "/users/account",
-        templateUrl: "/js/views/account.html",
-        controller: 'app.controller.users as users',
-        requiresAuth: true,
-        requiresRole: false
-    }).state('account.view', {
-        url: "/view",
-        templateUrl: "/js/views/account.view.html",
-        controller: 'app.controller.users as users',
-        requiresAuth: true,
-        requiresRole: false
-    }).state('account.edit', {
-        url: "/edit",
-        templateUrl: "/js/views/account.edit.html",
-        controller: 'app.controller.users as users',
-        requiresAuth: true,
-        requiresRole: false
-    }).state('account.admin', {
-        url: "/admin",
-        templateUrl: "/js/views/account.admin.html",
-        controller: 'app.controller.users as users',
-        requiresAuth: true,
-        requiresRole: 'admin'
-    }).state('account.logout', {
-        url: "/logout",
-        templateUrl: "/js/views/account.logout.html",
-        controller: 'app.controller.users as users',
-        requiresAuth: true,
-        requiresRole: false
     });
 
     $stateProvider.state('password_reset_login', {
@@ -83,6 +65,67 @@ usersModule.config(function($stateProvider, $urlRouterProvider) {
         }
     });
 
+    $stateProvider.state('account', {
+        url: "/users/account",
+        templateUrl: "/js/views/account.html",
+        controller: 'app.controller.users as users',
+        requiresAuth: true,
+        requiresRole: false
+    })
+
+    $stateProvider.state('account.view', {
+        url: "/view",
+        templateUrl: "/js/views/account.view.html",
+        controller: 'app.controller.users as users',
+        requiresAuth: true,
+        requiresRole: false,
+        parent: 'account'
+    });
+
+    $stateProvider.state('account.edit', {
+        url: "/edit",
+        templateUrl: "/js/views/account.edit.html",
+        controller: 'app.controller.users as users',
+        requiresAuth: true,
+        requiresRole: false,
+        parent: 'account'
+    });
+
+    $stateProvider.state('account.admin', {
+        url: "/admin",
+        templateUrl: "/js/views/account.admin.html",
+        controller: 'app.controller.users as users',
+        requiresAuth: true,
+        requiresRole: 'admin',
+        parent: 'account'
+    });
+
+    $stateProvider.state('account.admin.users', {
+        url: "/users",
+        templateUrl: "/js/views/admin/users.html",
+        controller: 'app.controller.users as users',
+        requiresAuth: true,
+        requiresRole: 'admin',
+        parent: 'account.admin'
+    });
+
+    $stateProvider.state('account.admin.kegs', {
+        url: "/kegs",
+        templateUrl: "/js/views/admin/kegs.html",
+        controller: 'app.controller.kegs as kegs',
+        requiresAuth: true,
+        requiresRole: 'admin',
+        parent: 'account.admin'
+    });
+
+    $stateProvider.state('account.admin.orphan-scans', {
+        url: "/orphan-scans",
+        templateUrl: "/js/views/admin/orphan-scans.html",
+        controller: 'app.controller.users as scans',
+        requiresAuth: true,
+        requiresRole: 'admin',
+        parent: 'account.admin'
+    });
 });
 
 usersModule.controller('app.controller.users', function($scope, $state, inform, userService) {
@@ -109,12 +152,7 @@ usersModule.controller('app.controller.users', function($scope, $state, inform, 
     }
 
     users.logout = function() {
-        $state.go('account.logout');
-        userService.logout().success(function(response) {
-            if(response.success) {
-                $state.go('login');
-            }
-        });
+        $state.go('logout');
     }
 
     users.sendPasswordResetEmail = function(email) {

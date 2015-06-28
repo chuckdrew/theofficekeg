@@ -1,1 +1,10 @@
-<h1>Admin</h1>
+<div class="admin-nav-container">
+    <div class="admin-nav">
+        <div class="users" ui-sref="account.admin.users" ui-sref-active="active">Users</div>
+        <div class="kegs" ui-sref="account.admin.kegs" ui-sref-active="active">Kegs</div>
+        <div class="orphan-scans" ui-sref="account.admin.orphan-scans" ui-sref-active="active">Orphan Scans</div>
+    </div>
+</div>
+<div class="admin-content">
+    <div ui-view></div>
+</div>

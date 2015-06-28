@@ -13,7 +13,7 @@
                     </div>
                     <div class="menu" ng-if="app.getCurrentUser()">
                         <a class="my-account" ui-sref="account.view" ui-sref-active="active" ng-click="app.scrollIntoView('#myaccount')" title="My Account">My Account</a>
-                        <a class="logout" href="/#/" ng-controller="app.controller.users as users" ng-click="users.logout()" title="Logout">Logout</a>
+                        <a class="logout" ui-sref="logout" ui-sref-active="active" title="Logout">Logout</a>
                     </div>
                 </div>
             </div>
