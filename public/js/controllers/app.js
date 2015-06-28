@@ -16,8 +16,12 @@ theofficekeg.config(function($interpolateProvider, $stateProvider, $urlRouterPro
 
     $stateProvider.state('home', {
         url: "/",
-        controller: function($state) {
-            $state.go('account.view');
+        controller: function($state, userService) {
+            if(userService.getCurrentUser()) {
+                $state.go('account.view');
+            } else {
+                $state.go('login');
+            }
         }
     });
 
@@ -37,9 +41,10 @@ theofficekeg.controller('app', function ($scope, $location, $state, inform, user
     $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
         if (toState.requiresAuth === true && !userService.getCurrentUser()) {
             event.preventDefault();
-            inform.add('Please login first.', {ttl: 5000, type: 'danger'});
+            inform.add('Please login or create and account first.', {ttl: 5000, type: 'danger'});
             intendedState = toState;
             $state.go('login');
+            app.scrollIntoView('#myaccount');
         } else if (toState.requiresNoAuth === true && userService.getCurrentUser()) {
             event.preventDefault();
             $state.go('account.view');
@@ -47,6 +52,11 @@ theofficekeg.controller('app', function ($scope, $location, $state, inform, user
             event.preventDefault();
             $state.go('account.view');
             inform.add('You do not have the privs to access this action son!', {ttl: 5000, type: 'danger'});
+        } else if (intendedState && userService.getCurrentUser() && toState.name != intendedState.name) {
+            event.preventDefault();
+            $state.go(intendedState);
+            intendedState = null;
+            app.scrollIntoView('#myaccount');
         }
     });
     
@@ -54,7 +64,11 @@ theofficekeg.controller('app', function ($scope, $location, $state, inform, user
         userService.setCurrentUser(currentUser);
 
         if($location.path() == "/" || $location.path() == "") {
-            $state.go('account.view');
+            if(currentUser) {
+                $state.go('account.view');
+            } else {
+                $state.go('login');
+            }
         }
     }
 
