@@ -46,8 +46,8 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     userService.sendPasswordResetEmail = function(email) {
         return $http.post('/users/send-password-reset-email', {email:email}).success(function(response) {
             inform.add(response.message, {ttl: 5000, type: 'danger'});
-        }).error(function(data, status, headers, config) {
-            inform.add("Error Creating Account", {ttl: 5000, type: 'danger'});
+        }).error(function(response) {
+            inform.add(response.message, {ttl: 5000, type: 'danger'});
         });
     }
 
