@@ -31,7 +31,7 @@ module.exports = function(app) {
         options.base_url = process.env.BASE_URL;
 
         var mailOptions = {
-            from: process.env.EMAIL_REPLY_TO,
+            from: options.from || process.env.EMAIL_REPLY_TO,
             to: options.to,
             subject: options.subject,
             template: options.template,

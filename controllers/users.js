@@ -219,6 +219,7 @@ module.exports = function(app, passport) {
                 app.sendMail({
                     template: 'notify',
                     to: user.email,
+                    from: "The Office Keg <" + req.user.email + ">",
                     subject: req.body.subject,
                     base_url: process.env.BASE_URL,
                     user: user,
