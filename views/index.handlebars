@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="buy-a-pint" ng-click="purchases.add(kegs.activeKeg._id)" ng-controller="app.controller.purchases as purchases">
-                        <div class="price">$[[kegs.activeKeg.pint_price]]</div>
+                        <div class="price">[[kegs.activeKeg.pint_price | currency]]</div>
                         <div class="tagline">Buy a Pint</div>
                     </div>
                 </div>
