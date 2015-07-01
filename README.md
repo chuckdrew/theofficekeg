@@ -5,9 +5,9 @@ We have a kegerator in our office but it is not company sponsored, so we have to
 
 The app requires MongoDB, Node JS, and Compass CSS -  so the first step is to get all those items running. If you are on OSx,  just run the commands I listed below.
 
-Mongo: https://www.mongodb.org/downloads (OSx: brew install mongodb)
-Compass: http://compass-style.org/install/ (OSx: gem install compass)
-Node JS: https://nodejs.org/download/ (OSx: brew install node)
+* **Mongo**: https://www.mongodb.org/downloads (OSx: brew install mongodb)
+* **Compass**: http://compass-style.org/install/ (OSx: gem install compass)
+* **Node JS**: https://nodejs.org/download/ (OSx: brew install node)
 
 ##Getting the app running
 
