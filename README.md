@@ -38,7 +38,7 @@ http://localhost:8081
 
 ## CSS Changes
 
-The frontend using sass/compass to compile the CSS. Follow these steps to get it running. I've been committing the compiled CSS to GIT, but I really should be ignoring the compiled CSS and running the compilation at deployment time.
+The frontend uses sass/compass to compile the CSS. Follow these steps to get it running. I've been committing the compiled CSS to GIT, but I really should be ignoring the compiled CSS and running the compilation at deployment time.
 
 ##### 1. Install Compass
 ```
@@ -55,5 +55,5 @@ compass watch
 ```
 To compress CSS for prod:
 ```
-compass watch -e production
+compass compile -e production
 ```
