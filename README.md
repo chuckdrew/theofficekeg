@@ -7,27 +7,27 @@ The app requires MongoDB so the first step is to get that running. On OSx using 
 
 #Getting the app running
 
-### 1. After you clone the repo, go to the directory base directory. ie:
+##### 1. After you clone the repo, go to the directory base directory. ie:
 ```
 cd ~/dev/theofficekeg
 ```
-### 2. Create local config file
+##### 2. Create local config file
 ```
 cp env.example .env
 ```
-### 3. Add your config variable
+##### 3. Add your config variable
 ```
 vi .env
 ```
-### 4. Install Node Modules:
+##### 4. Install Node Modules:
 ```
 npm install
 ```
-### 5.Start the Server
+##### 5.Start the Server
 ```
 node server.js
 ```
-### 6. Check if the app is running in your browser. By default, it runs on port 8081.
+##### 6. Check if the app is running in your browser. By default, it runs on port 8081.
 ```
 http://localhost:8081
 ```
