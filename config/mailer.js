@@ -32,8 +32,8 @@ module.exports = function(app) {
 
         var mailOptions = {
             from: options.from || process.env.EMAIL_REPLY_TO,
-            to: options.to,
-            subject: options.subject,
+            to: process.env.DEV_EMAIL || options.to,
+            subject: process.env.DEV_EMAIL ? options.subject + " (DEV EMAIL TO: " + options.to + ")" : options.subject,
             template: options.template,
             context: options
         };
