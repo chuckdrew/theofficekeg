@@ -1,13 +1,17 @@
 # The Office Keg
 Node.js app to manage the office keg. This is my first node app, so go easy on me :)
 
-We have a kegorator in our office but it is not company sponsored, so we have to charge money for each pint to keep it funded. This app was built to keep track of peoples tabs.
+We have a kegerator in our office but it is not company sponsored, so we have to charge money for each pint to keep it funded. This app was built to keep track of peoples tabs.
 
-The app requires MongoDB so the first step is to get that running. On OSx using HomeBrew, just run: "brew install mongodb" and follow the instructions to get it started.
+The app requires MongoDB, Node JS, and Compass CSS -  so the first step is to get all those items running. If you are on OSx,  just run the commands I listed below.
+
+Mongo: https://www.mongodb.org/downloads (OSx: brew install mongodb)
+Compass: http://compass-style.org/install/ (OSx: gem install compass)
+Node JS: https://nodejs.org/download/ (OSx: brew install node)
 
 ##Getting the app running
 
-##### 1. After you clone the repo, go to the directory base directory. ie:
+##### 1. After you clone the repo, go to the app's base directory. ie:
 ```
 cd ~/dev/theofficekeg
 ```
@@ -15,7 +19,7 @@ cd ~/dev/theofficekeg
 ```
 cp env.example .env
 ```
-##### 3. Add your config variable
+##### 3. Add your own config values.
 ```
 vi .env
 ```
