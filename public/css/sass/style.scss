@@ -427,6 +427,42 @@ p.balance strong {
   margin-bottom: 20px;
 }
 
+/* Admin */
+
+.admin-nav-container {
+  margin-bottom: 30px;
+  @include mq($from: tablet) {
+    float: left;
+    width: 25%;
+  }
+}
+.admin-nav-container .admin-nav .vert-tab{
+  padding: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 1px solid #00E4FB;
+}
+.admin-nav-container .admin-nav .vert-tab:first-child {
+  border-top: 1px solid #00E4FB;
+}
+.admin-nav-container .admin-nav .vert-tab.active {
+  background: #00E4FB;
+  color: #fff;
+
+}
+.admin-content {
+  @include mq($from: tablet) {
+    border-left: 1px solid #00E4FB;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    float: right;
+    width: 75%;
+    min-height: 300px;
+    padding-left: 25px;
+  }
+}
 
 .footer-wrap .footer {
   padding: 30px;
