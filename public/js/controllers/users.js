@@ -93,11 +93,20 @@ usersModule.config(function($stateProvider) {
 
     $stateProvider.state('account.admin', {
         url: '/admin',
-        redirectTo: 'account.admin.users',
+        redirectTo: 'account.admin.overview',
         templateUrl: "/js/views/account.admin.html",
         requiresAuth: true,
         requiresRole: 'admin',
         parent: 'account'
+    });
+
+    $stateProvider.state('account.admin.overview', {
+        url: "/overview",
+        templateUrl: "/js/views/admin/overview.html",
+        controller: 'app.controller.users as overview',
+        requiresAuth: true,
+        requiresRole: 'admin',
+        parent: 'account.admin'
     });
 
     $stateProvider.state('account.admin.users', {
@@ -122,6 +131,15 @@ usersModule.config(function($stateProvider) {
         url: "/orphan-scans",
         templateUrl: "/js/views/admin/orphan-scans.html",
         controller: 'app.controller.users as scans',
+        requiresAuth: true,
+        requiresRole: 'admin',
+        parent: 'account.admin'
+    });
+
+    $stateProvider.state('account.admin.messages', {
+        url: "/messages",
+        templateUrl: "/js/views/admin/messages.html",
+        controller: 'app.controller.users as user',
         requiresAuth: true,
         requiresRole: 'admin',
         parent: 'account.admin'
