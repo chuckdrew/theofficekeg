@@ -67,8 +67,8 @@ usersModule.config(function($stateProvider) {
 
     $stateProvider.state('account', {
         url: "/users/account",
+        redirectTo: 'account.view',
         templateUrl: "/js/views/account.html",
-        controller: 'app.controller.users as users',
         requiresAuth: true,
         requiresRole: false
     })
@@ -92,9 +92,9 @@ usersModule.config(function($stateProvider) {
     });
 
     $stateProvider.state('account.admin', {
-        url: "/admin",
+        url: '/admin',
+        redirectTo: 'account.admin.users',
         templateUrl: "/js/views/account.admin.html",
-        controller: 'app.controller.users as users',
         requiresAuth: true,
         requiresRole: 'admin',
         parent: 'account'

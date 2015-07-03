@@ -39,7 +39,10 @@ theofficekeg.controller('app', function ($scope, $location, $state, inform, user
     });
 
     $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-        if (toState.requiresAuth === true && !userService.getCurrentUser()) {
+        if(toState.redirectTo) {
+            event.preventDefault();
+            $state.go(toState.redirectTo);
+        } else if (toState.requiresAuth === true && !userService.getCurrentUser()) {
             event.preventDefault();
             inform.add('Please login or create and account first.', {ttl: 5000, type: 'danger'});
             intendedState = toState;
@@ -47,11 +50,12 @@ theofficekeg.controller('app', function ($scope, $location, $state, inform, user
             app.scrollIntoView('#myaccount');
         } else if (toState.requiresNoAuth === true && userService.getCurrentUser()) {
             event.preventDefault();
+            inform.add('Please logout first.', {ttl: 5000, type: 'danger'});
             $state.go('account.view');
         } else if (toState.requiresRole && !userService.hasRole(toState.requiresRole)) {
             event.preventDefault();
-            $state.go('account.view');
             inform.add('You do not have the privs to access this action son!', {ttl: 5000, type: 'danger'});
+            $state.go('account.view');
         } else if (intendedState && userService.getCurrentUser() && toState.name != intendedState.name) {
             event.preventDefault();
             $state.go(intendedState);
