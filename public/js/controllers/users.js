@@ -167,4 +167,7 @@ usersModule.controller('app.controller.users', function($scope, $state, inform, 
         userService.update(user);
     }
 
+    users.getProfilePicUrl = function(user) {
+        return userService.getProfilePicUrl(user);
+    }
 });

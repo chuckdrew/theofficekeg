@@ -6,6 +6,7 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     userService.currentUser = null;
     userService.currentUserPollingPromise = null;
 
+
     userService.login = function(credentials) {
         return $http.post('/users/login', credentials).success(function(response) {
             if(response.success) {
@@ -115,6 +116,11 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
         } else {
             return false;
         }
+    }
+
+    userService.getProfilePicUrl = function(user) {
+        var emailMd5 = md5(user.email);
+        return "https://www.gravatar.com/avatar/" + emailMd5 + ".jpg?s=200&r=x&d=identicon";
     }
 
 });

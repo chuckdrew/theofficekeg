@@ -24,6 +24,11 @@ a {
   color: #0c7bf8;
   text-decoration: underline;
 }
+a:active,
+a:hover,
+a:valid {
+  outline: none;
+}
 
 .upper-section-wrap {
   background: #382828 url("../../img/bg.jpg") no-repeat;
@@ -215,6 +220,17 @@ a {
 }
 p.latest  {
   float: left;
+  position: relative;
+  padding-left: 60px;
+}
+p.latest .avatar {
+  position: absolute;
+  left: 0;
+  top: -15px;
+}
+p.latest .avatar img {
+  width: 45px;
+  border-radius: 28px;
 }
 p.latest strong {
   font-weight: bold;
