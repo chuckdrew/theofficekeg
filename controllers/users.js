@@ -231,5 +231,10 @@ module.exports = function(app, passport) {
         });
     });
 
+    router.get('/log-headers', function(req, res) {
+        console.log(req.headers);
+        res.apiRes(true,'Logged Headers to Console.',null);
+    });
+
     return router;
 };
