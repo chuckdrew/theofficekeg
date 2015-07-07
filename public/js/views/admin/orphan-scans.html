@@ -13,12 +13,15 @@
             <div class="item right">
                 <span class="label">User</span>
                 <span class="value">
-                    <select ng-model="scanUserId" ng-change="scans.assignScanToUser(scanUserId, scan._id)" ng-options="user._id as (user.first_name + ' ' + user.last_name) for user in scans.users"></select>
+                    <select ng-model="scanUserId" ng-change="scans.assignScanToUser(scanUserId, scan.scanned_uuid)" ng-options="user._id as (user.first_name + ' ' + user.last_name) for user in scans.users"></select>
                 </span>
             </div>
         </div>
     </div>
-    <div class="load-more" ng-click="scans.scans.loadMoreOrphanScans(20)" ng-if="scans.orphans.results.length < 200">
+    <div class="load-more" ng-click="scans.scans.loadMoreOrphanScans(20)" ng-if="scans.orphans.results.length < 200 && scans.orphans.results.length != 0">
         <p>Show More</p>
+    </div>
+    <div class="no-records" ng-if="scans.orphans.results.length == 0">
+        <p>No Orphan Scans</p>
     </div>
 </div>

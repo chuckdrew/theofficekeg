@@ -14,8 +14,8 @@ scanServiceModule.service('scanService', function(inform, $http) {
         });
     }
 
-    scanService.assignScanToUser = function(userId, scanId) {
-        return $http.put('/scans/assign-to-user', {userId: userId, scanId:scanId}).success(function(response) {
+    scanService.assignScanToUser = function(userId, scanUUID) {
+        return $http.put('/scans/assign-orphan-scans', {user_id: userId, scanned_uuid:scanUUID}).success(function(response) {
             if(!response.success) {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});
             }

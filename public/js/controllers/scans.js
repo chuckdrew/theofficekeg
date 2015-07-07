@@ -43,8 +43,8 @@ scansModule.controller('app.controller.scans', function(scanService, userService
         });
     }
 
-    scans.assignScanToUser = function(userId, scanId) {
-        scanService.assignScanToUser(userId, scanId).success(function(response){
+    scans.assignScanToUser = function(userId, scanUUID) {
+        scanService.assignScanToUser(userId, scanUUID).success(function(response){
             if(response.success) {
                 inform.add(response.message, {ttl: 5000, type: 'success'});
             } else {
