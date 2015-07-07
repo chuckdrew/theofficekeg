@@ -1,11 +1,11 @@
 <div ng-app="app" ng-controller="app as app" ng-init='app.init({{{currentUser}}})'>
     <div inform class="inform-fixed inform-center inform-animate"></div>
-    <div class="wrapper">
+    <div class="wrapper" ng-controller="app.controller.users as users">
         <div class="upper-section-wrap">
             <div class="header-wrap">
                 <div class="header">
                     <div class="logo">
-                        <a ui-sref="account.view"><img src="/img/logo.png" alt="The Office Keg" /></a>
+                        <a href="/#/"><img src="/img/logo.png" alt="The Office Keg" /></a>
                     </div>
                     <div class="menu" ng-if="!app.getCurrentUser()">
                         <a class="sign-up" ui-sref="signup" ui-sref-active="active" ng-click="app.scrollIntoView('#myaccount')" title="Sign Up for The Office Keg">Sign Up</a>
@@ -13,7 +13,7 @@
                     </div>
                     <div class="menu" ng-if="app.getCurrentUser()">
                         <a class="my-account" ui-sref="account.view" ui-sref-active="active" ng-click="app.scrollIntoView('#myaccount')" title="My Account">My Account</a>
-                        <a class="logout" href="/#/" ng-controller="app.controller.users as users" ng-click="users.logout()" title="Logout">Logout</a>
+                        <a class="logout" ui-sref="logout" ui-sref-active="active" title="Logout">Logout</a>
                     </div>
                 </div>
             </div>
@@ -31,14 +31,14 @@
                         </div>
                     </div>
                     <div class="buy-a-pint" ng-click="purchases.add(kegs.activeKeg._id)" ng-controller="app.controller.purchases as purchases">
-                        <div class="price">$[[kegs.activeKeg.pint_price]]</div>
+                        <div class="price">[[kegs.activeKeg.pint_price | currency]]</div>
                         <div class="tagline">Buy a Pint</div>
                     </div>
                 </div>
             </div>
             <div class="upper-footer-wrap" ng-controller="app.controller.purchases as purchases" ng-init="purchases.latest()">
                 <div class="upper-footer">
-                    <p class="latest" ng-if="purchases.latestPour"><strong>[[purchases.latestPour.created | date:'M/d/yy h:mm a']]:</strong> [[purchases.latestPour.user.first_name]] [[purchases.latestPour.user.last_name]] just enjoyed a [[purchases.latestPour.keg.beer_name]]</p>
+                    <p class="latest" ng-if="purchases.latestPour"><a class="avatar" href="http://www.gravatar.com/" target="_blank"><img ng-src="[[users.getProfilePicUrl(purchases.latestPour.user)]]" /></a><strong>[[purchases.latestPour.created | date:'M/d/yy h:mm a']]:</strong> [[purchases.latestPour.user.first_name]] [[purchases.latestPour.user.last_name]] just enjoyed a [[purchases.latestPour.keg.beer_name]]</p>
                     <p class="balance" ng-if="app.getCurrentUser()"><strong>Your Tab:</strong> [[app.currentUser.balance | customCurrency]]</p>
                 </div>
             </div>

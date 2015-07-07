@@ -6,6 +6,7 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     userService.currentUser = null;
     userService.currentUserPollingPromise = null;
 
+
     userService.login = function(credentials) {
         return $http.post('/users/login', credentials).success(function(response) {
             if(response.success) {
@@ -46,8 +47,8 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     userService.sendPasswordResetEmail = function(email) {
         return $http.post('/users/send-password-reset-email', {email:email}).success(function(response) {
             inform.add(response.message, {ttl: 5000, type: 'danger'});
-        }).error(function(data, status, headers, config) {
-            inform.add("Error Creating Account", {ttl: 5000, type: 'danger'});
+        }).error(function(response) {
+            inform.add(response.message, {ttl: 5000, type: 'danger'});
         });
     }
 
@@ -60,6 +61,16 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
             }
         }).error(function() {
             userService.setCurrentUser(null);
+        });
+    }
+
+    userService.getAllUsers = function() {
+        return $http.get('/users/all').success(function(response){
+            if(!response.success) {
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
+            }
+        }).error(function(response) {
+            inform.add(response.message, {ttl: 5000, type: 'danger'});
         });
     }
 
@@ -115,6 +126,11 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
         } else {
             return false;
         }
+    }
+
+    userService.getProfilePicUrl = function(user) {
+        var emailMd5 = md5(user.email);
+        return "https://www.gravatar.com/avatar/" + emailMd5 + ".jpg?s=200&r=x&d=identicon";
     }
 
 });

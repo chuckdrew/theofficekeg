@@ -1,1 +1,12 @@
-<h1>Admin</h1>
+<div class="admin-nav-container">
+    <div class="admin-nav">
+        <div class="overview vert-tab" ui-sref="account.admin.overview" ui-sref-active="active">Overview</div>
+        <div class="users vert-tab" ui-sref="account.admin.users" ui-sref-active="active">Users</div>
+        <div class="kegs vert-tab" ui-sref="account.admin.kegs" ui-sref-active="active">Kegs</div>
+        <div class="orphan-scans vert-tab" ui-sref="account.admin.orphan-scans" ui-sref-active="active">Orphan Scans</div>
+        <div class="messages vert-tab" ui-sref="account.admin.messages" ui-sref-active="active">Messages</div>
+    </div>
+</div>
+<div class="admin-content">
+    <div ui-view></div>
+</div>

@@ -4,10 +4,10 @@ module.exports = function(requiredRole) {
             if(req.user.hasRole(requiredRole)) {
                 return next();
             } else {
-                res.apiRes(false, 'You do not have permission to use this action.', null);
+                res.status(403).apiRes(false, 'You do not have permission to use this action.', null);
             }
         } else {
-            res.apiRes(false, 'Please login on create a new account.', null);
+            res.status(401).apiRes(false, 'Please login on create a new account.', null);
         }
     }
 }

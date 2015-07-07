@@ -13,8 +13,12 @@ var purchaseSchema = mongoose.Schema({
     locked_date: Date
 });
 
-purchaseSchema.statics.lockPurchasesForUser = function(userId, callback) {
-    this.update({'user' : userId},{'locked' : true},null,callback);
+purchaseSchema.statics.lockPurchasesForUser = function(userId) {
+    this.update({'user': userId}, {'locked': true}, {multi: true},
+        function (err, num) {
+            console.log("Locked " + num + " purchases");
+        }
+    );
 }
 
 purchaseSchema.plugin(mongoosePaginate);

@@ -14,8 +14,8 @@ purchaseServiceModule.service('purchaseService', function(inform, $http, $interv
             } else {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
-        }).error(function() {
-            inform.add('Error recording purchase.', {ttl: 5000, type: 'danger'});
+        }).error(function(response) {
+            inform.add(response.message, {ttl: 5000, type: 'danger'});
         });
     }
 
@@ -26,8 +26,8 @@ purchaseServiceModule.service('purchaseService', function(inform, $http, $interv
             } else {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
-        }).error(function() {
-            inform.add('Error getting latest purchase', {ttl: 5000, type: 'danger'});
+        }).error(function(response) {
+            inform.add(response.message, {ttl: 5000, type: 'danger'});
         });
     }
 
@@ -44,8 +44,8 @@ purchaseServiceModule.service('purchaseService', function(inform, $http, $interv
             } else {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
-        }).error(function() {
-            inform.add('Error cancelling purchase.', {ttl: 5000, type: 'danger'});
+        }).error(function(response) {
+            inform.add(response, {ttl: 5000, type: 'danger'});
         });
     }
 
@@ -56,8 +56,8 @@ purchaseServiceModule.service('purchaseService', function(inform, $http, $interv
             } else {
                 inform.add('Error loading purchases.', {ttl: 5000, type: 'danger'});
             }
-        }).error(function() {
-            inform.add('Error loading purchases.', {ttl: 5000, type: 'danger'});
+        }).error(function(response) {
+            inform.add(response, {ttl: 5000, type: 'danger'});
         });
     }
 
