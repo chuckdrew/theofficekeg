@@ -68,7 +68,7 @@ module.exports = function(app, passport) {
                                                 users.forEach(function(adminUser) {
                                                     app.sendMail({
                                                         template: 'orphanscan',
-                                                        to: "joemess21@gmail.com",
+                                                        to: adminUser.email,
                                                         subject: 'Orphan Scan! Please assign to a user.',
                                                         base_url: process.env.BASE_URL,
                                                         purchase: newPurchase,
