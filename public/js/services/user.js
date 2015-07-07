@@ -64,6 +64,16 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
         });
     }
 
+    userService.getAllUsers = function() {
+        return $http.get('/users/all').success(function(response){
+            if(!response.success) {
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
+            }
+        }).error(function(response) {
+            inform.add(response.message, {ttl: 5000, type: 'danger'});
+        });
+    }
+
     userService.initUserPolling = function() {
         if(userService.currentUserPollingPromise == null) {
             userService.currentUserPollingPromise = $interval(function(){

@@ -1,2 +1,24 @@
 <h1 class="header-title">Orphan Scans</h1>
-<p>Orphan Scans will go here</p>
+<div class="orphans" ng-init="scans.loadOrphansScans(); scans.loadAllUsers();">
+    <div class="grid">
+        <div class="scan row" ng-repeat="scan in scans.orphans.results">
+            <div class="item">
+                <span class="label">Date</span>
+                <span class="value">[[scan.scanned_date | date:'M/d/yy h:mm a']]</span>
+            </div>
+            <div class="item">
+                <span class="label">UUID</span>
+                <span class="value">[[scan.scanned_uuid]]</span>
+            </div>
+            <div class="item right">
+                <span class="label">User</span>
+                <span class="value">
+                    <select ng-model="scanUserId" ng-change="scans.assignScanToUser(scanUserId, scan._id)" ng-options="user._id as (user.first_name + ' ' + user.last_name) for user in scans.users"></select>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="load-more" ng-click="scans.scans.loadMoreOrphanScans(20)" ng-if="scans.orphans.results.length < 200">
+        <p>Show More</p>
+    </div>
+</div>

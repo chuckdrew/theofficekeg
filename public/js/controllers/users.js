@@ -127,15 +127,6 @@ usersModule.config(function($stateProvider) {
         parent: 'account.admin'
     });
 
-    $stateProvider.state('account.admin.orphan-scans', {
-        url: "/orphan-scans",
-        templateUrl: "/js/views/admin/orphan-scans.html",
-        controller: 'app.controller.users as scans',
-        requiresAuth: true,
-        requiresRole: 'admin',
-        parent: 'account.admin'
-    });
-
     $stateProvider.state('account.admin.messages', {
         url: "/messages",
         templateUrl: "/js/views/admin/messages.html",
