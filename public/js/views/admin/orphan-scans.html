@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div class="load-more" ng-click="scans.scans.loadMoreOrphanScans(20)" ng-if="scans.orphans.results.length < 200 && scans.orphans.results.length != 0">
+    <div class="load-more" ng-click="scans.loadMoreOrphanScans(20)" ng-if="scans.orphans.results.length < 200 && scans.orphans.results.length != 0">
         <p>Show More</p>
     </div>
     <div class="no-records" ng-if="scans.orphans.results.length == 0">
