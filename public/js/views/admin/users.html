@@ -1,2 +1,23 @@
 <h1 class="header-title">Users</h1>
-<p>User management will go here.</p>
+<div class="users" ng-init="users.loadAllUsers();">
+    <div class="grid">
+        <div class="scan row" ng-repeat="user in users.users">
+            <div class="item">
+                <span class="label">Name</span>
+                <span class="value">[[user.first_name + ' ' + user.last_name]]</span>
+            </div>
+            <div class="item">
+                <span class="label">Email</span>
+                <span class="value">[[user.email]]</span>
+            </div>
+            <div class="item">
+                <span class="label">Balance</span>
+                <span class="value">[[user.balance | customCurrency]]</span>
+            </div>
+            <div class="item right">
+                <span class="label">Action</span>
+                <span class="value">Edit</span>
+            </div>
+        </div>
+    </div>
+</div>

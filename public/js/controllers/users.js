@@ -130,7 +130,7 @@ usersModule.config(function($stateProvider) {
     $stateProvider.state('account.admin.messages', {
         url: "/messages",
         templateUrl: "/js/views/admin/messages.html",
-        controller: 'app.controller.users as user',
+        controller: 'app.controller.users as users',
         requiresAuth: true,
         requiresRole: 'admin',
         parent: 'account.admin'
@@ -178,5 +178,13 @@ usersModule.controller('app.controller.users', function($scope, $state, inform, 
 
     users.getProfilePicUrl = function(user) {
         return userService.getProfilePicUrl(user);
+    }
+
+    users.loadAllUsers = function() {
+        userService.getAllUsers().success(function(response){
+            if(response.success) {
+                users.users = response.data;
+            }
+        });
     }
 });
