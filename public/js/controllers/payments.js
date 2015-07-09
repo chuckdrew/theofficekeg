@@ -18,4 +18,8 @@ paymentsModule.controller('app.controller.payments', function($rootScope, $scope
         payments.loadPayments();
     }
 
+    payments.add = function(userId, amount) {
+        alert("This needs to be wired up!");
+    }
+
 });

@@ -111,11 +111,30 @@ usersModule.config(function($stateProvider) {
 
     $stateProvider.state('account.admin.users', {
         url: "/users",
+        redirectTo: 'account.admin.users.list',
         templateUrl: "/js/views/admin/users.html",
         controller: 'app.controller.users as users',
         requiresAuth: true,
         requiresRole: 'admin',
         parent: 'account.admin'
+    });
+
+    $stateProvider.state('account.admin.users.edit', {
+        url: "/edit/{id}",
+        templateUrl: "/js/views/admin/users/edit.html",
+        controller: 'app.controller.users as users',
+        requiresAuth: true,
+        requiresRole: 'admin',
+        parent: 'account.admin.users'
+    });
+
+    $stateProvider.state('account.admin.users.list', {
+        url: "/list",
+        templateUrl: "/js/views/admin/users/list.html",
+        controller: 'app.controller.users as users',
+        requiresAuth: true,
+        requiresRole: 'admin',
+        parent: 'account.admin.users'
     });
 
     $stateProvider.state('account.admin.kegs', {
@@ -137,7 +156,7 @@ usersModule.config(function($stateProvider) {
     });
 });
 
-usersModule.controller('app.controller.users', function($scope, $state, inform, userService) {
+usersModule.controller('app.controller.users', function($scope, $state, inform, userService, $stateParams) {
 
     var users = this;
     users.user = userService.getCurrentUser();
@@ -184,6 +203,14 @@ usersModule.controller('app.controller.users', function($scope, $state, inform, 
         userService.getAllUsers().success(function(response){
             if(response.success) {
                 users.users = response.data;
+            }
+        });
+    }
+
+    users.loadUser = function() {
+        userService.getUser($stateParams.id).success(function(response){
+            if(response.success) {
+                users.user = response.data;
             }
         });
     }

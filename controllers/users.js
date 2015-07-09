@@ -107,6 +107,7 @@ module.exports = function(app, passport) {
                 user.email = req.body.email;
                 user.first_name = req.body.first_name;
                 user.last_name = req.body.last_name;
+                user.scanner_uuid = req.body.scanner_uuid;
 
                 if(req.body.new_password) {
                     user.password = user.generateHash(req.body.new_password);
