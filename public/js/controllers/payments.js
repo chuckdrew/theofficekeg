@@ -19,7 +19,7 @@ paymentsModule.controller('app.controller.payments', function($rootScope, $scope
     }
 
     payments.add = function(userId, amount) {
-        alert("This needs to be wired up!");
+        alert("This needs to be wired up! " + amount);
     }
 
 });
