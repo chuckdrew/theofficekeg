@@ -66,10 +66,10 @@
             <div class="box">
                 <h3 class="box-title">Add Payment</h3>
                 <div class="box-content">
-                    <form ng-controller="app.controller.payments as payments" ng-submit="payments.add(users.user._id, amount);">
+                    <form ng-controller="app.controller.payments as payments" ng-submit="payments.add(users.user._id, payments.amount, users.loadUser);">
                         <div class="field">
                             <label for="amount">Payment Amount</label>
-                            <input ng-model="amount" type="number" min="0.01" step="0.01" required class="form-control" id="amount" placeholder="Amount">
+                            <input ng-model="payments.amount" type="number" min="0.01" step="0.01" required class="form-control" id="amount" placeholder="Amount">
                         </div>
                         <div class="form-button">
                             <button type="submit" class="button button-default">Submit Payment</button>
