@@ -66,7 +66,15 @@ input[type="checkbox"]:focus {
 
 input,select,textarea,button {font-size: 16px;}
 input.input-text,textarea { padding:8px; }
-select { padding:1px; }
+select {
+  padding:15px; width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #fff;
+  border-radius: 6px;
+  border:1px solid #d9d9d9;
+}
 select option { padding-right:10px; }
 select.multiselect option { border-bottom:1px solid #ccc; padding:2px 5px; }
 select.multiselect option:last-child { border-bottom:0; }

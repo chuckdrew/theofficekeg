@@ -242,6 +242,50 @@ p.balance strong {
   font-weight: bold;
 }
 
+.two-column {
+  overflow: auto;
+}
+.two-column .col1 {
+  @include mq($from: tablet) {
+    float: left;
+    width: 48.5%;
+  }
+}
+.two-column .col2 {
+  @include mq($from: tablet) {
+    float: right;
+    width: 48.5%;
+  }
+}
+
+.box .box-title {
+  font-weight: 700;
+  font-size: 14px;
+  background: #f3f3f3;
+  padding: 10px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.box .box-content {
+  margin-bottom: 30px;
+}
+
+.label-value {
+  margin-bottom: 10px;
+  overflow: auto;
+  line-height: 1.2em;
+}
+.label-value:last-child {
+  margin-bottom: 0px;
+}
+.label-value .label {
+  float: left;
+  font-weight: 700;
+}
+.label-value .value {
+  float: right;
+}
+
 .grid {
   display: table;
   width: 100%;
@@ -255,6 +299,10 @@ p.balance strong {
     padding-bottom: 10px;
     margin-bottom: 10px;
   }
+}
+.grid .row:hover {
+  cursor: pointer;
+  background: #f3f3f3;
 }
 .grid .row:last-child {
   border-bottom: none;

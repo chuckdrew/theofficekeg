@@ -1,43 +1,75 @@
 <h1 class="header-title">[[users.user.first_name + " " + users.user.last_name]]</h1>
 <div class="user form" ng-init="users.loadUser()">
-    <div class="2-col">
-        <div class="col-1">
-            <div class="form">
-                <form ng-submit="users.update(users.user);">
-                    <div class="field">
-                        <label for="email">Email address</label>
-                        <input ng-model="users.user.email" type="email" required class="form-control" id="email" placeholder="Email">
+    <div class="two-column">
+        <div class="col1">
+            <div class="box">
+                <h3 class="box-title">Edit User Info</h3>
+                <div class="box-content">
+                    <div class="form">
+                        <form ng-submit="users.update(users.user);">
+                            <div class="field">
+                                <label for="email">Email address</label>
+                                <input ng-model="users.user.email" type="email" required class="form-control" id="email" placeholder="Email">
+                            </div>
+                            <div class="field">
+                                <label for="firstname">First Name</label>
+                                <input ng-model="users.user.first_name" type="text" required class="form-control" id="firstname" placeholder="First Name">
+                            </div>
+                            <div class="field">
+                                <label for="lastname">Last Name</label>
+                                <input ng-model="users.user.last_name" type="text" required class="form-control" id="lastname" placeholder="Last Name">
+                            </div>
+                            <div class="field">
+                                <label for="password">Password</label>
+                                <input ng-model="users.user.new_password" type="password" class="form-control" id="password" placeholder="Password">
+                            </div>
+                            <div class="field">
+                                <label for="password">Fob UUID</label>
+                                <input ng-model="users.user.scanner_uuid" type="text" class="form-control" id="scanner_uuid" placeholder="Fob UUID">
+                            </div>
+                            <div class="field">
+                                <label for="status">Status</label>
+                                <select ng-model="users.user.status" id="status" class="form-control">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="roles">Roles</label>
+                                <select multiple ng-model="users.user.roles" id="roles" class="form-control">
+                                    <option value="guest">Guest</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <div class="form-button">
+                                <button type="submit" class="button button-default">Save</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="field">
-                        <label for="firstname">First Name</label>
-                        <input ng-model="users.user.first_name" type="text" required class="form-control" id="firstname" placeholder="First Name">
-                    </div>
-                    <div class="field">
-                        <label for="lastname">Last Name</label>
-                        <input ng-model="users.user.last_name" type="text" required class="form-control" id="lastname" placeholder="Last Name">
-                    </div>
-                    <div class="field">
-                        <label for="password">Password</label>
-                        <input ng-model="users.user.new_password" type="password" class="form-control" id="password" placeholder="Password">
-                    </div>
-                    <div class="field">
-                        <label for="password">Fob UUID</label>
-                        <input ng-model="users.user.scanner_uuid" type="text" class="form-control" id="scanner_uuid" placeholder="Fob UUID">
-                    </div>
-                    <div class="form-button">
-                        <button type="submit" class="button button-default">Save</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-        <div class="col-2">
+        <div class="col2">
+            <div class="box">
+                <h3 class="box-title">User Details</h3>
+                <div class="box-content">
+                    <div class="label-value">
+                        <span class="label">Balance:</span>
+                        <span class="value">[[users.user.balance | customCurrency]]</span>
+                    </div>
+                    <div class="label-value">
+                        <span class="label">Member Since:</span>
+                        <span class="value">[[users.user.created | date:'M/d/yy h:mm a']]</span>
+                    </div>
+                </div>
+            </div>
             <div class="box">
                 <h3 class="box-title">Add Payment</h3>
                 <div class="box-content">
                     <form ng-controller="app.controller.payments as payments" ng-submit="payments.add(users.user._id, amount);">
                         <div class="field">
                             <label for="amount">Payment Amount</label>
-                            <input ng-model="amount" type="number" required class="form-control" id="amount" placeholder="Amount">
+                            <input ng-model="amount" type="number" min="0.01" step="0.01" required class="form-control" id="amount" placeholder="Amount">
                         </div>
                         <div class="form-button">
                             <button type="submit" class="button button-default">Submit Payment</button>
