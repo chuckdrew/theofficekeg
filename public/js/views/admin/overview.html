@@ -1,2 +1,24 @@
 <h1 class="header-title">Overview</h1>
-<p>App overview and reporting will go here. Ie total outstanding balances, user counts.</p>
+<div>
+    <div class="two-column">
+        <div class="col1">
+            <div class="box">
+                <h3 class="box-title">Current Keg Stats</h3>
+                <div class="box-content">
+                    <p>This is coming soon.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col2" ng-init="users.getStats()">
+            <div class="box">
+                <h3 class="box-title">Users Stats</h3>
+                <div class="box-content">
+                    <div class="label-value">
+                        <span class="label">Total Outstanding Balance:</span>
+                        <span class="value">[[users.stats.totalOutstandingBalance | customCurrency]]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

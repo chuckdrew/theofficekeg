@@ -242,5 +242,11 @@ module.exports = function(app, passport) {
         res.apiRes(true,'Logged Headers to Console.',null);
     });
 
+    router.get('/stats', function(req, res) {
+        User.getTotalOutstandingBalance().then(function(result) {
+            res.apiRes(true,'Successfully Calculated Total Outstanding Balance.',result.pop());
+        });
+    });
+
     return router;
 };
