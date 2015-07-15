@@ -4,7 +4,7 @@
         <div class="scan row" ng-repeat="user in users.users" ui-sref="account.admin.users.edit({id:user._id})">
             <div class="item">
                 <span class="label">Name</span>
-                <span class="value"><img class="user-pic" ng-src="[[users.getProfilePicUrl(user)]]" /> [[user.first_name + ' ' + user.last_name]]</span>
+                <span class="value"><img class="roundpic" ng-src="[[users.getProfilePicUrl(user)]]" /> [[user.first_name + ' ' + user.last_name]]</span>
             </div>
             <div class="item">
                 <span class="label">Email</span>

@@ -14,8 +14,20 @@
                 <h3 class="box-title">Users Stats</h3>
                 <div class="box-content">
                     <div class="label-value">
+                        <span class="label">User Count:</span>
+                        <span class="value">[[users.stats.userCount]]</span>
+                    </div>
+                    <div class="label-value">
                         <span class="label">Total Outstanding Balance:</span>
                         <span class="value">[[users.stats.totalOutstandingBalance | customCurrency]]</span>
+                    </div>
+                    <div class="label-value">
+                        <span class="label">Total Liabilities:</span>
+                        <span class="value">[[users.stats.totalLiabilities | customCurrency]]</span>
+                    </div>
+                    <div class="label-value">
+                        <span class="label">Total Balance:</span>
+                        <span class="value">[[users.stats.totalBalance | customCurrency]]</span>
                     </div>
                 </div>
             </div>

@@ -49,14 +49,19 @@ userSchema.statics.getUsersWithRole = function(role) {
 userSchema.statics.getTotalOutstandingBalance = function() {
     return this.aggregate([
         {
-            $match: {
-                balance: {$lt: 0 }
+            $project: {
+                outstandingBalance: {$cond: [{$lt: ['$balance', 0]}, '$balance', 0]},
+                totalLiabilities: {$cond: [{$gt: ['$balance', 0]}, '$balance', 0]},
+                balance: 1
             }
         },
         {
             $group: {
                 _id: null,
-                totalOutstandingBalance: {$sum: '$balance'}
+                totalOutstandingBalance: {$sum: '$outstandingBalance'},
+                totalLiabilities: {$sum: '$totalLiabilities'},
+                totalBalance: {$sum: '$balance'},
+                userCount: {$sum: 1}
             }
         }
     ]).exec();
