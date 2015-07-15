@@ -46,6 +46,22 @@ userSchema.statics.getUsersWithRole = function(role) {
     return this.find({'roles': role }).exec();
 };
 
+userSchema.statics.getTotalOutstandingBalance = function() {
+    return this.aggregate([
+        {
+            $match: {
+                balance: {$lt: 0 }
+            }
+        },
+        {
+            $group: {
+                _id: null,
+                totalOutstandingBalance: {$sum: '$balance'}
+            }
+        }
+    ]).exec();
+};
+
 userSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('User', userSchema);

@@ -103,7 +103,7 @@ usersModule.config(function($stateProvider) {
     $stateProvider.state('account.admin.overview', {
         url: "/overview",
         templateUrl: "/js/views/admin/overview.html",
-        controller: 'app.controller.users as overview',
+        controller: 'app.controller.users as users',
         requiresAuth: true,
         requiresRole: 'admin',
         parent: 'account.admin'
@@ -211,6 +211,14 @@ usersModule.controller('app.controller.users', function($scope, $state, inform, 
         userService.getUser($stateParams.id).success(function(response){
             if(response.success) {
                 users.user = response.data;
+            }
+        });
+    }
+
+    users.getStats = function() {
+        userService.getStats().success(function(response) {
+            if(response.success) {
+                users.stats = response.data;
             }
         });
     }

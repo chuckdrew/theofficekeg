@@ -143,4 +143,14 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
         return "https://www.gravatar.com/avatar/" + emailMd5 + ".jpg?s=200&r=x&d=identicon";
     }
 
+    userService.getStats = function() {
+        return $http.get('/users/stats').success(function(response){
+            if(!response.success) {
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
+            }
+        }).error(function(response) {
+            inform.add(response.message, {ttl: 5000, type: 'danger'});
+        });
+    }
+
 });
