@@ -1,15 +1,16 @@
-var kegsModule = angular.module('app.kegs', []);
+var kegsModule = angular.module('app.kegs', [
+    'app.service.keg'
+]);
 
-kegsModule.controller('app.controller.kegs', function($rootScope, $scope, $window, $http, $state, inform) {
+kegsModule.controller('app.controller.kegs', function($rootScope, $scope, $window, $http, $state, inform, kegService) {
 
     var kegs = this;
+    kegs.kegs = null;
 
     kegs.getActiveKeg = function() {
-        $http.get('/kegs/active').success(function(response){
+        kegService.getActiveKeg().success(function(response){
             if(response.success) {
                 kegs.activeKeg = response.data;
-            } else {
-                inform.add(response.message, {ttl: 5000, type: 'danger'});
             }
         });
     }
