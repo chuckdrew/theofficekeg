@@ -2,7 +2,7 @@ var kegsModule = angular.module('app.kegs', [
     'app.service.keg'
 ]);
 
-usersModule.config(function($stateProvider) {
+kegsModule.config(function($stateProvider) {
 
     $stateProvider.state('account.admin.kegs', {
         url: "/kegs",
