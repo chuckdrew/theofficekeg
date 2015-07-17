@@ -137,15 +137,6 @@ usersModule.config(function($stateProvider) {
         parent: 'account.admin.users'
     });
 
-    $stateProvider.state('account.admin.kegs', {
-        url: "/kegs",
-        templateUrl: "/js/views/admin/kegs.html",
-        controller: 'app.controller.kegs as kegs',
-        requiresAuth: true,
-        requiresRole: 'admin',
-        parent: 'account.admin'
-    });
-
     $stateProvider.state('account.admin.messages', {
         url: "/messages",
         templateUrl: "/js/views/admin/messages.html",

@@ -14,16 +14,14 @@ kegServiceModule.service('kegService', function(inform, $http) {
         });
     }
 
-    //kegService.loadKegs = function(limit) {
-    //    return $http.get('/payments/list', {params:{page: 1, limit: limit}}).success(function(response){
-    //        if(response.success) {
-    //            paymentService.paymentList = response.data;
-    //        } else {
-    //            inform.add('Error loading purchases.', {ttl: 5000, type: 'danger'});
-    //        }
-    //    }).error(function(response) {
-    //        inform.add(response, {ttl: 5000, type: 'danger'});
-    //    });
-    //}
+    kegService.loadKegs = function(limit) {
+        return $http.get('/kegs/list', {params:{page: 1, limit: limit}}).success(function (response) {
+            if (!response.success) {
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
+            }
+        }).error(function (response) {
+            inform.add(response, {ttl: 5000, type: 'danger'});
+        });
+    }
 
 });

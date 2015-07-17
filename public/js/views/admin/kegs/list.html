@@ -1,0 +1,27 @@
+<h1 class="header-title">Kegs</h1>
+<div class="users" ng-init="kegs.loadKegs();">
+    <div class="grid">
+        <div class="scan row" ng-repeat="keg in kegs.kegs.results" ui-sref="account.admin.kegs.edit({id:keg._id})">
+            <div class="item">
+                <span class="label">Beer</span>
+                <span class="value">[[keg.beer_name]]</span>
+            </div>
+            <div class="item">
+                <span class="label">Brewery</span>
+                <span class="value">[[keg.brewery_name]]</span>
+            </div>
+            <div class="item">
+                <span class="label">Price</span>
+                <span class="value">[[keg.pint_price | customCurrency]]</span>
+            </div>
+            <div class="item">
+                <span class="label">Price</span>
+                <span class="value">[[keg.total_price | customCurrency]]</span>
+            </div>
+            <div class="item right">
+                <span class="label">Active</span>
+                <span class="value">[[keg.active | customCurrency]]</span>
+            </div>
+        </div>
+    </div>
+</div>

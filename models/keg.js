@@ -5,6 +5,8 @@ var kegSchema = mongoose.Schema({
     beer_name : String,
     brewery_name: String,
     pint_price: Number,
+    total_price: Number,
+    volume_oz: Number,
     is_active: {type: Boolean, default: false},
     created : {type: Date, default: Date.now}
 });
