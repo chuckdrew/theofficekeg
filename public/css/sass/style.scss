@@ -317,6 +317,7 @@ p.balance strong {
 .grid .row .item {
   display: table-cell;
   padding: 12px 0px 8px 0px;
+  line-height: 26px;
 
   @include mq($until: tablet) {
     display: block;
@@ -411,9 +412,13 @@ p.balance strong {
   font-size: 40px;
   color: #00E4FF;
   font-weight: 700;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   border-bottom: 1px solid #e7ecea;
   padding-bottom: 5px;
+
+  @include mq($until: tablet) {
+    font-size: 30px;
+  }
 }
 .my-account-wrapper .my-account .user-form {
   max-width: 400px;
@@ -530,6 +535,8 @@ p.balance strong {
 
 }
 .admin-content {
+  position: relative;
+
   @include mq($from: tablet) {
     border-left: 1px solid #00E4FB;
     box-sizing:border-box;
@@ -539,6 +546,20 @@ p.balance strong {
     width: 75%;
     min-height: 300px;
     padding-left: 25px;
+  }
+
+  .top-button {
+    margin-bottom: 20px;
+
+    @include mq($from: tablet) {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+    }
+
+    .button {
+      padding: 5px 20px;
+    }
   }
 }
 

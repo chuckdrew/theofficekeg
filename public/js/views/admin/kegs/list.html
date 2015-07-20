@@ -1,4 +1,7 @@
 <h1 class="header-title">Kegs</h1>
+<div class="top-button">
+    <a class="button" ui-sref="account.admin.kegs.add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Keg</a>
+</div>
 <div class="users" ng-init="kegs.loadKegs();">
     <div class="grid">
         <div class="scan row" ng-repeat="keg in kegs.kegs.results" ui-sref="account.admin.kegs.edit({id:keg._id})">
@@ -11,16 +14,16 @@
                 <span class="value">[[keg.brewery_name]]</span>
             </div>
             <div class="item">
-                <span class="label">Price</span>
-                <span class="value">[[keg.pint_price | customCurrency]]</span>
+                <span class="label">Pint Price</span>
+                <span class="value">[[keg.pint_price | currency]]</span>
             </div>
             <div class="item">
-                <span class="label">Price</span>
-                <span class="value">[[keg.total_price | customCurrency]]</span>
+                <span class="label">Keg Price</span>
+                <span class="value">[[keg.total_price | currency]]</span>
             </div>
             <div class="item right">
                 <span class="label">Active</span>
-                <span class="value">[[keg.active | customCurrency]]</span>
+                <span class="value" ng-if="keg.is_active">[[keg.is_active | active]]</span>
             </div>
         </div>
     </div>

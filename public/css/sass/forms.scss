@@ -103,6 +103,15 @@ input.qty { width:2.5em;}
   user-select: none;
   color: #333333;
   background-color: #ffffff;
+  text-decoration: none;
+}
+
+.button.no-border {
+  border: none;
+}
+
+.button.light-border {
+  border: 1px solid #eeeeee;
 }
 
 .button:hover,

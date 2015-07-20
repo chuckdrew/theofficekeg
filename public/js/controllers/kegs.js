@@ -43,7 +43,7 @@ kegsModule.config(function($stateProvider) {
 
 });
 
-kegsModule.controller('app.controller.kegs', function($rootScope, $scope, $window, $http, $state, inform, kegService) {
+kegsModule.controller('app.controller.kegs', function($rootScope, $scope, $window, $http, $state, inform, kegService, $stateParams) {
 
     var kegs = this;
     kegs.kegs = null;
@@ -64,8 +64,38 @@ kegsModule.controller('app.controller.kegs', function($rootScope, $scope, $windo
         });
     }
 
-    kegs.add = function(keg) {
+    kegs.loadKeg = function() {
+        kegService.loadKeg($stateParams.id).success(function(response){
+            if(response.success) {
+                kegs.keg = response.data;
+            }
+        });
+    }
 
+    kegs.add = function(keg) {
+        kegService.add(keg).success(function(response){
+            if(response.success) {
+                inform.add(response.message, {ttl: 3000, type: 'success'});
+                $state.go('account.admin.kegs.list');
+            }
+        });
+    }
+
+    kegs.update = function(keg) {
+        kegService.update(keg).success(function(response){
+            if(response.success) {
+                inform.add(response.message, {ttl: 3000, type: 'success'});
+            }
+        });
+    }
+
+    kegs.activate = function(keg) {
+        kegService.activate(keg).success(function(response) {
+            if(response.success) {
+                kegs.loadKeg();
+                inform.add(response.message, {ttl: 3000, type: 'success'});
+            }
+        });
     }
 
 });

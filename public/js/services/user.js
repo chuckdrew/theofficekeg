@@ -6,7 +6,6 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     userService.currentUser = null;
     userService.currentUserPollingPromise = null;
 
-
     userService.login = function(credentials) {
         return $http.post('/users/login', credentials).success(function(response) {
             if(response.success) {
@@ -116,7 +115,10 @@ userServiceModule.service('userService', function(inform, $http, $interval) {
     userService.update = function(user) {
         return $http.put('/users/update', user).success(function(response) {
             if(response.success) {
-                userService.setCurrentUser(response.data);
+                if(userService.getCurrentUser()._id == response.data._id) {
+                    userService.setCurrentUser(response.data);
+                }
+
                 inform.add(response.message, {ttl: 3000, type: 'success'});
             } else {
                 inform.add(response.message, {ttl: 5000, type: 'danger'});

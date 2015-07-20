@@ -1,1 +1,51 @@
-edit
+<h1 class="header-title">[[kegs.keg.beer_name]]</h1>
+<div class="top-button">
+    <a class="button light-border" ui-sref="account.admin.kegs.list"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back</a>
+</div>
+<div class="keg form" ng-init="kegs.loadKeg()">
+    <div class="two-column">
+        <div class="col1">
+            <div class="box">
+                <div class="box-content">
+                    <h3 class="box-title">Keg Info</h3>
+                    <div class="form">
+                        <form ng-submit="kegs.update(kegs.keg);">
+                            <div class="field">
+                                <label for="brewery_name">Brewery Name</label>
+                                <input ng-model="kegs.keg.brewery_name" type="text" required class="form-control" id="brewery_name" placeholder="Brewery Name">
+                            </div>
+                            <div class="field">
+                                <label for="beer_name">Beer Name</label>
+                                <input ng-model="kegs.keg.beer_name" type="text" required class="form-control" id="beer_name" placeholder="Beer Name">
+                            </div>
+                            <div class="field">
+                                <label for="pint_price">Pint Price</label>
+                                <input ng-model="kegs.keg.pint_price" type="number" min="0.01" step="0.01" required class="form-control" id="pint_price" placeholder="Pint Price">
+                            </div>
+                            <div class="field">
+                                <label for="total_price">Total Price</label>
+                                <input ng-model="kegs.keg.total_price" type="number" min="0.01" step="0.01" required class="form-control" id="total_price" placeholder="Total Price">
+                            </div>
+                            <div class="field">
+                                <label for="volume_oz">Volume in Ounces</label>
+                                <input ng-model="kegs.keg.volume_oz" type="number" min="0" required class="form-control" id="volume_oz" placeholder="Total Volume">
+                            </div>
+                            <div class="form-button">
+                                <button type="submit" class="button button-default">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="box">
+                <h3 class="box-title">Activate Keg</h3>
+                <div class="box-content">
+                    <button ng-if="!kegs.keg.is_active" type="submit" class="button button-default" ng-click="kegs.activate(kegs.keg)">Activate</button>
+                    <strong ng-if="kegs.keg.is_active">This Keg is Active.</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

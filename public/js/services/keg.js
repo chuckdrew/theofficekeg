@@ -24,4 +24,44 @@ kegServiceModule.service('kegService', function(inform, $http) {
         });
     }
 
+    kegService.loadKeg = function(kegId) {
+        return $http.get('/kegs', {params:{_id: kegId}}).success(function (response) {
+            if (!response.success) {
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
+            }
+        }).error(function (response) {
+            inform.add(response, {ttl: 5000, type: 'danger'});
+        });
+    }
+
+    kegService.add = function(keg) {
+        return $http.post('/kegs/add',keg).success(function(response){
+            if(!response.success) {
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
+            }
+        }).error(function(response) {
+            inform.add(response.message, {ttl: 5000, type: 'danger'});
+        });
+    }
+
+    kegService.update = function(keg) {
+        return $http.put('/kegs/update',keg).success(function(response){
+            if(!response.success) {
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
+            }
+        }).error(function(response) {
+            inform.add(response.message, {ttl: 5000, type: 'danger'});
+        });
+    }
+
+    kegService.activate = function(keg) {
+        return $http.post('/kegs/activate',keg).success(function(response){
+            if(!response.success) {
+                inform.add(response.message, {ttl: 5000, type: 'danger'});
+            }
+        }).error(function(response) {
+            inform.add(response.message, {ttl: 5000, type: 'danger'});
+        });
+    }
+
 });
