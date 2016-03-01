@@ -3,7 +3,7 @@
         <h1 class="balance-label">Your Tab:</h1>
         <h1 class="balance-value" ng-class = "(app.currentUser.balance >= 0) ? 'positive':'negative'">[[app.currentUser.balance | customCurrency]]</h1>
     </div>
-    <div class="purchases " ng-controller="app.controller.purchases as purchases" ng-init="purchases.loadPurchases()">
+    <div class="purchases" ng-controller="app.controller.purchases as purchases" ng-init="purchases.loadPurchases()">
         <h2>Pints</h2>
         <div class="grid">
             <div class="purchase row" ng-repeat="purchase in purchases.list.results">
@@ -33,22 +33,29 @@
             <p>Show More</p>
         </div>
     </div>
-    <div class="payments " ng-controller="app.controller.payments as payments" ng-init="payments.loadPayments()">
-        <h2>Payments</h2>
-        <div class="grid">
-            <div class="payment row" ng-repeat="payment in payments.list.results">
-                <div class="item">
-                    <span class="label">Date</span>
-                    <span class="value">[[payment.created | date:'M/d/yy h:mm a']]</span>
-                </div>
-                <div class="item right">
-                    <span class="label">Amount</span>
-                    <span class="value">[[payment.amount | customCurrency]]</span>
+    <div class="payments">
+        <div class="charge" ng-controller="app.controller.charge as charge">
+            <h2>Add a Payment</h2>
+            <input ng-model="charge.amount" type="text" money precision="2" class="custom-amount-input" placeholder="Enter payment amount">
+            <button id="addPaymentBtn" ng-click="charge.doCheckout()" class="button button-default">Pay with Card</button>
+        </div>
+        <div ng-controller="app.controller.payments as payments" ng-init="payments.loadPayments()">
+            <h2>Payments</h2>
+            <div class="grid">
+                <div class="payment row" ng-repeat="payment in payments.list.results">
+                    <div class="item">
+                        <span class="label">Date</span>
+                        <span class="value">[[payment.created | date:'M/d/yy h:mm a']]</span>
+                    </div>
+                    <div class="item right">
+                        <span class="label">Amount</span>
+                        <span class="value">[[payment.amount | customCurrency]]</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="load-more" ng-click="payments.loadMorePayments(20)" ng-if="payments.list.results.length < 200">
-            <p>Show More</p>
+            <div class="load-more" ng-click="payments.loadMorePayments(20)" ng-if="payments.list.results.length < 200">
+                <p>Show More</p>
+            </div>
         </div>
     </div>
 </div>

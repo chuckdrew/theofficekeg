@@ -19,7 +19,7 @@ purchaseSchema.statics.lockPurchasesForUser = function(userId) {
             console.log("Locked " + num + " purchases");
         }
     );
-}
+};
 
 purchaseSchema.plugin(mongoosePaginate);
 

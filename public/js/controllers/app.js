@@ -7,6 +7,7 @@ var theofficekeg = angular.module("app", [
     'app.users',
     'app.purchases',
     'app.payments',
+    'app.charge',
     'app.kegs',
     'app.scans'
 ]);
