@@ -1,5 +1,5 @@
 .env
 public/css/.sass-cache/
-node_modules/*
-node_modules
+.idea/
+node_modules/
 theofficekeg.iml
