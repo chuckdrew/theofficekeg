@@ -1,7 +1,4 @@
-var PaymentService = require('payments');
-var Payment = require('../models/payment');
-var User = require('../models/user');
-var Purchase = require('../models/purchase');
+var PaymentService = require('./payments');
 
 module.exports = function(app, passport) {
     var express = require('express');
@@ -23,7 +20,7 @@ module.exports = function(app, passport) {
                 res.apiRes(false, 'Your card has been declined.', err);
             }
             else {
-                PaymentService.addPayment(userId, (amount/100), res);
+                return PaymentService.addPayment(userId, (amount/100), res, app);
             }
         });
     });

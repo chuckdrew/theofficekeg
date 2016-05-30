@@ -7,7 +7,7 @@ module.exports = function(app, passport) {
     var router = express.Router();
 
     router.post('/add', passport.checkAuth('admin'), function (req, res) {
-        addPayment(req.body.user_id, req.body.amount, res);
+        addPayment(req.body.user_id, req.body.amount, res, app);
     });
 
     router.get('/list', passport.checkAuth('guest'), function(req, res) {
@@ -29,7 +29,7 @@ module.exports = function(app, passport) {
     return router;
 }
 
-module.exports.addPayment = function(userId, amount, res) {
+module.exports.addPayment = function(userId, amount, res, app) {
     var newPayment = new Payment();
 
     newPayment.user = userId;
@@ -54,9 +54,9 @@ module.exports.addPayment = function(userId, amount, res) {
                 user.increaseBalance(newPayment.amount)
                 user.save(function (err) {
                     if(err) {
-                        res.apiRes(false, 'Error applying payment to users account', err);
+                        return res.apiRes(false, 'Error applying payment to users account', err);
                     } else {
-                        res.apiRes(true, 'Successfully Saved Payment', newPayment);
+                        return res.apiRes(true, 'Successfully Saved Payment', newPayment);
                     }
                 });
             });

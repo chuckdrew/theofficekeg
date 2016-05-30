@@ -1,5 +1,9 @@
-var chargeModule = angular.module('app.charge', ['app.service.charge', 'stripe.checkout', 'fiestah.money'])
-    .config(function(StripeCheckoutProvider) {
+var chargeModule = angular.module('app.charge', [
+    'app.service.charge',
+    'app.service.payment',
+    'stripe.checkout',
+    'fiestah.money'
+    ]).config(function(StripeCheckoutProvider) {
         StripeCheckoutProvider.defaults({
             key: "pk_test_isAvnRFlwG4pGaafHWMHdyTc"
         });
@@ -7,7 +11,7 @@ var chargeModule = angular.module('app.charge', ['app.service.charge', 'stripe.c
         StripeCheckoutProvider.load
     });
 
-chargeModule.controller('app.controller.charge', function($rootScope, $scope, $log, chargeService, StripeCheckout, inform) {
+chargeModule.controller('app.controller.charge', function($rootScope, $scope, $log, chargeService, paymentService, StripeCheckout, inform) {
     var charge = this;
     charge.amount = null;
 
@@ -31,9 +35,7 @@ chargeModule.controller('app.controller.charge', function($rootScope, $scope, $l
                 chargeService.processCharge(token, options.amount).success(function(response) {
                     if(response.success) {
                         inform.add(response.message, {ttl: 3000, type: 'success'});
-                        payments.loadPayments();
-                        payments.amount = null;
-                        successCallback.call();
+                        paymentService.loadPayments();
                     }
                 });
             });
