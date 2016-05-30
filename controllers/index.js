@@ -9,6 +9,6 @@ module.exports = function(app, passport) {
     router.use('/kegs', require('./kegs')(app, passport));
     router.use('/purchases', require('./purchases')(app, passport));
     router.use('/payments', require('./payments')(app, passport));
-
+    router.use('/charge', require('./charge')(app, passport));
     return router;
 };
