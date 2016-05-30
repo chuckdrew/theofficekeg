@@ -3,3 +3,4 @@ public/css/.sass-cache/
 .idea/
 node_modules/
 theofficekeg.iml
+config.js

@@ -2,10 +2,11 @@ var chargeModule = angular.module('app.charge', [
     'app.service.charge',
     'app.service.payment',
     'stripe.checkout',
-    'fiestah.money'
-    ]).config(function(StripeCheckoutProvider) {
+    'fiestah.money',
+    'app.config'
+    ]).config(function(StripeCheckoutProvider, STRIPE_PUBLISH_KEY) {
         StripeCheckoutProvider.defaults({
-            key: "pk_test_isAvnRFlwG4pGaafHWMHdyTc"
+            key: STRIPE_PUBLISH_KEY
         });
 
         StripeCheckoutProvider.load

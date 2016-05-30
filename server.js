@@ -15,6 +15,9 @@ var MongoStore = require('connect-mongo')(session);
 var configDB = require('./config/database.js');
 var exphbs  = require('express-handlebars');
 
+//Create AngularJS config constants
+require('./config/angular');
+
 //Create Standard Response Object
 express.response.apiRes = function(status, message, data) {
     this.json({
