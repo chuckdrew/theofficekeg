@@ -28,7 +28,14 @@ chargeModule.controller('app.controller.charge', function($rootScope, $scope, $l
         handler.open(options)
             .then(function(result) {
                 var token = result[0].id;
-                chargeService.processCharge(token, options.amount);
+                chargeService.processCharge(token, options.amount).success(function(response) {
+                    if(response.success) {
+                        inform.add(response.message, {ttl: 3000, type: 'success'});
+                        payments.loadPayments();
+                        payments.amount = null;
+                        successCallback.call();
+                    }
+                });
             });
     };
 });
