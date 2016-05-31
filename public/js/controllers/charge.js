@@ -25,20 +25,25 @@ chargeModule.controller('app.controller.charge', function($rootScope, $scope, $l
 
     charge.doCheckout = function(token, args) {
 
-        var options = {
-            description: "Add Beer Money!",
-            amount: charge.amount * 100
-        };
+        if(charge.amount < 10) {
+            inform.add("Please add at least $10.00.", {ttl: 5000, type: 'danger'});
+        }
+        else {
+            var options = {
+                description: "Add Beer Money!",
+                amount: charge.amount * 100
+            };
 
-        handler.open(options)
-            .then(function(result) {
-                var token = result[0].id;
-                chargeService.processCharge(token, options.amount).success(function(response) {
-                    if(response.success) {
-                        inform.add(response.message, {ttl: 3000, type: 'success'});
-                        paymentService.loadPayments();
-                    }
+            handler.open(options)
+                .then(function (result) {
+                    var token = result[0].id;
+                    chargeService.processCharge(token, options.amount).success(function (response) {
+                        if (response.success) {
+                            inform.add(response.message, {ttl: 3000, type: 'success'});
+                            paymentService.loadPayments();
+                        }
+                    });
                 });
-            });
+        }
     };
 });

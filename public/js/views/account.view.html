@@ -36,7 +36,7 @@
     <div class="payments">
         <div class="charge" ng-controller="app.controller.charge as charge">
             <h2>Add a Payment</h2>
-            <input ng-model="charge.amount" type="text" money precision="2" class="custom-amount-input" placeholder="Enter payment amount">
+            <input ng-model="charge.amount" type="text" money precision="2" class="custom-amount-input" placeholder="Enter payment amount (min $10.00)">
             <button id="addPaymentBtn" ng-click="charge.doCheckout()" class="button button-default">Pay with Card</button>
         </div>
         <div ng-controller="app.controller.payments as payments" ng-init="payments.loadPayments()">
