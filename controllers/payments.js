@@ -1,13 +1,14 @@
 var Payment = require('../models/payment');
 var User = require('../models/user');
 var Purchase = require('../models/purchase');
+var Numeral = require('numeral');
 
 module.exports = function(app, passport) {
     var express = require('express');
     var router = express.Router();
 
     router.post('/add', passport.checkAuth('admin'), function (req, res) {
-        addPayment(req.body.user_id, req.body.amount, res, app);
+        addPayment(req.body.user_id, req.body.amount, 'admin', res, app);
     });
 
     router.get('/list', passport.checkAuth('guest'), function(req, res) {
@@ -29,16 +30,19 @@ module.exports = function(app, passport) {
     return router;
 }
 
-module.exports.addPayment = function(userId, amount, res, app) {
+module.exports.addPayment = function(userId, amount, method, res, app) {
     var newPayment = new Payment();
 
     newPayment.user = userId;
     newPayment.amount = amount;
+    newPayment.method = method;
 
     newPayment.save(function(err) {
         if (err) {
             res.apiRes(false,'Error Saving Payment',err);
         } else {
+            var formattedAmount = Numeral(newPayment.amount).format('$0,0.00');
+
             User.findOne({'_id': userId}, function(err, user) {
                 Purchase.lockPurchasesForUser(user._id);
 
@@ -47,7 +51,7 @@ module.exports.addPayment = function(userId, amount, res, app) {
                     to: user.email,
                     subject: 'Thanks for your payment!',
                     base_url: process.env.BASE_URL,
-                    payment: newPayment,
+                    amount: formattedAmount,
                     user: user
                 });
 

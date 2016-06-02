@@ -42,6 +42,9 @@ chargeModule.controller('app.controller.charge', function($rootScope, $scope, $l
                             inform.add(response.message, {ttl: 3000, type: 'success'});
                             paymentService.loadPayments();
                         }
+                        else {
+                            inform.add(response.message, {ttl: 3000, type: 'danger'});
+                        }
                     });
                 });
         }
