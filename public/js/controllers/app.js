@@ -9,7 +9,8 @@ var theofficekeg = angular.module("app", [
     'app.payments',
     'app.charge',
     'app.kegs',
-    'app.scans'
+    'app.scans',
+    'app.messages'
 ]);
 
 theofficekeg.config(function($interpolateProvider, $stateProvider, $urlRouterProvider) {

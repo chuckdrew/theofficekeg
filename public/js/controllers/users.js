@@ -213,4 +213,5 @@ usersModule.controller('app.controller.users', function($scope, $state, inform, 
             }
         });
     }
+    
 });

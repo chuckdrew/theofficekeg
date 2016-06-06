@@ -1,2 +1,18 @@
 <h1 class="header-title">Messages</h1>
-<p>This will be an ui for sending messages to users</p>
+<div class="form">
+    <div class="wrapper" ng-controller="app.controller.messages as messages">
+        <form ng-submit="messages.notifyAllUsers()">
+            <div class="field">
+                <label for="subject">Message Subject</label>
+                <input id="subject" type="text" ng-model="messages.subject" placeholder="Input a subject"/>
+            </div>
+            <div class="field">
+                <label for="message">Message Body</label>
+                <textarea id="message" class="message" ng-model="messages.message" placeholder="Input a message to all users." rows="20"/>
+            </div>
+            <div class="form-button">
+                <button type="submit" class="button button-default">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
