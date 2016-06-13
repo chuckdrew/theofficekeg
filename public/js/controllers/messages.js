@@ -20,7 +20,8 @@ messagesModule.controller('app.controller.messages', function($rootScope, $scope
             if(response.success) {
                 messages.subject = null;
                 messages.message = null;
-                
+                angular.element("#message").empty();
+
                 inform.add(response.message, {ttl: 5000, type: 'success'});
             }
         }).error(function(response) {

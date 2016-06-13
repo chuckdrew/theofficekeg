@@ -8,7 +8,7 @@
             </div>
             <div class="field">
                 <label for="message">Message Body</label>
-                <textarea id="message" class="message" ng-model="messages.message" placeholder="Input a message to all users." rows="20"/>
+                <div trumbowyg-ng ng-model="messages.message" editor-config="{btns: ['viewHTML', 'formatting', 'btnGrp-semantic', 'superscript', 'subscript', 'link', 'insertImage', 'btnGrp-justify', 'btnGrp-lists', 'horizontalRule', 'removeformat', 'fullscreen']}" id="message" placeholder="Input a message to all users."></div>
             </div>
             <div class="form-button">
                 <button type="submit" class="button button-default">Send</button>

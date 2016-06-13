@@ -4,3 +4,4 @@ public/css/.sass-cache/
 node_modules/
 theofficekeg.iml
 config.js
+npm-debug.log

@@ -4,6 +4,7 @@ var theofficekeg = angular.module("app", [
     'ui.router',
     'ngFitText',
     'inform',
+    'trumbowyg-ng',
     'app.users',
     'app.purchases',
     'app.payments',

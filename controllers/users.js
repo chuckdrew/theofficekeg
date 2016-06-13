@@ -221,18 +221,30 @@ module.exports = function(app, passport) {
 
     router.post('/notify-all-users', passport.checkAuth('admin'), function(req, res) {
         User.find({status:"active"}, function(err, users) {
-            users.forEach(function(user) {
+            if(process.env.DEV_EMAIL) {
                 app.sendMail({
                     template: 'notify',
-                    to: user.email,
+                    to: '',
                     from: "The Office Keg <" + req.user.email + ">",
                     subject: req.body.subject,
                     base_url: process.env.BASE_URL,
-                    user: user,
+                    user: users[0],
                     message: req.body.message
                 });
-            });
-
+            }
+            else {
+                users.forEach(function (user) {
+                    app.sendMail({
+                        template: 'notify',
+                        to: user.email,
+                        from: "The Office Keg <" + req.user.email + ">",
+                        subject: req.body.subject,
+                        base_url: process.env.BASE_URL,
+                        user: user,
+                        message: req.body.message
+                    });
+                });
+            }
             res.apiRes(true,'Successfully emailed all active users.',null);
         });
     });
