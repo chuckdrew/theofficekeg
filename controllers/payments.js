@@ -8,7 +8,7 @@ module.exports = function(app, passport) {
     var router = express.Router();
 
     router.post('/add', passport.checkAuth('admin'), function (req, res) {
-        addPayment(req.body.user_id, req.body.amount, 'admin', res, app);
+        module.exports.addPayment(req.body.user_id, req.body.amount, 'admin', res, app);
     });
 
     router.get('/list', passport.checkAuth('guest'), function(req, res) {
