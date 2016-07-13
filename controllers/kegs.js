@@ -81,18 +81,22 @@ module.exports = function(app, passport) {
         Keg.findOne({'is_active' : true}, function(err, keg) {
             Purchase.find({'keg' : keg.id, 'cancelled' : false}, function(err, purchases) {
                 if(purchases) {
+
                     var kegStats = {};
                     var collected = 0;
+                    var numOfPurchases = 0;
 
                     purchases.forEach(function(purchase) {
                         collected += purchase.price;
+                        numOfPurchases++;
                     });
 
                     kegStats['total'] = keg.total_price;
                     kegStats['collected'] = collected;
                     kegStats['debt'] = keg.total_price - collected;
+                    kegStats['num_of_purchases'] = numOfPurchases;
 
-                    res.apiRes(true, 'Succesfully generated keg stats', kegStats);
+                    res.apiRes(true, 'Successfully generated keg stats', kegStats);
                 }
             });
         });
