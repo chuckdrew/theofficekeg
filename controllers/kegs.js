@@ -1,4 +1,5 @@
 var Keg = require('../models/keg');
+var Purchase = require('../models/purchase');
 
 module.exports = function(app, passport) {
     var express = require('express');
@@ -73,6 +74,26 @@ module.exports = function(app, passport) {
             } else {
                 res.apiRes(false,'Could Not Find Active Keg',keg);
             }
+        });
+    });
+
+    router.get('/active/stats', function(req, res) {
+        Keg.findOne({'is_active' : true}, function(err, keg) {
+            Purchase.find({'keg' : keg.id,'cancelled' : true}, function(err, purchases) {
+                if(purchases) {
+                    var kegStats = {};
+                    var collected = 0;
+                    purchases.forEach(function(purchase) {
+                        collected += purchase.price;
+                    });
+
+                    kegStats['total'] = keg.total_price;
+                    kegStats['collected'] = collected;
+                    kegStats['debt'] = keg.total_price - collected;
+
+                    res.apiRes(true, 'Succesfully generated keg stats', kegStats);
+                }
+            });
         });
     });
 
