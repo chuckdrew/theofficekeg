@@ -79,10 +79,11 @@ module.exports = function(app, passport) {
 
     router.get('/active/stats', function(req, res) {
         Keg.findOne({'is_active' : true}, function(err, keg) {
-            Purchase.find({'keg' : keg.id,'cancelled' : true}, function(err, purchases) {
+            Purchase.find({'keg' : keg.id, 'cancelled' : false}, function(err, purchases) {
                 if(purchases) {
                     var kegStats = {};
                     var collected = 0;
+
                     purchases.forEach(function(purchase) {
                         collected += purchase.price;
                     });
